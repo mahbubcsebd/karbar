@@ -1,0 +1,142 @@
+{
+    "Header": {
+        "searchPlaceholder": "পণ্যের নাম লিখুন",
+        "search": "খুজুন",
+        "itemsNumber": "টি আইটেম",
+        "cartEmpty": "কার্টে কোন প্রোডাক্ট নেই।",
+        "total": "সর্বমোট",
+        "order": "অর্ডার করুন",
+        "currency": "টাকা"
+    },
+    "Categories": {
+        "allProduct": "সব প্রোডাক্ট",
+        "bestSellingProduct": "বেস্ট সেলিং প্রোডাক্ট",
+        "latestProduct": "নতুন প্রোডাক্ট"
+    },
+    "Global": {
+        "all": "সবগুলো",
+        "noFound": "দুঃখিত প্রোডাক্ট টি পাওয়া যায় নি।",
+        "latestProduct": "নতুন প্রোডাক্ট",
+        "ourProduct": "আমাদের পণ্যগুলো",
+        "seeMore": "আরো দেখুন"
+    },
+    "TemplateFour": {
+        "latest": "নতুন",
+        "products": "পণ্যগুলো",
+        "our": "আমাদের",
+        "product": "পণ্য"
+    },
+    "Faqs": {
+        "faqTitle": "সাধারণ জিজ্ঞাসা"
+    },
+    "Testimonial": {
+        "testimonialTitle": "ক্রেতার রিভিউ"
+    },
+    "RecentViewed": {
+        "recentTitle": "সম্প্রতি দেখা"
+    },
+    "RelatedProducts": {
+        "relatedTitle": "সম্পর্কিত পণ্য"
+    },
+    "Banner": {
+        "shopBanner": "প্রোডাক্ট পেজ"
+    },
+    "ProductCard": {
+        "seeDetails": "বিস্তারিত দেখুন",
+        "priceCurrency": "মূল্য",
+        "seeMore": "আরো দেখুন",
+        "sectionTitle": "নতুন প্রোডাক্ট",
+        "SortBy": {
+            "sortBy": "সর্ট করুন",
+            "all": "সবগুলো",
+            "newArrival": "নিউ এরাইভাল",
+            "bestSelling": "বেস্ট সেলিং",
+            "discount": "অফার"
+        }
+    },
+    "ProductDetails": {
+        "price": "মূল্য",
+        "currency": "৳",
+        "addToCart": "কার্টে যোগ করুন",
+        "order": "অর্ডার করুন",
+        "productVarientSelect": "প্রোডাক্টের ভ্যারিয়েন্ট সিলেক্ট করুন",
+        "stockOut": "দুঃখিত! প্রোডাক্টের এই ভ্যারিয়েন্ট টি স্টকে নেই। অন্য ভ্যারিয়েন্ট সিলেক্ট করুন।",
+        "max": "আপনি সর্বোচ্চ",
+        "limitation": "টি প্রোডাক্ট অর্ডার করতে পারবেন। এর বেশি স্টকে নেই।",
+        "outOfStock": "দুঃখিত প্রোডাকটি স্টকে নেই।",
+        "productDetails": "পণ্যের বিবরণ",
+        "detailsCategory": "ক্যাটাগরি",
+        "detailsProductCode": "প্রোডাক্ট কোড",
+        "detailsFabrics": "ফ্যাব্রিক্স",
+        "socialShareDic": "শেয়ার করুন"
+    },
+    "ProductReview": {
+        "ratingAndReview": "পণ্যের রেটিং এবং রিভিউ",
+        "writeReview": "রিভিউ লিখুন",
+        "totalRating": "মোট রেটিং",
+        "productReview": "পণ্যের রিভিউ",
+        "reviewImgUpload": "ফটো আপলোড করুন",
+        "Form": {
+            "yourRating": "আপনার রেটিং",
+            "reviewComment": "আপনার মন্তব্য",
+            "reviewUpload": "ফটো আপলোড করুন",
+            "reviewName": "আপনার নাম",
+            "reviewEmail": "আপনার ইমেইল",
+            "reviewSubmit": "রিভিউ সাবমিট করুন"
+        }
+    },
+    "Checkout": {
+        "formTitle": "অর্ডারটি সম্পন্ন করতে আপনার নাম, মোবাইল নম্বর ও ঠিকানা নিচে লিখুন",
+        "orderTitle": "আপনার অর্ডার",
+        "paymentTitle": "পেমেন্ট অপশন",
+        "dicSubTotal": "সাবটোটাল ",
+        "dicDeliveryFee": "ডেলিভারি ফি",
+        "dicCouponProvide": "কুপন কোড থাকলে দিন",
+        "dicTotal": "সর্বমোট",
+        "dicConfirm": "অর্ডার কনফার্ম করুন",
+        "dicConfirmProcessing": "অর্ডার প্রসেসিং",
+        "cartEmpty": "কার্টে কোন প্রডাক্ট নেই",
+        "bkashMsgBefore": "বিকাশ এ 'পেমেন্ট' অপশন থেকে",
+        "bkashMsgAfter": "এই নম্বর এ অর্ডার এমাউন্টটি পেমেন্ট করুন এবং নিচে আপনার বিকাশ একাউন্ট নম্বর এবং ট্রানজেকশন আইডি টি দিন।",
+        "nagadMsgBefore": "নগদ এ 'সেন্ড মানি'",
+        "nagadMsgAfter": "এই নম্বর এ অর্ডার এমাউন্টটি সেন্ড করুন এবং নিচে আপনার নগদ একাউন্ট নম্বর এবং ট্রানজেকশন আইডি টি দিন।",
+        "provideBkashNumber": "বিকাশ নম্বর দিন",
+        "provideNagadNumber": "নগদ নম্বর দিন",
+        "bkashTransactionID": "বিকাশ ট্রানজেকশন আইডি দিন",
+        "nagadTransactionID": "নগদ ট্রানজেকশন আইডি দিন",
+        "Form": {
+            "nameLabel": "আপনার নাম লিখুন",
+            "namePlaceholder": "সম্পূর্ণ নামটি লিখুন",
+            "phoneLabel": "আপনার মোবাইল নম্বরটি লিখুন",
+            "phonePlaceholder": "১১ ডিজিটের মোবাইল নম্বরটি লিখুন",
+            "areaLabel": "এলাকা সিলেক্ট করুন",
+            "insideDhaka": "ঢাকার ভিতরে",
+            "outsideDhaka": "ঢাকার বাইরে",
+            "freeDelevery": "ফ্রি ডেলিভারি",
+            "currency": "টাকা",
+            "addressLabel": "সম্পূর্ন ঠিকানা",
+            "addressPlaceholder": "হাউজ নম্বর, রোড, ইউনিয়ন, উপজেলা, জেলা",
+            "noteLabel": "নোট",
+            "optional": "অপশনাল",
+            "notePlaceholder": "আপনার স্পেশাল কোন রিকোয়ারমেন্ট থাকলে এখানে লিখুন"
+        }
+    },
+    "OrderSuccess": {
+        "orderSuccess": "অভিনন্দন! অর্ডারটি সম্পন্ন হয়েছে!",
+        "orderThanks": "এ শপিং করার জন্য আপনাকে ধন্যবাদ!!",
+        "shoppingMore": "আরও শপিং করুন"
+    },
+    "Footer": {
+        "contact": "যোগাযোগ",
+        "footerDesc": "দারিব এক জায়গায় শীর্ষস্থানীয় ক্রীড়া সামগ্রী বিক্রি করে। আমাদের পারফরম্যান্স এবং আরামদায়ক জার্সি, টুপি, প্যান্ট এবং জুতা কিনুন। Daarib এর সাথে আপনার খেলা আপ করার জন্য প্রস্তুত করুন।",
+        "company": "কোম্পানি",
+        "aboutUs": "আমাদের সম্পর্কে",
+        "privacyPolicy": "প্রাইভেসি পলিসি",
+        "returnPolicy": "রিটার্ণ পলিসি",
+        "termsAndConditions": "টার্মস এন্ড কন্ডিশনস",
+        "copyRight": "সর্বস্বত্ব সংরক্ষিত দারিব",
+        "payment": "পেমেন্ট করুন",
+        "socialMedia": "সোশ্যাল মিডিয়া",
+        "developBy": "ডেভেলপ বাই"
+    }
+}
