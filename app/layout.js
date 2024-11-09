@@ -89,12 +89,7 @@ export default function RootLayout({ children }) {
 
     return (
         <html lang="en">
-            {isGTMLoaded && addManager?.tag_manager_id && (
-                <>
-                    <GoogleTagManager gtmId={addManager.tag_manager_id} />
-                    <GTMNoScript gtmId={addManager.tag_manager_id} />
-                </>
-            )}
+            <GoogleTagManager gtmId="GTM-WCNLBVKG" />
 
             <body className={poppins.className}>
                 <Suspense fallback={<HomePreLoader />}>
