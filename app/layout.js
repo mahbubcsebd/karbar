@@ -1,10 +1,8 @@
 'use client';
 
-import { GoogleTagManager } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { Suspense, useEffect, useReducer, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +11,8 @@ import whatsapp from '../app/assets/icons/whatsapp.svg';
 import ScrollToTop from '../app/components/ScrollToTop';
 import { ProductContext } from '../app/context/cartContext';
 import { cartReducer, initialState } from '../app/reducer/CartReducer';
+import { usePathname } from 'next/navigation';
+import Script from 'next/script';
 import { ModalProvider } from '../app/reducer/ModalProvider';
 import { SearchProvider } from '../app/reducer/SearchContext';
 import FBPixel from './components/add-manager/FBPixel';
@@ -33,16 +33,29 @@ const poppins = Poppins({
     subsets: ['latin'],
 });
 
-function GTMNoScript({ gtmId }) {
+function GTMScript({ gtmId }) {
+    if (!gtmId) return null;
+
     return (
-        <noscript>
-            <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-                height="0"
-                width="0"
-                style={{ display: 'none', visibility: 'hidden' }}
-            />
-        </noscript>
+        <>
+            <Script id="google-tag-manager" strategy="afterInteractive">
+                {`
+                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer','${gtmId}');
+                `}
+            </Script>
+            <noscript>
+                <iframe
+                    src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+                    height="0"
+                    width="0"
+                    style={{ display: 'none', visibility: 'hidden' }}
+                />
+            </noscript>
+        </>
     );
 }
 
@@ -74,8 +87,8 @@ export default function RootLayout({ children }) {
                 setSiteSetting(siteSettings.data);
                 setTemplate(templateData);
                 setAddManager(addManagerData);
-
-                // Set GTM loaded if ID exists
+                
+                // Set GTM loaded flag after data is fetched
                 if (addManagerData?.tag_manager_id) {
                     setIsGTMLoaded(true);
                 }
@@ -89,8 +102,8 @@ export default function RootLayout({ children }) {
 
     return (
         <html lang="en">
-            <GoogleTagManager gtmId="GTM-WCNLBVKG" />
-
+            {isGTMLoaded && <GTMScript gtmId={addManager?.tag_manager_id} />}
+            
             <body className={poppins.className}>
                 <Suspense fallback={<HomePreLoader />}>
                     <LanguageProvider>
@@ -161,9 +174,7 @@ export default function RootLayout({ children }) {
                         </ProductContext.Provider>
                     </LanguageProvider>
                 </Suspense>
-                {addManager?.pixel_id && (
-                    <FBPixel pixelId={addManager?.pixel_id} />
-                )}
+                {isGTMLoaded && <FBPixel pixelId={addManager?.pixel_id} />}
             </body>
         </html>
     );
