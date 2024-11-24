@@ -30,8 +30,9 @@ const PosSearch = ({ search, setSearch }) => {
                     </button>
                 )}
                 <button
-                    type="submit"
-                    onClick={handleSearch}
+                    // type="submit"
+                    // onClick={handleSearch}
+                    type="button"
                     className="absolute top-1/2 -translate-y-1/2 right-[18px] text-gray-500 text-xl font-normal flex items-center"
                 >
                     <IoSearchOutline />

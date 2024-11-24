@@ -49,6 +49,7 @@ const ProductListFive = () => {
                 const productsData = await getAllProduct(
                     language,
                     selectedCategory,
+                    '',
                     'all',
                     '',
                     page,
@@ -172,7 +173,7 @@ const ProductListFive = () => {
                             ))}
                         </ul>
                     </div>
-                    <Suspense fallback={<h2>Loading...</h2>}>
+                    <Suspense fallback={<h2></h2>}>
                         {loading && !isSeeMoreClick ? (
                             <div className="product-list grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-[30px]">
                                 <SkeletonCard />

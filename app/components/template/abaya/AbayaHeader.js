@@ -2,33 +2,24 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { RxCross1 } from 'react-icons/rx';
 import logo from '../../../assets/icons/logo.svg';
 import useDictionary from '../../../hooks/useDictionary';
-import { getSiteSettings } from '../../../utils/getSiteSettings';
+import useSiteSetting from '../../../hooks/useSiteSetting';
 import HeaderCart from '../../HeaderCart';
 import LanguageSwitcher from '../../LanguageSwitcher';
 import AbayaHeaderSearch from './AbayaHeaderSearch';
 
 const AbayaHeader = () => {
     const [showSearchModal, setShowSearchModal] = useState(false);
-    const [siteSetting, setSiteSetting] = useState('');
+    const { siteSetting, loading, error } = useSiteSetting();
     const { dictionary } = useDictionary();
 
     const handleSearch = () => {
         setShowSearchModal(!showSearchModal);
     };
-
-    useEffect(() => {
-        const fetchSiteSettings = async () => {
-            let siteSettings = await getSiteSettings();
-            setSiteSetting(siteSettings.data);
-        };
-
-        fetchSiteSettings();
-    }, []);
 
     const { header_logo } = siteSetting;
 
@@ -64,7 +55,7 @@ const AbayaHeader = () => {
                                         alt="logo"
                                         width={82}
                                         height={30}
-                                        className="max-w-[150px] lg:w-auto h-auto lg:max-w-[200px] max-h-[56px]"
+                                        className="max-w-[160px] lg:w-auto h-auto lg:max-w-[200px] max-h-[56px]"
                                     />
                                 </Link>
                             </div>

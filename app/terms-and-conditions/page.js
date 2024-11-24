@@ -3,17 +3,17 @@
 import Link from 'next/link';
 import { getSiteSettings } from '../utils/getSiteSettings';
 
-  export async function generateMetadata() {
-      const siteSetting = await getSiteSettings();
+export async function generateMetadata() {
+    const siteSetting = await getSiteSettings();
 
-      return {
-          title: `${siteSetting.data.title} | Terms and conditions Page`,
-          icons: {
-              icon: siteSetting.data.fev_icon,
-              apple: siteSetting.data.fev_icon,
-          },
-      };
-  }
+    return {
+        title: `${siteSetting.data.title} | Terms and conditions Page`,
+        icons: {
+            icon: siteSetting.data.fev_icon,
+            apple: siteSetting.data.fev_icon,
+        },
+    };
+}
 
 const TermsAndConditions = async () => {
     const siteSetting = await getSiteSettings();

@@ -9,8 +9,8 @@ import logo from "@/assets/icons/logo.svg";
 import nagad from '@/assets/icons/nagad.svg';
 import youtube from '@/assets/icons/youtube.svg';
 import useDictionary from '@/hooks/useDictionary';
+import useSiteSetting from '@/hooks/useSiteSetting';
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
-import { getSiteSettings } from '@/utils/getSiteSettings';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -20,20 +20,18 @@ import { FiPhoneCall } from 'react-icons/fi';
 
 const AbayaFooter = () => {
     const { language, dictionary } = useDictionary();
-    const [siteSetting, setSiteSetting] = useState('');
+    const { siteSetting, loading, error } = useSiteSetting();
     const [paymentMethod, setPaymentMethod] = useState([]);
 
     useEffect(() => {
-        const fetchSiteSettings = async () => {
-            const siteSettings = await getSiteSettings(language);
+        const fetchPaymentMethod = async () => {
             const paymentMethodData = await getPaymentMethod();
 
             setPaymentMethod(paymentMethodData.data);
-            setSiteSetting(siteSettings.data);
         };
 
-        fetchSiteSettings();
-    }, [language]);
+        fetchPaymentMethod();
+    }, []);
 
     const {
         contact,
@@ -133,7 +131,7 @@ const AbayaFooter = () => {
                                     </p>
                                     {footer_address
                                         ? footer_address
-                                        : 'Block #K, Road #18, House #195, Floor #2nd (lift), South Banasree, Rampura, Dhaka'}
+                                        : 'Mirpur DOHS, Dhaka, Bangladesh'}
                                 </div>
                             </div>
                         </div>
@@ -143,11 +141,11 @@ const AbayaFooter = () => {
                 <div className="container">
                     <div className="lg:flex justify-between items-center py-[30px] hidden">
                         <div>
-                            <p className="text-lg font-normal text-gray-500 flex items-center gap-[4px]">
-                                All rights deserved by{' '}
+                            <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
+                                &copy;All rights reserved by{' '}
                                 <span className="font-semibold">{title}</span>
                             </p>
-                            <p className="text-lg font-normal text-gray-500 flex items-center gap-[4px]">
+                            <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
                                 {/* © {copyRight} */}
                                 Powered by{' '}
                                 <Link
@@ -157,7 +155,7 @@ const AbayaFooter = () => {
                                     <Image
                                         src={karbar}
                                         alt="karbar"
-                                        className="w-[70px] pt-[4px]"
+                                        className="w-[65px] lg:w-[70px] pt-[4px]"
                                     />
                                 </Link>
                             </p>
@@ -325,11 +323,11 @@ const AbayaFooter = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center py-5 bg-gray-700 lg:hidden">
-                        <p className="text-lg font-normal text-gray-500 flex items-center gap-[4px]">
-                            All rights deserved by{' '}
+                        <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
+                            &copy;All rights reserved by{' '}
                             <span className="font-semibold">{title}</span>
                         </p>
-                        <p className="text-lg font-normal text-gray-500 flex items-center gap-[4px]">
+                        <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
                             Powered by{' '}
                             <Link
                                 className="text-gray-400"
@@ -338,7 +336,7 @@ const AbayaFooter = () => {
                                 <Image
                                     src={karbar}
                                     alt="karbar"
-                                    className="w-[70px] pt-[4px]"
+                                    className="w-[65px] lg:w-[70px] pt-[4px]"
                                 />
                             </Link>
                         </p>

@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { CiLocationOn, CiMail } from 'react-icons/ci';
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
@@ -11,19 +10,10 @@ import cod from '../assets/icons/cod.svg';
 import footerBg from '../assets/icons/footer-bg.svg';
 import logo from '../assets/icons/footer-logo.svg';
 import nagad from '../assets/icons/nagad.svg';
-import { getSiteSettings } from '../utils/getSiteSettings';
+import useSiteSetting from '../hooks/useSiteSetting';
 
 const Footer = () => {
-    const [siteSetting, setSiteSetting] = useState('');
-
-    useEffect(() => {
-        const fetchSiteSettings = async () => {
-            let siteSettings = await getSiteSettings();
-            setSiteSetting(siteSettings.data);
-        };
-
-        fetchSiteSettings();
-    }, []);
+const { siteSetting, loading, error } = useSiteSetting();
 
     const {
         footer_logo,

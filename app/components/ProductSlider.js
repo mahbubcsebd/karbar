@@ -17,6 +17,7 @@ import './productSlider.css';
 import Image from 'next/image';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { ModalContext } from '../context/ModalContext';
+import useAdManager from '../hooks/useAdManager';
 import { trackEvent } from '../utils/facebookPixel';
 import ImageMagnifier from './ImageMagnifier';
 
@@ -24,26 +25,29 @@ const ProductSlider = ({ product }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const { isOpen, setIsOpen } = useContext(ModalContext);
     const { product_images, video_link } = product;
+    const { adManager } = useAdManager();
 
     // For Google tag manager
     useEffect(() => {
-        window.dataLayer.push({
-            event: 'view_item',
-            ecommerce: {
-                items: product,
-            },
-        });
+        if (adManager?.tag_manager_id) {
+            window.dataLayer.push({
+                event: 'view_item',
+                ecommerce: {
+                    items: product,
+                },
+            });
 
-        // For Facebook Pixels
-        trackEvent('View Item', product);
-    }, [product]);
+            // For Facebook Pixels
+            trackEvent('View Item', product);
+        }
+    }, [product, adManager]);
 
 
 
     return (
         <div className="product-slider">
             {product_images && product_images.length > 0 ? (
-                <div className="w-full h-[460px] sm:h-[600px] md:h-[880px] lg:h-[550px] xl:h-[530px]: 2xl:h-[620px] lg:rounded-[30px] overflow-hidden mb-4">
+                <div className="w-full h-[420px] sm:h-[600px] md:h-[880px] lg:h-[550px] xl:h-[530px]: 2xl:h-[620px] lg:rounded-[30px] overflow-hidden mb-4">
                     <Swiper
                         spaceBetween={10}
                         navigation={true}

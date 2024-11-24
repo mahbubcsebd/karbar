@@ -155,14 +155,14 @@ const ReviewForm = ({ id, setShowReview, dictionary }) => {
                             label={reviewName}
                             type="text"
                             name="name"
-                            warningMessage={nameMsg ? nameMsg : null}
+                            message={nameMsg ? nameMsg : null}
                             value={formData.name}
                         />
                         <Input
                             label="আপনার ইমেইল / ফোন নম্বর দিন"
                             type="text"
                             name="email"
-                            warningMessage={emailMsg ? emailMsg : null}
+                            message={emailMsg ? emailMsg : null}
                             value={formData.email}
                         />
                     </div>

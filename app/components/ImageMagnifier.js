@@ -1,28 +1,35 @@
-"use client"
+'use client';
 
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
 const ImageMagnifier = ({ src, width, height, zoomLevel = 2 }) => {
-    const [isHovered, setIsHovered] = useState(false);
+    const [isMagnifying, setIsMagnifying] = useState(false);
     const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
     const imageRef = useRef();
 
-    const handleMouseMove = (e) => {
+    const handleMove = (x, y) => {
         const { left, top, width, height } =
             imageRef.current.getBoundingClientRect();
-        const x = ((e.clientX - left) / width) * 100;
-        const y = ((e.clientY - top) / height) * 100;
-        setBackgroundPosition(`${x}% ${y}%`);
+        const xPercent = ((x - left) / width) * 100;
+        const yPercent = ((y - top) / height) * 100;
+        setBackgroundPosition(`${xPercent}% ${yPercent}%`);
     };
 
-    const handleMouseEnter = () => {
-        setIsHovered(true);
+    const handleMouseMove = (e) => {
+        handleMove(e.clientX, e.clientY);
     };
 
-    const handleMouseLeave = () => {
-        setIsHovered(false);
+    const handleTouchMove = (e) => {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            handleMove(touch.clientX, touch.clientY);
+        }
     };
+
+    const handleStart = () => setIsMagnifying(true);
+
+    const handleEnd = () => setIsMagnifying(false);
 
     return (
         <div
@@ -31,29 +38,33 @@ const ImageMagnifier = ({ src, width, height, zoomLevel = 2 }) => {
                 width: '100%',
                 height: '100%',
                 overflow: 'hidden',
-                cursor: 'zoom-in',
+                cursor: isMagnifying ? 'zoom-out' : 'zoom-in',
             }}
             onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={handleStart}
+            onMouseLeave={handleEnd}
+            onTouchStart={handleStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleEnd}
             ref={imageRef}
         >
             <Image
                 src={src}
+                priority
                 alt="Zoomable"
-                width={width} // Use the dynamic width from props
-                height={height} // Use the dynamic height from props
+                width={width}
+                height={height}
                 onError={() => console.error('Image failed to load')}
                 style={{
                     width: '100%',
                     height: '100%',
                     display: 'block',
                     transition: 'opacity 0.3s ease',
-                    opacity: 1, // Keep opacity always visible
+                    opacity: 1,
                 }}
                 className="object-cover w-full h-full"
             />
-            {isHovered && (
+            {isMagnifying && (
                 <div
                     style={{
                         backgroundImage: `url("${src}")`,
@@ -61,7 +72,7 @@ const ImageMagnifier = ({ src, width, height, zoomLevel = 2 }) => {
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: `${zoomLevel * 100}% ${
                             zoomLevel * 100
-                        }%`, // Set to zoom level for both dimensions
+                        }%`,
                         position: 'absolute',
                         top: 0,
                         left: 0,

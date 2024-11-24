@@ -4,7 +4,7 @@ import logo from '@/assets/icons/logo.svg';
 import useAuth from '@/hooks/useAuth';
 import useDictionary from '@/hooks/useDictionary';
 import usePos from '@/hooks/usePos';
-import { getSiteSettings } from '@/utils/getSiteSettings';
+import useSiteSetting from '@/hooks/useSiteSetting';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ import PosUser from './PosUser';
 
 const PosHeader = () => {
     const [showSearchModal, setShowSearchModal] = useState(false);
-    const [siteSetting, setSiteSetting] = useState('');
+    const { siteSetting, loading, error } = useSiteSetting();
     const [user, setUser] = useState([]);
     const { dictionary } = useDictionary();
     const { state, dispatch } = usePos();
@@ -32,8 +32,6 @@ const PosHeader = () => {
         fetchUser();
     }, [authToken]);
 
-
-
     const handleSearch = () => {
         setShowSearchModal(!showSearchModal);
     };
@@ -42,21 +40,12 @@ const PosHeader = () => {
         dispatch({
             type: 'CLEAR_CART',
         });
-    }
-
-    useEffect(() => {
-        const fetchSiteSettings = async () => {
-            let siteSettings = await getSiteSettings();
-            setSiteSetting(siteSettings.data);
-        };
-
-        fetchSiteSettings();
-    }, []);
+    };
 
     const { header_logo } = siteSetting;
 
     return (
-        <div className="mb-[83px] lg:mb-[90px]">
+        <div className="mb-[76px] lg:mb-[90px]">
             <header
                 id="header"
                 className="header py-[10px] bg-white border-b border-[#D1D1D1] fixed top-0 left-0 w-full z-10"
@@ -65,9 +54,7 @@ const PosHeader = () => {
                     <div className="container">
                         <div className="flex items-center justify-between header-content">
                             <div className="flex items-center gap-[50px]">
-                                <div
-                                    className={`header-logo`}
-                                >
+                                <div className={`header-logo`}>
                                     <Link href="/">
                                         <Image
                                             src={
@@ -76,7 +63,7 @@ const PosHeader = () => {
                                             alt="logo"
                                             width={100}
                                             height={40}
-                                            className="max-w-[150px] lg:w-auto h-auto lg:max-w-[200px] max-h-[56px]"
+                                            className="max-w-[160px] lg:w-auto h-auto lg:max-w-[200px] max-h-[56px]"
                                         />
                                     </Link>
                                 </div>

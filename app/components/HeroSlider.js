@@ -1,29 +1,55 @@
-'use client'
+'use client';
 
-import Image from "next/image";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
+import { getHeroImage } from '@/utils/getHeroImage';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import './hero.css';
 
-// import required modules
-import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+const HeroSlider = () => {
+    const [images, setImages] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [dynamicClass, setDynamicClass] = useState('h-[350px]');
 
-const HeroSlider = ({images}) => {
+    useEffect(() => {
+        const fetchHero = async () => {
+            try {
+                const heroImages = await getHeroImage();
+                setImages(heroImages.data);
+            } catch {
+                console.log('hero slide image fetch failed');
+            } finally {
+                setLoading(false);
+                setTimeout(() => {
+                    setDynamicClass('h-auto');
+                }, 2000);
+            }
+        };
+        fetchHero();
+    }, []);
+
+    if (!images) {
+        return null;
+    }
+
     return (
         <div
             id="hero"
             className="hero"
         >
             <div className="hero-area">
-                    <div className="w-full h-[160px] md:h-[350px] overflow-hidden">
+                <div className={`w-full overflow-hidden ${dynamicClass}`}>
+                    {loading ? (
+                        <div className="w-full overflow-hidden h-[150px] lg:h-[350px]"></div>
+                    ) : (
                         <Swiper
                             spaceBetween={30}
+                            loop={true}
                             autoplay={{
                                 delay: 2500,
                                 disableOnInteraction: false,
@@ -41,20 +67,22 @@ const HeroSlider = ({images}) => {
                             ]}
                             className="mySwiper"
                         >
-                            {images.map((img) => (
+                            {images?.map((img) => (
                                 <SwiperSlide key={img.id}>
                                     <Image
                                         src={img.image_url}
                                         alt={img.title}
                                         width={900}
+                                        priority
                                         height={500}
                                         className="object-cover w-full h-full"
                                     />
                                 </SwiperSlide>
                             ))}
                         </Swiper>
-                    </div>
+                    )}
                 </div>
+            </div>
         </div>
     );
 };

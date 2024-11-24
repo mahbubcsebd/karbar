@@ -9,17 +9,21 @@ import {
     useRef,
     useState,
 } from 'react';
+
+import { usePathname, useSearchParams } from 'next/navigation';
 import { IoOptions } from 'react-icons/io5';
 import SortContext from '../context/SortContext';
 import useDictionary from '../hooks/useDictionary';
 import SearchContext from '../reducer/SearchContext';
 import { getAllCategories } from '../utils/categories';
 import { getAllProduct } from '../utils/getProduct';
+import CategoryWiseFilter from './CategoryWiseFilter';
 import GlobalProductCard from './GlobalProductCard';
 import SkeletonCard from './skeleton/SkeletonCard';
 
 const ProductList = ({ category }) => {
-    const [selectedCategory, setSelectedCategory] = useState(category);
+    // const [selectedCategory, setSelectedCategory] = useState(category);
+    // const [selectedSubCategory, setSelectedSubCategory] = useState('');
     const [showProduct, setShowProduct] = useState(12);
     const [productItem, setProductItem] = useState([]);
     const [page, setPage] = useState(1);
@@ -35,6 +39,30 @@ const ProductList = ({ category }) => {
     const router = useRouter();
     const { sortQuery, setSortQuery } = useContext(SortContext);
     const [sortValue, setSortValue] = useState(sortQuery);
+
+    // ----------------------------
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        // Ensure this code runs only on the client
+        setIsClient(true);
+    }, []);
+
+    // Extract category and subcategory from URL
+    const pathSegments = pathname.split('/').filter(Boolean);
+    const currentCategory = pathSegments[1]; // After 'collections'
+    const currentSubCategory = searchParams.get('sub_category');
+
+    const [selectedCategory, setSelectedCategory] = useState(
+        currentCategory || ''
+    );
+    const [selectedSubCategory, setSelectedSubCategory] = useState(
+        currentSubCategory || ''
+    );
+    const [subCategories, setSubCategories] = useState([]);
+    // ----------------------------
 
     const { sortBy, all, newArrival, bestSelling, discount } =
         dictionary.ProductCard.SortBy;
@@ -80,6 +108,7 @@ const ProductList = ({ category }) => {
                 const productsData = await getAllProduct(
                     language,
                     selectedCategory,
+                    selectedSubCategory,
                     sortQuery,
                     searchQuery,
                     page,
@@ -105,7 +134,14 @@ const ProductList = ({ category }) => {
         };
 
         fetchProduct();
-    }, [language, selectedCategory, sortQuery, searchQuery, page]);
+    }, [
+        language,
+        selectedCategory,
+        sortQuery,
+        searchQuery,
+        selectedSubCategory,
+        page,
+    ]);
 
     const options = [
         { value: null, label: all },
@@ -113,7 +149,6 @@ const ProductList = ({ category }) => {
         { value: 'best_selling', label: bestSelling },
         { value: 'discount', label: discount },
     ];
-
 
     const handleSeeMore = useCallback(() => {
         setPage((prevPage) => prevPage + 1);
@@ -172,6 +207,11 @@ const ProductList = ({ category }) => {
         };
     }, []);
 
+    if (!isClient) {
+        // Return null or a fallback during SSR
+        return null;
+    }
+
     return (
         <div
             id="product-section"
@@ -180,17 +220,35 @@ const ProductList = ({ category }) => {
             <div className="product-area">
                 <div className="container">
                     <div className="product-filter flex flex-col lg:flex-row justify-between gap-4 mb-[30px]">
-                        <div className="flex items-start gap-4 sm:gap-5">
-                            <div className="flex items-center gap-2 mt-1 text-lg md:text-[20px] font-normal text-gray-800">
+                        <div className="flex gap-4">
+                            <div className="flex gap-2 text-lg md:text-[20px] font-normal text-gray-800 md:hidden mt-2">
                                 <IoOptions />
                             </div>
-                            <ul ref={scrollContainerRef}
-                            className="flex items-center md:flex-wrap gap-2 sm:gap-3 md:gap-[18px] max-w-[calc(100% - 60px)] overflow-x-auto categories-scroll">
+                            <div className="mt-[5px] hidden md:block">
+                                <p className="text-base text-gray-700 font-normal">
+                                    Filter by:
+                                </p>
+                            </div>
+                            <CategoryWiseFilter
+                                categories={categories}
+                                subCategories={subCategories}
+                                setSubCategories={setSubCategories}
+                                selectedCategory={selectedCategory}
+                                setSelectedCategory={setSelectedCategory}
+                                selectedSubCategory={selectedSubCategory}
+                                setSelectedSubCategory={setSelectedSubCategory}
+                                setSortQuery={setSortQuery}
+                                router={router}
+                            />
+                            {/* <ul
+                                ref={scrollContainerRef}
+                                className="flex items-center md:flex-wrap gap-2 sm:gap-3 md:gap-[18px] max-w-[calc(100% - 60px)] overflow-x-auto categories-scroll"
+                            >
                                 <li>
                                     <button
                                         onClick={handleAllFilter}
                                         type="button"
-                                        className={`px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
+                                        className={`whitespace-nowrap px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
                                             selectedCategory == 'all'
                                                 ? 'bg-gray-700 text-white'
                                                 : ''
@@ -206,7 +264,7 @@ const ProductList = ({ category }) => {
                                                 handleCategory(category.slug)
                                             }
                                             type="button"
-                                            className={`px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
+                                            className={`whitespace-nowrap px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
                                                 selectedCategory ==
                                                 category.slug
                                                     ? 'bg-gray-700 text-white'
@@ -217,10 +275,10 @@ const ProductList = ({ category }) => {
                                         </button>
                                     </li>
                                 ))}
-                            </ul>
+                            </ul> */}
                         </div>
                         <div>
-                            <div className="flex items-center gap-2 min-w-[220px]">
+                            <div className="flex items-center gap-2 min-w-[250px]">
                                 <p className="text-xs font-normal text-gray-700 lg:text-base">
                                     {sortBy} :
                                 </p>
@@ -263,7 +321,7 @@ const ProductList = ({ category }) => {
                         (searchQuery || sortQuery !== 'all') && (
                             <div className="flex justify-center pt-10 text-gray-600">
                                 <h2 className="text-2xl font-normal">
-                                    দুঃখিত! প্রোডাক্ট পাওয়া যায় নি।
+                                    {dictionary.Global.noFound}
                                 </h2>
                             </div>
                         )

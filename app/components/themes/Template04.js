@@ -1,5 +1,4 @@
-import { getHeroImage } from '../../utils/getHeroImage';
-import { getTestimonials } from '../../utils/getTestimonial';
+import Advertisement from '../Advertisement';
 import Categories from '../Categories';
 import HeroSlider from '../HeroSlider';
 import RecentlyViewedThree from '../RecentlyViewedThree';
@@ -8,22 +7,19 @@ import Accordion from '../accordion/Accordion';
 import LatestProductFour from '../template/template-four/LatestProductFour';
 import ProductListFour from '../template/template-four/ProductListFour';
 
-const TemplateFour = async () => {
-    const heroImages = await getHeroImage();
-    const testimonials = await getTestimonials();
+const TemplateFour = () => {
     return (
         <>
             <Categories />
-            <HeroSlider images={heroImages.data} />
+            <HeroSlider />
+            <Advertisement position="home_top" />
             <LatestProductFour />
-            {/* <Campain /> */}
             <ProductListFour />
+            <Advertisement position="home_middle" />
             <Accordion bg={true} />
-            <Testimonials
-                testimonials={testimonials.data}
-                bg={true}
-            />
+            <Testimonials bg={true} />
             <RecentlyViewedThree />
+            <Advertisement position="home_bottom" />
         </>
     );
 };

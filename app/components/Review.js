@@ -3,17 +3,18 @@ import ReviewForm from "./ReviewForm";
 const Review = ({ id, showReview, setShowReview, dictionary }) => {
     const { productReview } = dictionary;
     return (
-        <div
-            id="product-review"
-            className="pt-20 product-review"
-        >
-            <div className="product-review-area">
-                <div className="container">
-                    <div className="flex items-center justify-between mb-[30px] md:mb-16">
-                        <h3 className="text-base font-semibold text-gray-800 md:text-2xl">
-                            {productReview}
-                        </h3>
-                        {/* <div className="flex items-center gap-2">
+        showReview && (
+            <div
+                id="product-review"
+                className="pt-20 product-review"
+            >
+                <div className="product-review-area">
+                    <div className="container">
+                        <div className="flex items-center justify-between mb-[30px] md:mb-16">
+                            <h3 className="text-base font-semibold text-gray-800 md:text-2xl">
+                                {productReview}
+                            </h3>
+                            {/* <div className="flex items-center gap-2">
                             <p className="text-base font-normal text-gray-800">
                                 ক্রমানুসারে :
                             </p>
@@ -25,19 +26,20 @@ const Review = ({ id, showReview, setShowReview, dictionary }) => {
                                 </select>
                             </div>
                         </div> */}
-                    </div>
-                    {showReview && (
-                        <div className="max-w-[670px]">
-                            <ReviewForm
-                                dictionary={dictionary}
-                                id={id}
-                                setShowReview={setShowReview}
-                            />
                         </div>
-                    )}
+                        {showReview && (
+                            <div className="max-w-[670px]">
+                                <ReviewForm
+                                    dictionary={dictionary}
+                                    id={id}
+                                    setShowReview={setShowReview}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
+        )
     );
 };
 

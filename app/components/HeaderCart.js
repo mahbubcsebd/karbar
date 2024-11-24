@@ -64,7 +64,7 @@ const HeaderCart = ({dictionary}) => {
             >
                 <BsCart3 />
                 {state.cartItems.length > 0 && (
-                    <span className="w-3 h-3 rounded-full bg-[#FF2848] text-[8px] text-white flex justify-center items-center absolute top-[9px] right-[10px]">
+                    <span className="w-3 h-3 rounded-full bg-[#FF2848] text-[8px] text-white flex justify-center items-center absolute  top-[7px] right-[6px] lg:top-[9px] lg:right-[10px]">
                         {state.cartItems.length}
                     </span>
                 )}

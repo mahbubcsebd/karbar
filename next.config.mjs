@@ -15,10 +15,10 @@ const nextConfig = {
         //     'img.freepik.com',
         // ],
         remotePatterns: [
-            // {
-            //     protocol: 'https',
-            //     hostname: 'admin.daarib.com',
-            // },
+            {
+                protocol: 'https',
+                hostname: 'admin.daarib.com',
+            },
             {
                 protocol: 'https',
                 hostname: 'admin.evascollection.shop',
@@ -29,7 +29,9 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: new URL(process.env.NEXT_PUBLIC_API_BASE_URL).hostname || 'localhost',
+                hostname:
+                    new URL(process.env.NEXT_PUBLIC_API_BASE_URL).hostname ||
+                    'localhost',
             },
             {
                 protocol: 'https',

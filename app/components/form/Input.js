@@ -4,7 +4,7 @@ const Input = ({
     type = 'text',
     placeholder,
     optional,
-    warningMessage,
+    message,
 }) => {
     return (
         <div className="single-input">
@@ -22,17 +22,17 @@ const Input = ({
                 placeholder={placeholder}
                 className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
             />
-            {/* {warningMessage && ( */}
+            {/* {message && ( */}
             <small
                 className={`mt-1 text-red-500 ${
-                    warningMessage === '' ||
-                    warningMessage === null ||
-                    warningMessage
+                    message === '' ||
+                    message === null ||
+                    message
                         ? ''
                         : 'hidden'
                 }`}
             >
-                {warningMessage}
+                {message}
             </small>
             {/* )} */}
         </div>

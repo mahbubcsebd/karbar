@@ -74,7 +74,7 @@ const  ProductCardFive = ({ product }) => {
                     <p className="text-[#DC2626] text-semibold">20% Off</p>
                 </div>
                 {stock < 1 && (
-                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[9999999] opacity-80">
+                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">
                         স্টক আউট
                     </div>
                 )}

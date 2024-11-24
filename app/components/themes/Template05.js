@@ -1,28 +1,23 @@
-import { getHeroImage } from '../../utils/getHeroImage';
-import { getTestimonials } from '../../utils/getTestimonial';
+import Advertisement from '../Advertisement';
 import Categories from '../Categories';
 import HeroSlider from '../HeroSlider';
 import RecentlyViewedThree from '../RecentlyViewedThree';
 import Testimonials from '../Testimonials';
 import LatestProductFive from '../template/template-five/LatestProductFive';
 import ProductListFive from '../template/template-five/ProductListFive';
-import PromotionFive from '../template/template-five/PromotionFive';
 
-const TemplateFive = async () => {
-    const heroImages = await getHeroImage();
-    const testimonials = await getTestimonials();
+const TemplateFive = () => {
     return (
         <>
             <Categories />
-            <HeroSlider images={heroImages.data} />
+            <HeroSlider />
+            <Advertisement position="home_top" />
             <LatestProductFive />
-            <PromotionFive />
             <ProductListFive />
-            <Testimonials
-                testimonials={testimonials.data}
-                bg={true}
-            />
+            <Advertisement position="home_middle" />
+            <Testimonials bg={true} />
             <RecentlyViewedThree />
+            <Advertisement position="home_bottom" />
         </>
     );
 };

@@ -57,7 +57,7 @@ const Ratings = ({ reviewHandler, ratings, dictionary }) => {
                 <div className="container">
                     <div className="flex flex-col justify-between mb-10 md:items-center md:flex-row">
                         <div className="relative">
-                            <h3 className="pb-2 text-2xl font-semibold text-gray-800 md:text-3xl capitalize">
+                            <h3 className="pb-2 text-2xl font-semibold text-gray-800 capitalize md:text-3xl">
                                 {ratingAndReview}
                             </h3>
                             <Image

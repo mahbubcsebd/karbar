@@ -3,7 +3,9 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import RatingReadOnly from './RatingReadOnly';
 
 const ClientFeedback = ({ reviews }) => {
-
+    if (reviews.length <= 0) {
+        return null;
+    }
     return (
         <div className="container">
             <div className="grid gap-[30px]">
@@ -20,7 +22,7 @@ const ClientFeedback = ({ reviews }) => {
                                     </span>{' '}
                                     {review.name}
                                 </p>
-                                <div className='pt-1'>
+                                <div className="pt-1">
                                     <RatingReadOnly rating={review.rating} />
                                 </div>
                             </div>
@@ -60,4 +62,4 @@ const ClientFeedback = ({ reviews }) => {
     );
 };
 
-export default ClientFeedback
+export default ClientFeedback;

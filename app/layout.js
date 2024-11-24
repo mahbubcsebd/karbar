@@ -1,20 +1,20 @@
 'use client';
 
+import { GoogleTagManager } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import NextTopLoader from 'nextjs-toploader';
 import { Suspense, useEffect, useReducer, useState } from 'react';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import messanger from '../app/assets/icons/messanger.svg';
 import whatsapp from '../app/assets/icons/whatsapp.svg';
 import ScrollToTop from '../app/components/ScrollToTop';
 import { ProductContext } from '../app/context/cartContext';
-// import { SortProvider } from '../app/context/SortContext';
 import { cartReducer, initialState } from '../app/reducer/CartReducer';
-// import LanguageProvider from '../app/reducer/LanguageProvider';
-import { GoogleTagManager } from '@next/third-parties/google';
-import { usePathname } from 'next/navigation';
 import { ModalProvider } from '../app/reducer/ModalProvider';
 import { SearchProvider } from '../app/reducer/SearchContext';
 import FBPixel from './components/add-manager/FBPixel';
@@ -25,6 +25,8 @@ import { LanguageProvider } from './context/LanguageContext';
 import { SiteSettingProvider } from './context/SiteSettingContext';
 import { SortProvider } from './context/SortContext';
 import './globals.css';
+import AdProvider from './provider/AdProvider';
+import OrderProvider from './provider/orderIdProvider';
 import getAddManager from './utils/getAddManager';
 import { getSiteSettings } from './utils/getSiteSettings';
 import getTemplate from './utils/getTemplate';
@@ -35,17 +37,13 @@ const poppins = Poppins({
     subsets: ['latin'],
 });
 
-// Separate loading component
-// const LoadingFallback = () => (
-//     <div className=""></div>
-// );
-
 export default function RootLayout({ children }) {
     const pathname = usePathname();
     const [state, dispatch] = useReducer(cartReducer, initialState);
     const [siteSetting, setSiteSetting] = useState(null);
     const [template, setTemplate] = useState(null);
     const [addManager, setAddManager] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // Loading state for the preloader
 
     const conditionalPath =
         pathname !== '/order-successfull' &&
@@ -57,18 +55,24 @@ export default function RootLayout({ children }) {
 
         const fetchData = async () => {
             try {
-                const [siteSettings, templateData, addManagerData] =
-                    await Promise.all([
-                        getSiteSettings(),
-                        getTemplate(),
-                        getAddManager(),
-                    ]);
-
+                // Fetch site setting first
+                const siteSettings = await getSiteSettings();
                 setSiteSetting(siteSettings.data);
+
+                // Fetch other data after siteSetting is loaded
+                const [templateData, addManagerData] = await Promise.all([
+                    getTemplate(),
+                    getAddManager(),
+                ]);
+
                 setTemplate(templateData);
                 setAddManager(addManagerData);
+
+                // Set a delay before hiding the loader
+                setTimeout(() => setIsLoading(false), 1000); // 1000 ms delay
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setIsLoading(false); // Hide loader on error
             }
         };
 
@@ -77,82 +81,123 @@ export default function RootLayout({ children }) {
 
     return (
         <html lang="en">
-            {addManager?.tag_manager_id && addManager?.tag_manager_id !='undefined' && (
-                <GoogleTagManager gtmId={addManager?.tag_manager_id} />
-            )}
+            {addManager?.tag_manager_id &&
+                Array.isArray(addManager?.tag_manager_id) &&
+                addManager?.tag_manager_id.map((gtmId) => (
+                    <GoogleTagManager
+                        key={gtmId}
+                        gtmId={gtmId}
+                    />
+                ))}
+
             <body className={poppins.className}>
-                <Suspense fallback={<HomePreLoader />}>
-                    <LanguageProvider>
-                        <ProductContext.Provider value={{ state, dispatch }}>
-                            <SearchProvider>
-                                <SortProvider>
-                                    <ModalProvider>
-                                        <SiteSettingProvider>
-                                            <main>
-                                                {conditionalPath &&
-                                                    template?.template_name && (
-                                                        <HeaderThemes
-                                                            template={
-                                                                template.template_name
+                {/* Display HomePreLoader while loading */}
+                {isLoading ? (
+                    <HomePreLoader />
+                ) : (
+                    <Suspense fallback={<HomePreLoader />}>
+                        <LanguageProvider>
+                            <AdProvider>
+                                <ProductContext.Provider
+                                    value={{ state, dispatch }}
+                                >
+                                    <SearchProvider>
+                                        <SortProvider>
+                                            <ModalProvider>
+                                                <SiteSettingProvider>
+                                                    <OrderProvider>
+                                                        <NextTopLoader
+                                                            color="#8831E1"
+                                                            initialPosition={
+                                                                0.08
+                                                            }
+                                                            crawlSpeed={200}
+                                                            height={3}
+                                                            crawl={true}
+                                                            showSpinner={false}
+                                                            easing="ease"
+                                                            speed={200}
+                                                            shadow="0 0 10px #8831E1,0 0 5px #8831E1"
+                                                            zIndex={
+                                                                99999999999999
                                                             }
                                                         />
-                                                    )}
+                                                        <main>
+                                                            {conditionalPath &&
+                                                                template?.template_name && (
+                                                                    <HeaderThemes
+                                                                        template={
+                                                                            template.template_name
+                                                                        }
+                                                                    />
+                                                                )}
 
-                                                {children}
+                                                            {children}
 
-                                                {conditionalPath &&
-                                                    template?.template_name && (
-                                                        <FooterThemes
-                                                            template={
-                                                                template.template_name
-                                                            }
-                                                        />
-                                                    )}
-                                            </main>
+                                                            {conditionalPath &&
+                                                                template?.template_name && (
+                                                                    <FooterThemes
+                                                                        template={
+                                                                            template.template_name
+                                                                        }
+                                                                    />
+                                                                )}
+                                                        </main>
 
-                                            <ScrollToTop />
-
-                                            {siteSetting?.whatsapp_id &&
-                                                siteSetting?.fb_page_id && (
-                                                    <div className="fixed z-[99999999] grid gap-3 md:gap-2 bottom-10 md:bottom-[85px] right-4">
-                                                        <Link
-                                                            className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
-                                                            target="_blank"
-                                                            href={`https://wa.me/${siteSetting.whatsapp_id}`}
-                                                        >
-                                                            <Image
-                                                                className="w-full h-full"
-                                                                src={whatsapp}
-                                                                alt="whatsapp"
-                                                                priority
-                                                            />
-                                                        </Link>
-                                                        <Link
-                                                            className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
-                                                            target="_blank"
-                                                            href={`https://m.me/${siteSetting.fb_page_id}`}
-                                                        >
-                                                            <Image
-                                                                className="w-full h-full"
-                                                                src={messanger}
-                                                                alt="messanger"
-                                                                priority
-                                                            />
-                                                        </Link>
-                                                    </div>
-                                                )}
-
-                                            <ToastContainer />
-                                        </SiteSettingProvider>
-                                    </ModalProvider>
-                                </SortProvider>
-                            </SearchProvider>
-                        </ProductContext.Provider>
-                    </LanguageProvider>
-                </Suspense>
-                {addManager?.pixel_id && (
-                    <FBPixel pixelId={addManager?.pixel_id} />
+                                                        <ScrollToTop />
+                                                        <div className="fixed z-[99999999] grid gap-3 md:gap-2 bottom-10 md:bottom-[85px] right-4">
+                                                            {siteSetting?.whatsapp_id && (
+                                                                <Link
+                                                                    className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
+                                                                    target="_blank"
+                                                                    href={`https://wa.me/${siteSetting.whatsapp_id}`}
+                                                                >
+                                                                    <Image
+                                                                        className="w-full h-full"
+                                                                        src={
+                                                                            whatsapp
+                                                                        }
+                                                                        alt="whatsapp"
+                                                                        priority
+                                                                    />
+                                                                </Link>
+                                                            )}
+                                                            {siteSetting?.fb_page_id && (
+                                                                <Link
+                                                                    className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
+                                                                    target="_blank"
+                                                                    href={`https://m.me/${siteSetting.fb_page_id}`}
+                                                                >
+                                                                    <Image
+                                                                        className="w-full h-full"
+                                                                        src={
+                                                                            messanger
+                                                                        }
+                                                                        alt="messanger"
+                                                                        priority
+                                                                    />
+                                                                </Link>
+                                                            )}
+                                                        </div>
+                                                        <ToastContainer />
+                                                    </OrderProvider>
+                                                </SiteSettingProvider>
+                                            </ModalProvider>
+                                        </SortProvider>
+                                    </SearchProvider>
+                                </ProductContext.Provider>
+                            </AdProvider>
+                        </LanguageProvider>
+                    </Suspense>
                 )}
+                {addManager?.pixel_id &&
+                    Array.isArray(addManager?.pixel_id) &&
+                    addManager?.pixel_id.map((id) => (
+                        <FBPixel
+                            key={id}
+                            pixelId={id}
+                        />
+                    ))}
             </body>
         </html>
     );

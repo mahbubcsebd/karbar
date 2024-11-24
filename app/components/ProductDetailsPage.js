@@ -101,7 +101,7 @@ const ProductDetailsPage = ({ slug }) => {
     } = product || {};
     return (
         <div>
-            <div className="py-6 md:py-20 product-details-page">
+            <div className="pb-6 md:p md:py-20 product-details-page">
                 <div className="product-details-area">
                     <div className="container">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">

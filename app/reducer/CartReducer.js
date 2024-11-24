@@ -6,7 +6,11 @@ const initialState = {
 };
 
 const saveToLocalStorage = (cartItems) => {
-    localStorage.setItem('cartItems', cartItems);
+    const data = {
+        items: JSON.parse(cartItems),
+        timestamp: new Date().getTime(),
+    };
+    localStorage.setItem('cartItems', JSON.stringify(data));
 };
 
 // Action types
@@ -55,7 +59,6 @@ const cartReducer = (state, action) => {
                 (x) => x.id !== action.payload
             );
             saveToLocalStorage(JSON.stringify(remainingItems));
-            //  saveToLocalStorage(remainingItems);
             return {
                 ...state,
                 cartItems: remainingItems,
@@ -93,7 +96,6 @@ const cartReducer = (state, action) => {
             const clearCartItems = [];
             const clearCartTotal = 0;
             saveToLocalStorage(JSON.stringify(clearCartItems));
-            // saveToLocalStorage(JSON.stringify(decrementedItems));
             return {
                 ...state,
                 cartItems: clearCartItems,
@@ -101,8 +103,19 @@ const cartReducer = (state, action) => {
             };
         case SET_CART:
             if (typeof window === undefined) return;
-            const getLocalData =
-                JSON.parse(localStorage.getItem('cartItems')) || [];
+            const storedData = localStorage.getItem('cartItems');
+            if (!storedData) return { ...state, cartItems: [], cartTotal: 0 };
+
+            const parsedData = JSON.parse(storedData);
+            const currentTime = new Date().getTime();
+
+            // Check if 24 hours have passed
+            if (currentTime - parsedData.timestamp > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('cartItems');
+                return { ...state, cartItems: [], cartTotal: 0 };
+            }
+
+            const getLocalData = parsedData.items || [];
             return {
                 ...state,
                 cartItems: getLocalData,

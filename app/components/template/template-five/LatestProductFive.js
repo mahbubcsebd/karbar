@@ -21,6 +21,7 @@ const LatestProductFive = () => {
                 const productsData = await getAllProduct(
                     language,
                     'all',
+                    '',
                     'new_arrival',
                     '',
                     1,

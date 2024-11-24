@@ -26,7 +26,7 @@ const Accordion = ({bg}) => {
     } = useFetchData(getFaq, [language]);
 
 
-    if (faqsLoading) return <p>Loading FAQs...</p>;
+    if (faqsLoading) return null;
     if (faqsError) return <p>Error loading FAQs: {faqsError}</p>;
     if (!faqs) return <p>No FAQs found</p>;
 

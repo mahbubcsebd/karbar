@@ -34,6 +34,7 @@ const SearchResult = ({ search, closeSearchResults }) => {
                 const productsData = await getAllProduct(
                     language,
                     "all",
+                    '',
                     null,
                     debouncedSearch
                 );

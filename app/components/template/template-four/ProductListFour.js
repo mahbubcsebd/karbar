@@ -50,6 +50,7 @@ const ProductListFour = () => {
                 const productsData = await getAllProduct(
                     language,
                     selectedCategory,
+                    '',
                     'all',
                     '',
                     page,
@@ -146,7 +147,7 @@ const ProductListFour = () => {
                                 <button
                                     onClick={handleAllFilter}
                                     type="button"
-                                    className={`px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full hover:bg-[#348E29] hover:text-white transition duration-150 ${
+                                    className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full hover:bg-[#348E29] hover:text-white transition duration-150 ${
                                         selectedCategory == 'all'
                                             ? 'bg-[#348E29] text-white'
                                             : ''
@@ -162,7 +163,7 @@ const ProductListFour = () => {
                                             handleCategory(category.slug)
                                         }
                                         type="button"
-                                        className={`px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full hover:bg-[#348E29] hover:text-white transition duration-150 ${
+                                        className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full hover:bg-[#348E29] hover:text-white transition duration-150 ${
                                             selectedCategory == category.slug
                                                 ? 'bg-[#348E29] text-white'
                                                 : ''
@@ -174,7 +175,7 @@ const ProductListFour = () => {
                             ))}
                         </ul>
                     </div>
-                    <Suspense fallback={<h2>Loading...</h2>}>
+                    <Suspense fallback={<h2></h2>}>
                         {loading && !isSeeMoreClick ? (
                             <div className="product-list grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-[30px]">
                                 <SkeletonCard />

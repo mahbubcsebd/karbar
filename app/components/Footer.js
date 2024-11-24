@@ -14,23 +14,12 @@ import logo from '../assets/icons/footer-logo.svg';
 import karbar from '../assets/icons/karbar-logo.svg';
 import nagad from '../assets/icons/nagad.svg';
 import useDictionary from '../hooks/useDictionary';
-import { getSiteSettings } from '../utils/getSiteSettings';
+import useSiteSetting from '../hooks/useSiteSetting';
 
 const Footer = () => {
-    const [siteSetting, setSiteSetting] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState([]);
     const { language, dictionary } = useDictionary();
-    // const { siteSetting } = useSiteSetting();
-
-    useEffect(() => {
-        const fetchSiteSettings = async () => {
-            const settings = await getSiteSettings(language);
-
-            setSiteSetting(settings.data);
-        };
-
-        fetchSiteSettings();
-    }, [language]);
+    const { siteSetting, loading, error } = useSiteSetting();
 
         useEffect(() => {
             const fetchPaymentMethod = async () => {
@@ -249,11 +238,11 @@ const Footer = () => {
                 <hr className="border-gray-600" />
                 <div className="container">
                     <div className="lg:flex justify-between items-center py-[30px] hidden">
-                        <p className="text-lg font-normal text-gray-500 flex items-center gap-[4px]">
-                            @All rights deserved by{' '}
+                        <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
+                            &copy;All rights reserved by{' '}
                             <span className="font-semibold">{title}</span>
                         </p>
-                        <p className="text-lg font-normal text-gray-500 flex items-center gap-[4px]">
+                        <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
                             {/* © {copyRight} */}
                             Powered by{' '}
                             <Link
@@ -264,7 +253,7 @@ const Footer = () => {
                                 <Image
                                     src={karbar}
                                     alt="karbar"
-                                    className="w-[70px] pt-[4px]"
+                                    className="w-[65px] lg:w-[70px] pt-[4px]"
                                 />
                             </Link>
                         </p>
@@ -327,11 +316,11 @@ const Footer = () => {
                         </div>
                     )}
                     <div className="flex flex-col items-center justify-center gap-1 py-5 bg-gray-700">
-                        <p className="text-lg font-normal text-gray-400 flex items-center gap-[4px]">
-                            @All rights deserved by{' '}
+                        <p className="text-base lg:text-lg font-normal text-gray-400 flex items-center gap-[4px]">
+                            &copy;All rights reserved by{' '}
                             <span className="font-semibold">{title}</span>
                         </p>
-                        <p className="flex items-center gap-1 text-lg font-normal text-gray-400 lg:hidden">
+                        <p className="flex items-center gap-1 text-base font-normal text-gray-400 lg:text-lg lg:hidden">
                             {/* © {copyRight} */}
                             Powered by{' '}
                             <Link
@@ -341,7 +330,7 @@ const Footer = () => {
                                 <Image
                                     src={karbar}
                                     alt="karbar"
-                                    className="w-[70px] pt-[4px]"
+                                    className="w-[65px] lg:w-[70px] pt-[4px]"
                                 />
                             </Link>
                         </p>

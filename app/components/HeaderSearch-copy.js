@@ -24,6 +24,7 @@ const HeaderSearch = ({ showSearchModal, setShowSearchModal, dictionary }) => {
                 language,
                 null,
                 null,
+                null,
                 search
             );
             setProducts(productsData.data);

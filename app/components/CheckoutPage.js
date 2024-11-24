@@ -12,7 +12,9 @@ import nagad from '../assets/icons/checkout-nagad.svg';
 import Input from '../components/form/Input';
 import PaymentRadio from '../components/form/PaymentRadio';
 import { ProductContext } from '../context/cartContext';
+import useAdManager from '../hooks/useAdManager';
 import useDictionary from '../hooks/useDictionary';
+import useOrderId from '../hooks/useOrderId';
 import { trackEvent } from '../utils/facebookPixel';
 import { getCoupon } from '../utils/getCoupon';
 import { orderPost } from '../utils/orderPost';
@@ -24,8 +26,9 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const [couponCode, setCouponCode] = useState('');
     const [productStock, setProductStock] = useState(0);
     const [discountValue, setDiscountValue] = useState(null);
-    const {dictionary} = useDictionary();
-
+    const { dictionary } = useDictionary();
+    const { adManager } = useAdManager();
+    const {orderId, setOrderId} = useOrderId();
 
     const {
         formTitle,
@@ -54,6 +57,8 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
         namePlaceholder,
         phoneLabel,
         phonePlaceholder,
+        emailLabel,
+        emailPlaceholder,
         areaLabel,
         insideDhaka,
         outsideDhaka,
@@ -70,12 +75,14 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
         setCouponCode(event.target.value);
     };
 
-    const {
-        inside_dhaka,
-        outside_dhaka,
-        bkash: bkashNum,
-        nagad: nagadNum,
-    } = siteSettings;
+    const bkashNum = paymentMethod.find(
+        (method) => method.name === 'bkash'
+    )?.number;
+    const nagadNum = paymentMethod.find(
+        (method) => method.name === 'nagad'
+    )?.number;
+
+    const { inside_dhaka, outside_dhaka } = siteSettings;
 
     const insideDhakaDC = inside_dhaka ? Number(inside_dhaka) : 0;
     const outsideDhakaDC = outside_dhaka ? Number(outside_dhaka) : 0;
@@ -276,6 +283,9 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                 const responseData = await response.json();
 
                 if (responseData.success) {
+                    setOrderId(responseData.order_number);
+                    console.log(responseData);
+                    console.log(orderId);
                     router.push('/order-successfull');
                     toast.success(`${responseData.success}`, {
                         position: 'bottom-right',
@@ -285,12 +295,14 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                         type: 'CLEAR_CART',
                     });
                     // For Google tag manager
-                    window.dataLayer.push({
-                        event: 'purchase',
-                        ecommerce: {
-                            items: orderData,
-                        },
-                    });
+                    if (adManager?.tag_manager_id) {
+                        window.dataLayer.push({
+                            event: 'purchase',
+                            ecommerce: {
+                                items: orderData,
+                            },
+                        });
+                    }
 
                     // For Facebook Pixels
                     trackEvent('Purchase', orderData);
@@ -313,12 +325,14 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
 
     // For Google tag manager
     useEffect(() => {
-        window.dataLayer.push({
-            event: 'begin_checkout',
-            ecommerce: {
-                items: cartItems,
-            },
-        });
+        if (adManager?.tag_manager_id) {
+            window.dataLayer.push({
+                event: 'begin_checkout',
+                ecommerce: {
+                    items: cartItems,
+                },
+            });
+        }
 
         // For Facebook Pixels
         trackEvent('Checkout', cartItems);
@@ -328,7 +342,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     return (
         <div
             id="cart-page"
-            className="pb-20 pt-28 md:py-20 cart-page"
+            className="pt-10 pb-20 lg:pt-28 md:py-20 cart-page"
         >
             <div className="cart-area">
                 <div className="container">
@@ -350,7 +364,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                             type="text"
                                             name="name"
                                             placeholder={namePlaceholder}
-                                            warningMessage={
+                                            message={
                                                 nameWarningMessage
                                                     ? nameWarningMessage
                                                     : null
@@ -362,12 +376,19 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                             type="number"
                                             name="phone"
                                             placeholder={phonePlaceholder}
-                                            warningMessage={
+                                            message={
                                                 phoneWarningMessage
                                                     ? phoneWarningMessage
                                                     : null
                                             }
                                             required
+                                        />
+                                        <Input
+                                            label={emailLabel}
+                                            type="text"
+                                            name="email"
+                                            placeholder={emailPlaceholder}
+                                            optional={optional}
                                         />
                                         <div className="delivary-area">
                                             <label className="block text-gray-700 text-sm font-semibold mb-[6px]">
@@ -403,7 +424,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                 type="text"
                                                 name="address"
                                                 placeholder={addressPlaceholder}
-                                                warningMessage={
+                                                message={
                                                     addressWarningMessage
                                                         ? addressWarningMessage
                                                         : null

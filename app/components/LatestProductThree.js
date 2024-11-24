@@ -30,6 +30,7 @@ const LatestProductThree = () => {
                 const productsData = await getAllProduct(
                     language,
                     'all',
+                    null,
                     'new_arrival',
                     '',
                     1,
@@ -78,7 +79,9 @@ const LatestProductThree = () => {
                         </div>
                     </div>
                     <Swiper
-                        slidesPerView={4}
+                        slidesPerView={
+                            products.length < 4 ? products.length : 4
+                        }
                         spaceBetween={30}
                         pagination={{
                             clickable: true,

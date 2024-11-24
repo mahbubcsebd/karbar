@@ -73,7 +73,7 @@ const LanguageSwitcher = ({template}) => {
               </div>
               <div
                   className={`block w-full md:py-[10px] md:h-12 md:rounded-full font-normal md:border border-[#D14BF8] appearance-none md:px-9 focus:outline-none focus:ring-2 focus:ring-purple-400 cursor-pointer capitalize md:bg-white pr-4 ${
-                      template === 'Template02' ? 'text-white' : 'text-gray-800'
+                      template === 'Template02' ? 'text-white md:text-gray-800' : 'text-gray-800'
                   }`}
                   onClick={toggleDropdown}
               >

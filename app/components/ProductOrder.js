@@ -1,10 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState, } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BsCart3 } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { ProductContext } from '../context/cartContext';
+import useAdManager from '../hooks/useAdManager';
 import { trackEvent } from '../utils/facebookPixel';
 import { getProductStock } from '../utils/getProductStock';
 import ProductCounter from './ProductCounter';
@@ -21,6 +22,7 @@ const ProductOrder = ({ product, dictionary }) => {
     const [availableSizeOptions, setAvailableSizeOptions] = useState(variants);
     const [productCount, setProductCount] = useState(1);
     const [attributes, setAttributes] = useState('');
+    const { adManager } = useAdManager();
 
     const router = useRouter();
     const { state, dispatch } = useContext(ProductContext);
@@ -34,13 +36,12 @@ const ProductOrder = ({ product, dictionary }) => {
         productVarientSelect,
     } = dictionary;
 
-    useEffect(()=> {
+    useEffect(() => {
         if (variants.length < 1) {
             setProductStock(stock);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productStock])
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productStock]);
 
     const handleChange = async (key, variantIndex, value) => {
         console.log(key, variantIndex, value); // Debugging info
@@ -87,25 +88,25 @@ const ProductOrder = ({ product, dictionary }) => {
         setProductStock(productStock.stock);
     };
 
-
-
     useEffect(() => {
-        const requiredFields = variants.map((variant) => Object.keys(variant)[0]);
-        const allRequiredFieldsSelected = requiredFields.every((field) => selectedValues[field]);
+        const requiredFields = variants.map(
+            (variant) => Object.keys(variant)[0]
+        );
+        const allRequiredFieldsSelected = requiredFields.every(
+            (field) => selectedValues[field]
+        );
         setButtonActive(allRequiredFieldsSelected);
     }, [selectedValues, variants]);
-
 
     const handleAddToCart = (event) => {
         if (event.type === 'submit') {
             event.preventDefault();
         }
 
-        if(!buttonActive){
+        if (!buttonActive) {
             setRequiredMsg(true);
             return;
         }
-
 
         const selectedProduct = {
             ...product,
@@ -123,12 +124,14 @@ const ProductOrder = ({ product, dictionary }) => {
             });
 
             // For Google Tag manager
-            window.dataLayer.push({
-                event: 'add_to_cart',
-                ecommerce: {
-                    items: selectedProduct,
-                },
-            });
+            if (adManager?.tag_manager_id) {
+                window.dataLayer.push({
+                    event: 'add_to_cart',
+                    ecommerce: {
+                        items: selectedProduct,
+                    },
+                });
+            }
 
             // For Facebook Pixels
             trackEvent('Add To Cart', selectedProduct);

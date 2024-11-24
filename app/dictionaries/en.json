@@ -27,7 +27,7 @@
         "product": "Product"
     },
     "Faqs": {
-        "faqTitle": "Frequently Asked Question"
+        "faqTitle": "Some Common Questions"
     },
     "Testimonial": {
         "testimonialTitle": "Customer Reviews"
@@ -97,7 +97,7 @@
         "dicConfirmProcessing": "Order Processing",
         "cartEmpty": "Cart is empty",
         "bkashMsgBefore": "Pay the order amount to",
-        "bkashMsgAfter": "from 'Payment' option at Bkash and enter your Bikash account number and transaction ID below.",
+        "bkashMsgAfter": "from 'Payment' option at Bkash and enter your Bkash account number and transaction ID below.",
         "nagadMsgBefore": "Send the order amount to 'Send Money'",
         "nagadMsgAfter": "in cash and enter your Nagad account number and transaction ID below.",
         "provideBkashNumber": "Enter Bkash number",
@@ -108,6 +108,8 @@
             "nameLabel": "Enter your name",
             "namePlaceholder": "Enter the full name",
             "phoneLabel": "Enter your mobile number",
+            "emailLabel": "Enter your email address",
+            "emailPlaceholder": "Enter your email address",
             "phonePlaceholder": "Enter the 11 digit mobile number",
             "areaLabel": "Select area",
             "insideDhaka": "Inside Dhaka",
@@ -117,13 +119,14 @@
             "addressLabel": "Address",
             "addressPlaceholder": "House Number, Road, Union, Upazila, District",
             "noteLabel": "Note",
-            "optional": "Otional",
+            "optional": "Optional",
             "notePlaceholder": "Write here if you have any special requirements"
         }
     },
     "OrderSuccess": {
         "orderSuccess": "Congratulations! The order has been completed!",
         "orderThanks": "Thank you for shopping at",
+        "orderIdText": "Your order id is",
         "shoppingMore": "Shop more"
     },
     "Footer": {

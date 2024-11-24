@@ -1,25 +1,25 @@
-import { getHeroImage } from '../../utils/getHeroImage';
-import { getTestimonials } from '../../utils/getTestimonial';
+import Advertisement from '../Advertisement';
 import Categories from '../Categories';
+import FaqSection from '../FaqSection';
 import HeroSlider from '../HeroSlider';
 import HomeCategories from '../HomeCategories';
 import LatestProduct from '../LatestProduct';
 import RecentlyViewed from '../RecentlyViewed';
 import Testimonials from '../Testimonials';
-import Accordion from '../accordion/Accordion';
 
-const Template01 = async () => {
-    const heroImages = await getHeroImage();
-    const testimonials = await getTestimonials();
+const Template01 = () => {
     return (
         <>
             <Categories />
-            <HeroSlider images={heroImages.data} />
+            <HeroSlider />
+            <Advertisement position="home_top" />
             <LatestProduct />
             <HomeCategories />
-            <Accordion />
-            <Testimonials testimonials={testimonials.data} />
+            <Advertisement position="home_middle" />
+            <FaqSection />
+            <Testimonials />
             <RecentlyViewed />
+            <Advertisement position="home_bottom" />
         </>
     );
 };

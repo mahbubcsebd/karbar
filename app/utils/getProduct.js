@@ -3,13 +3,14 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export async function getAllProduct(
     lang = 'en',
     category = null,
+    subCategory = '',
     sort_by = null,
-    search = null,
+    search = '',
     page = 1,
     perPage = 12,
 ) {
     const res = await fetch(
-        `${baseUrl}/${lang}/products?search=${search}&category=${category}&page=${page}&perPage=${perPage}&sort_by=${sort_by}`,
+        `${baseUrl}/${lang}/products?search=${search}&category=${category}&sub_category=${subCategory}&page=${page}&perPage=${perPage}&sort_by=${sort_by}`,
         { cache: 'no-store' }
     );
 

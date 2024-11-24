@@ -178,7 +178,7 @@ const ProductList = () => {
                                     <button
                                         onClick={handleAllFilter}
                                         type="button"
-                                        className={`px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
+                                        className={`whitespace-nowrap px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
                                             selectedCategory == 'all'
                                                 ? 'bg-gray-700 text-white'
                                                 : ''
@@ -194,7 +194,7 @@ const ProductList = () => {
                                                 handleCategory(category.name)
                                             }
                                             type="button"
-                                            className={`px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
+                                            className={`whitespace-nowrap px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
                                                 selectedCategory ==
                                                 category.name
                                                     ? 'bg-gray-700 text-white'

@@ -242,6 +242,9 @@ body {
 button:focus-visible {
     outline: none;
 }
+button:focus {
+    outline: none;
+}
 
 @media screen and (max-width: 1560px) {
     .table-h-1 {
@@ -252,4 +255,33 @@ button:focus-visible {
     .table-h-1 {
         min-width: 475px;
     }
+}
+
+/* Banner custom style */
+.multiple-banner {
+    gap: 16px;
+}
+
+.multiple-banner.template01 {
+    gap: 16px;
+}
+
+.multiple-banner.template02 {
+    gap: 16px;
+}
+
+.multiple-banner.template03 {
+    gap: 16px;
+}
+
+.multiple-banner.template04 {
+    gap: 16px;
+}
+
+.multiple-banner.template05 {
+    gap: 16px;
+}
+
+#nprogress {
+    z-index: 999999999999999999999999999999999;
 }

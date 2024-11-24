@@ -221,7 +221,7 @@ const PosProductsList = () => {
                                 ))}
                             </ul>
                         </div>
-                        <Suspense fallback={<h2>Loading...</h2>}>
+                        <Suspense fallback={<h2></h2>}>
                             {loading && !isSeeMoreClick ? (
                                 <div className="grid grid-cols-2 gap-4 product-list sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                     <PosSkeletonCard />

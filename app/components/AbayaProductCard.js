@@ -59,7 +59,7 @@ const AbayaProductCard = ({ product }) => {
         >
             <Link
                 href={`/products/${slug}`}
-                className="block product-image h-[240px] sm:h-[373px] md:h-[286px] lg:h-[270px] xl:h-[344px] 1xl:h-[417px] 2xl:h-[419px] rounded-tl-lg rounded-tr-lg overflow-hidden relative"
+                className="block product-image h-[180px] sm:h-[373px] md:h-[232px] lg:h-[306px] xl:h-[281px] 1xl:h-[417px] 2xl:h-[337px] rounded-tl-lg rounded-tr-lg overflow-hidden relative"
             >
                 <Image
                     src={preview_image ? preview_image : noAvailableImg}
@@ -69,7 +69,7 @@ const AbayaProductCard = ({ product }) => {
                     className="object-cover w-full h-full"
                 />
                 {stock < 1 && (
-                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[9999999] opacity-80">
+                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">
                         স্টক আউট
                     </div>
                 )}
@@ -77,7 +77,7 @@ const AbayaProductCard = ({ product }) => {
             <div className="product-content p-[10px] md:p-[18px] bg-white">
                 <Link
                     href={`/products/${slug}`}
-                    className="block mb-1 text-xs font-medium text-gray-900 sm:text-base lg:text-base xl:text-lg md:mb-2 product-title ellipsis-2 xl:min-h-14"
+                    className="block mb-1 text-xs font-medium text-gray-900 capitalize sm:text-base lg:text-base xl:text-lg md:mb-2 product-title ellipsis-2 xl:min-h-14"
                 >
                     {name}
                 </Link>

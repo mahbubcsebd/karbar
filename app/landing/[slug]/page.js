@@ -4,7 +4,6 @@ import Testimonials from '@/components/Testimonials';
 import { getLanding } from '@/utils/getLanding';
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
 import { getSiteSettings } from '@/utils/getSiteSettings';
-import { getTestimonials } from '@/utils/getTestimonial';
 import LandingBanner from './component/LandingBanner';
 import LandingChoose from './component/LandingChoose';
 import LandingDescription from './component/LandingDescription';
@@ -33,7 +32,6 @@ import OurPackages from './component/OurPackages';
   }
 
 const LandingPage = async ({params : {slug}}) => {
-    const testimonials = await getTestimonials();
     const siteSettings = await getSiteSettings('en');
     const paymentMethod = await getPaymentMethod('en');
 
@@ -67,9 +65,9 @@ const LandingPage = async ({params : {slug}}) => {
                     section_four_available_size,
                 }}
             />
-            {testimonials.data.length > 3 && (
+            {testimonials.data.length >= 3 && (
                 <div className="landing-testimonial bg-[#F4EBFF] pt-10 pb-3 lg:pt-20 lg:pb-14 mb-[30px] lg:mb-[60px]">
-                    <Testimonials testimonials={testimonials.data} />
+                    <Testimonials />
                 </div>
             )}
             <LandingShopWithUs

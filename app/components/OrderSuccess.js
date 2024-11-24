@@ -1,5 +1,6 @@
 "use client"
 
+import useOrderId from '@/hooks/useOrderId';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,14 +11,15 @@ import useDictionary from "../hooks/useDictionary";
 
 const OrderSuccess = ({ title }) => {
     const {language, dictionary} = useDictionary();
+    const {orderId} = useOrderId();
 
-    const { orderSuccess, orderThanks, shoppingMore } = dictionary.OrderSuccess;
+    const { orderSuccess, orderThanks, orderIdText, shoppingMore } = dictionary.OrderSuccess;
     const router = useRouter();
 
     useEffect(() => {
         setTimeout(() => {
             router.push('/');
-        }, 7000);
+        }, 20000);
     }, [router]);
 
     return (
@@ -62,6 +64,10 @@ const OrderSuccess = ({ title }) => {
                             {title} {orderThanks}
                         </p>
                     )}
+
+                    <p className="text-base font-normal text-gray-700">
+                        {orderIdText}: <span className='inline-block font-semibold'>{orderId}</span>
+                    </p>
 
                     <Link
                         href="/"

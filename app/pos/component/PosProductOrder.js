@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { BsCart3 } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import ProductCounter from '../../components/ProductCounter';
+import useAdManager from '../../hooks/useAdManager';
 
 const PosProductOrder = ({ product, dictionary }) => {
     const [showStockMsg, setShowStockMsg] = useState(false);
@@ -21,6 +22,7 @@ const PosProductOrder = ({ product, dictionary }) => {
     const [availableSizeOptions, setAvailableSizeOptions] = useState(variants);
     const [productCount, setProductCount] = useState(1);
     const [attributes, setAttributes] = useState('');
+    const { adManager } = useAdManager();
 
     const router = useRouter();
     const { state, dispatch } = useContext(ProductContext);
@@ -120,12 +122,14 @@ const PosProductOrder = ({ product, dictionary }) => {
             });
 
             // For Google Tag manager
+            if (adManager?.tag_manager_id) {
             window.dataLayer.push({
                 event: 'add_to_cart',
                 ecommerce: {
                     items: selectedProduct,
                 },
             });
+        }
 
             // For Facebook Pixels
             trackEvent('Add To Cart', selectedProduct);

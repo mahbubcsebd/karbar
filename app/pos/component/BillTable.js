@@ -19,6 +19,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 
+import useAdManager from '@/hooks/useAdManager';
 import useAuth from '@/hooks/useAuth';
 import useDictionary from '@/hooks/useDictionary';
 import usePos from '@/hooks/usePos';
@@ -81,6 +82,7 @@ const BillTable = ({
     const [invoice, setInvoice] = useState('');
     const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
     const { language } = useDictionary();
+    const { adManager } = useAdManager();
 
     const { state, dispatch } = usePos();
     const { posCartItems, cartTotal } = state;
@@ -418,12 +420,14 @@ const BillTable = ({
                         type: 'CLEAR_CART',
                     });
                     // For Google tag manager
-                    window.dataLayer.push({
-                        event: 'purchase',
-                        ecommerce: {
-                            items: orderData,
-                        },
-                    });
+                    if (adManager?.tag_manager_id) {
+                        window.dataLayer.push({
+                            event: 'purchase',
+                            ecommerce: {
+                                items: orderData,
+                            },
+                        });
+                    }
 
                     // For Facebook Pixels
                     trackEvent('Purchase', orderData);
