@@ -5,13 +5,9 @@ export async function getLanding(slug) {
         cache: 'no-store',
     });
 
-
-
     if (!res.ok) {
         throw new Error('Failed to fetch Landing data');
     }
-
-    console.log(slug);
 
     return res.json();
 }

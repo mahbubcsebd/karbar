@@ -3,10 +3,10 @@
 
 import latestBg from '@/assets/images/latest-product-bg-4.svg';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useDictionary from '../../../hooks/useDictionary';
 import { getAllProduct } from '../../../utils/getProduct';
+import KarbarButton from '../../KarbarButton';
 import SectionTitleFour from '../../SectionTitleFour';
 import ProductCardFour from './ProductCardFour';
 
@@ -67,12 +67,21 @@ const LatestProductFour = () => {
                         <div>No products found</div>
                     )}
                     <div className="flex justify-center pt-10 md:pt-[70px]">
-                        <Link
+                        <KarbarButton
+                            asLink
+                            href="/collections/all"
+                            preserveHover={true}
+                            variant="default"
+                            className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                        >
+                            {seeMore}
+                        </KarbarButton>
+                        {/* <Link
                             href="/collections/all"
                             className="text-base md:text-[20px] text-white font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full  bg-[#348E29] hover:bg-transparent hover:text-[#348E29] border border-[#348E29]"
                         >
                             {seeMore}
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

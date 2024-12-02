@@ -4,6 +4,7 @@ import Testimonials from '@/components/Testimonials';
 import { getLanding } from '@/utils/getLanding';
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
 import { getSiteSettings } from '@/utils/getSiteSettings';
+import { getTestimonials } from '@/utils/getTestimonial';
 import LandingBanner from './component/LandingBanner';
 import LandingChoose from './component/LandingChoose';
 import LandingDescription from './component/LandingDescription';
@@ -34,7 +35,7 @@ import OurPackages from './component/OurPackages';
 const LandingPage = async ({params : {slug}}) => {
     const siteSettings = await getSiteSettings('en');
     const paymentMethod = await getPaymentMethod('en');
-
+    const testimonials = await getTestimonials('en');
     const landingData = await getLanding(slug);
 
     const {
@@ -49,6 +50,8 @@ const LandingPage = async ({params : {slug}}) => {
         section_five_image,
         section_five_description,
         products,
+        button_text,
+        button_color,
     } = landingData.data;
 
     return (
@@ -56,6 +59,8 @@ const LandingPage = async ({params : {slug}}) => {
             <LandingBanner landing={{ section_one_title, section_one_image }} />
             <LandingChoose
                 landing={{ section_two_description, section_two_image }}
+                button_text={button_text}
+                button_color={button_color}
             />
             <LandingDescription
                 landing={{
@@ -64,6 +69,8 @@ const LandingPage = async ({params : {slug}}) => {
                     section_three_offer_order,
                     section_four_available_size,
                 }}
+                button_text={button_text}
+                button_color={button_color}
             />
             {testimonials.data.length >= 3 && (
                 <div className="landing-testimonial bg-[#F4EBFF] pt-10 pb-3 lg:pt-20 lg:pb-14 mb-[30px] lg:mb-[60px]">
@@ -72,6 +79,8 @@ const LandingPage = async ({params : {slug}}) => {
             )}
             <LandingShopWithUs
                 landing={{ section_five_image, section_five_description }}
+                button_text={button_text}
+                button_color={button_color}
             />
             <OurPackages products={products} />
             <CheckoutPage

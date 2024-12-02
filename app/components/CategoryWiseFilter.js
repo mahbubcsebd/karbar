@@ -11,6 +11,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { ChevronRight, X } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function CategorySelectForm({
@@ -25,9 +26,24 @@ export default function CategorySelectForm({
     router,
 }) {
     const [isClient, setIsClient] = useState(false);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         setIsClient(true);
+        // Get sub_category from URL on initial load
+        const subCategoryFromUrl = searchParams.get('sub_category');
+        if (
+            subCategoryFromUrl &&
+            selectedCategory &&
+            selectedCategory !== 'all'
+        ) {
+            const category = categories.find(
+                (cat) => cat.slug === selectedCategory
+            );
+            setSubCategories(category?.sub_category || []);
+            setSelectedSubCategory(subCategoryFromUrl);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -36,8 +52,12 @@ export default function CategorySelectForm({
                 (cat) => cat.slug === selectedCategory
             );
             setSubCategories(category?.sub_category || []);
-            // Set sub-category to 'all' by default when category changes
-            setSelectedSubCategory('all');
+
+            // Only reset sub-category if there's no sub_category in URL
+            const subCategoryFromUrl = searchParams.get('sub_category');
+            if (!subCategoryFromUrl) {
+                setSelectedSubCategory('all');
+            }
         } else {
             setSubCategories([]);
         }
@@ -46,11 +66,12 @@ export default function CategorySelectForm({
         categories,
         setSubCategories,
         setSelectedSubCategory,
+        searchParams,
     ]);
 
     const handleCategoryChange = (value) => {
         setSelectedCategory(value);
-        setSelectedSubCategory('all'); // Reset to 'all' when category changes
+        setSelectedSubCategory('all');
         setSortQuery('all');
         router.push(`/collections/${value}`);
     };
@@ -76,7 +97,7 @@ export default function CategorySelectForm({
     };
 
     const handleBreadcrumbCategoryClick = () => {
-        setSelectedSubCategory('all'); // Reset to 'all' when using breadcrumb
+        setSelectedSubCategory('all');
         setSortQuery('all');
         router.push(`/collections/${selectedCategory}`);
     };

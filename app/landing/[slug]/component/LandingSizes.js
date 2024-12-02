@@ -1,7 +1,10 @@
-import Link from 'next/link';
-import { IoCartOutline } from 'react-icons/io5';
+import LinkButton from './LinkButton';
 
-const LandingSizes = ({ section_four_available_size }) => {
+const LandingSizes = ({
+    section_four_available_size,
+    button_text,
+    button_color,
+}) => {
     return (
         <div className="bg-white rounded-lg lg:rounded-[20px] p-[24px] lg:p-10 mt-[30px]">
             <div
@@ -22,13 +25,10 @@ const LandingSizes = ({ section_four_available_size }) => {
                 below and get your new favorite pair of trousers now.
             </p> */}
             <div className="pt-[30px] flex justify-start">
-                <Link
-                    href="#our-package-section"
-                    className="text-base lg:text-lg text-white font-normal flex items-center justify-center gap-[6px] bg-purple-900 border border-purple-900 hover:bg-transparent hover:text-purple-900 transition-all duration-150 rounded-[8px] px-[24px] lg:px-[30px] py-4 lg:py-5"
-                >
-                    <IoCartOutline />
-                    Shop Now
-                </Link>
+                <LinkButton
+                    button_text={button_text}
+                    button_color={button_color}
+                />
             </div>
         </div>
     );

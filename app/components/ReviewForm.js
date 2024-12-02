@@ -6,6 +6,7 @@ import { reviewPost } from '../utils/reviewPost';
 import Dropbox from './Dropbox';
 import Input from './form/Input';
 import ProductRating from './form/ProductRating';
+import KarbarButton from './KarbarButton';
 
 const ReviewForm = ({ id, setShowReview, dictionary }) => {
     const [rating, setRating] = useState(0);
@@ -167,12 +168,17 @@ const ReviewForm = ({ id, setShowReview, dictionary }) => {
                         />
                     </div>
                 </div>
-                <button
+                <KarbarButton
+                    type="submit"
+                    className="flex justify-center items-center gap-[6px] text-base font-medium px-6 py-4 rounded-md w-full text-center sm:w-auto">
+                    {reviewSubmit}
+                </KarbarButton>
+                {/* <button
                     type="submit"
                     className="flex justify-center items-center gap-[6px] text-base text-white font-medium px-6 py-4 bg-black rounded-md w-full text-center sm:w-auto"
                 >
                     {reviewSubmit}
-                </button>
+                </button> */}
             </form>
         </div>
     );

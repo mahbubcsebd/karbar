@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import noAvailableImg from '../assets/icons/no-available.svg';
 import { ProductContext } from '../context/cartContext';
 import useDictionary from '../hooks/useDictionary';
+import KarbarButton from './KarbarButton';
 // import { ProductContext } from "../context/cartContext";
 
 const  ProductCardThree = ({ product }) => {
@@ -74,12 +75,20 @@ const  ProductCardThree = ({ product }) => {
                     <p className="text-[#484848]">20% Off</p>
                 </div>
                 <div className="absolute -bottom-[60px] flex items-center w-full gap-2 px-5 -translate-x-1/2 left-1/2 group-hover:bottom-5 transition-all duration-300">
-                    <Link
+                    <KarbarButton
+                        asLink
+                        preserveHover={true}
+                        href={`/products/${slug}`}
+                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-full"
+                    >
+                        {seeDetails}
+                    </KarbarButton>
+                    {/* <Link
                         href={`/products/${slug}`}
                         className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal text-white bg-[#4C20CD] rounded-full product-button"
                     >
                         {seeDetails}
-                    </Link>
+                    </Link> */}
                 </div>
                 {stock < 1 && (
                     <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">

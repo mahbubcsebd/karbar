@@ -9,8 +9,8 @@ import { getAllProduct } from '../utils/getProduct';
 // import { getAllCategories } from '../../../utils/categories';
 import ourProductsbg from '@/assets/images/our-products-bg.svg';
 import Image from 'next/image';
-import Link from 'next/link';
 import { getAllCategories } from '../utils/categories';
+import KarbarButton from './KarbarButton';
 import ProductCardThree from './ProductCardThree';
 import SkeletonCard from './skeleton/SkeletonCard';
 
@@ -215,12 +215,20 @@ const ProductListThree = () => {
                             )}
                     </div> */}
                     <div className="flex justify-center md:pt-[70px] mt-6">
-                        <Link
+                        <KarbarButton
+                            asLink
+                            href={`/collections/${selectedCategory}`}
+                            variant="outline"
+                            className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                        >
+                            {dictionary.Global.seeMore}
+                        </KarbarButton>
+                        {/* <Link
                             href={`/collections/${selectedCategory}`}
                             className="text-base md:text-[20px] text-white font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full bg-[linear-gradient(87deg,_#D14BF8_-6.96%,_#4C20CD_115.83%)]"
                         >
                             {loading ? 'Loading...' : dictionary.Global.seeMore}
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

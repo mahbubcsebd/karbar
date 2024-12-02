@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { BsCart3 } from 'react-icons/bs';
 import { RxCross1, RxCrossCircled } from 'react-icons/rx';
 import { toast } from 'react-toastify';
 import { ProductContext } from '../context/cartContext';
+import KarbarButton from './KarbarButton';
 // import { ProductContext } from '../context/cartContext';
 
 
@@ -147,13 +147,21 @@ const HeaderCart = ({dictionary}) => {
                                 </p>
                             </div>
                             <div className="pt-5">
-                                <Link
+                                <KarbarButton
+                                    asLink
+                                    href="/checkout"
+                                    onClick={handleShow}
+                                    className="px-[30px] py-4 text-base rounded-md w-full"
+                                >
+                                    {order}
+                                </KarbarButton>
+                                {/* <Link
                                     href="/checkout"
                                     className="flex justify-center items-center text-center gap-2 px-[30px] py-4 text-base text-white bg-gray-900 rounded-md w-full"
                                     onClick={handleShow}
                                 >
                                     {order}
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
                     )}

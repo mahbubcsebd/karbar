@@ -9,8 +9,9 @@ import { getAllProduct } from '../../../utils/getProduct';
 // import { getAllCategories } from '../../../../../utils/categories';
 import ourProductsbg from '@/assets/images/our-product-bg-4.svg';
 import Image from 'next/image';
-import Link from 'next/link';
+import useSiteSetting from '../../../hooks/useSiteSetting';
 import { getAllCategories } from '../../../utils/categories';
+import KarbarButton from '../../KarbarButton';
 import SkeletonCard from '../../skeleton/SkeletonCard';
 import ProductCardFour from './ProductCardFour';
 
@@ -25,6 +26,9 @@ const ProductListFour = () => {
     const [isSeeMoreClick, setIsSeeMoreClick] = useState(false);
     const { language, dictionary } = useDictionary();
     const [categories, setCategories] = useState([]);
+    const {siteSetting} = useSiteSetting();
+
+     const buttonBgColor = siteSetting?.btn_bg_color || '#348E29';
 
     const memoizedProductsArray = useMemo(() => {
         return productItem;
@@ -134,7 +138,10 @@ const ProductListFour = () => {
                     <div className="product-filter flex flex-col md:flex-row justify-between md:items-center gap-2 mb-[30px]">
                         <h2 className="text-2xl font-semibold text-gray-800 capitalize md:text-4xl">
                             {dictionary.TemplateFour.our}
-                            <span className="text-[#348E29]">
+                            <span
+                                style={{ color: siteSetting?.btn_bg_color }}
+                                className="text-[#348E29]"
+                            >
                                 {' '}
                                 {dictionary.TemplateFour.product}
                             </span>
@@ -147,11 +154,21 @@ const ProductListFour = () => {
                                 <button
                                     onClick={handleAllFilter}
                                     type="button"
-                                    className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full hover:bg-[#348E29] hover:text-white transition duration-150 ${
+                                    className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full transition duration-150 ${
                                         selectedCategory == 'all'
-                                            ? 'bg-[#348E29] text-white'
+                                            ? `bg-[${buttonBgColor}] text-white`
                                             : ''
                                     }`}
+                                    style={{
+                                        backgroundColor:
+                                            selectedCategory == 'all'
+                                                ? buttonBgColor
+                                                : '',
+                                        color:
+                                            selectedCategory == 'all'
+                                                ? 'white'
+                                                : '',
+                                    }}
                                 >
                                     {dictionary.Global.all}
                                 </button>
@@ -163,11 +180,23 @@ const ProductListFour = () => {
                                             handleCategory(category.slug)
                                         }
                                         type="button"
-                                        className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full hover:bg-[#348E29] hover:text-white transition duration-150 ${
+                                        className={`whitespace-nowrap px-3 py-1 md:px-4 md:py-[10px] md:text-sm xl:px-5 xl:py-2 text-xs xl:text-base font-normal text-gray-800 rounded-full transition duration-150 ${
                                             selectedCategory == category.slug
-                                                ? 'bg-[#348E29] text-white'
+                                                ? `bg-[${buttonBgColor}] text-white`
                                                 : ''
                                         }`}
+                                        style={{
+                                            backgroundColor:
+                                                selectedCategory ==
+                                                category.slug
+                                                    ? buttonBgColor
+                                                    : '',
+                                            color:
+                                                selectedCategory ==
+                                                category.slug
+                                                    ? 'white'
+                                                    : '',
+                                        }}
                                     >
                                         {category.name}
                                     </button>
@@ -212,19 +241,27 @@ const ProductListFour = () => {
                                     onClick={() => handleSeeMore(4)}
                                     disabled={loading}
                                     type="button"
-                                    className="text-base md:text-[20px] text-gray-900 font-normal border-2 border-gray-900 px-6 py-3 rounded-lg md:px-[30px] md:py-4 hover:bg-gray-900 hover:text-white transition duration-150"
+                                    className="text-base md:text-[20px] text-gray-900 font-normal border-2 border-gray-900 px-6 py-3 rounded-lg md:px-[30px] md:py-4 hover:bg-gray-900 transition duration-150"
                                 >
                                     {loading ? 'Loading...' : dictionary.Global.seeMore}
                                 </button>
                             )}
                     </div> */}
                     <div className="flex justify-center md:pt-[70px] mt-6">
-                        <Link
+                        <KarbarButton
+                            asLink
                             href={`/collections/${selectedCategory}`}
-                            className="text-base md:text-[20px] text-[#348E29] font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full bg-transparent hover:text-white hover:bg-[#348E29] border border-[#348E29]"
+                            variant="outline"
+                            className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
                         >
                             {loading ? 'Loading...' : dictionary.Global.seeMore}
-                        </Link>
+                        </KarbarButton>
+                        {/* <Link
+                            href={`/collections/${selectedCategory}`}
+                            className="text-base md:text-[20px] text-[#348E29] font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full bg-transparent hover:bg-[#348E29] border border-[#348E29]"
+                        >
+                            {loading ? 'Loading...' : dictionary.Global.seeMore}
+                        </Link> */}
                     </div>
                 </div>
             </div>

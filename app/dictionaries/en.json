@@ -114,6 +114,7 @@
             "areaLabel": "Select area",
             "insideDhaka": "Inside Dhaka",
             "outsideDhaka": "Outside Dhaka",
+            "dhakaSubArea": "Dhaka Sub Area",
             "freeDelevery": "Free delivery",
             "currency": "Taka",
             "addressLabel": "Address",

@@ -7,7 +7,7 @@ const ClientFeedback = ({ reviews }) => {
         return null;
     }
     return (
-        <div className="container">
+        <div className="container pt-10">
             <div className="grid gap-[30px]">
                 {reviews.map((review) => (
                     <div

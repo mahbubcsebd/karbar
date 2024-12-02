@@ -692,7 +692,7 @@ const BillTable = ({
                     </div>
                 )}
                 <div className="border-t border-[#DFDFDF] pt-5">
-                    <div className="flex items-center gap-[50px] mb-5">
+                    <div className="flex items-center xl:gap-[50px] gap-5 flex-wrap mb-5">
                         <div className="text-xs text-gray-700 font-medium flex items-center gap-[10px]">
                             <p>Items:</p>
                             <p>
@@ -724,33 +724,7 @@ const BillTable = ({
                                 Pay Via:
                             </p>
                         </div>
-                        {/* <CashModal
-                        submitHandler={submitCashHandler}
-                        isOpen={isCashOpen}
-                        setIsOpen={setIsCashOpen}
-                    />
-                    <BkashModal
-                        submitHandler={submitBkashHandler}
-                        isOpen={isBkashOpen}
-                        setIsOpen={setIsBkashOpen}
-                    />
-                    <CardModal
-                        submitHandler={submitCardHandler}
-                        isOpen={isCardOpen}
-                        setIsOpen={setIsCardOpen}
-                    />
-                    <DueModal
-                        submitHandler={submitDueHandler}
-                        isOpen={isDueOpen}
-                        setIsOpen={setIsDueOpen}
-                    />
-                    <PartialModal
-                        submitHandler={submitPartialHandler}
-                        isOpen={isPartialOpen}
-                        setIsOpen={setIsPartialOpen}
-                    /> */}
-
-                        <ul className="flex items-center gap-[10px]">
+                        <ul className="flex items-center gap-[10px] flex-wrap">
                             {paymentMethods.map((paymentMethod) => (
                                 <li key={paymentMethod.id}>
                                     <button

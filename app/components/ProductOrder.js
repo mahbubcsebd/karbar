@@ -8,6 +8,7 @@ import { ProductContext } from '../context/cartContext';
 import useAdManager from '../hooks/useAdManager';
 import { trackEvent } from '../utils/facebookPixel';
 import { getProductStock } from '../utils/getProductStock';
+import KarbarButton from './KarbarButton';
 import ProductCounter from './ProductCounter';
 
 const ProductOrder = ({ product, dictionary }) => {
@@ -250,7 +251,31 @@ const ProductOrder = ({ product, dictionary }) => {
                     setIncrementDisable={setIncrementDisable}
                     variants={variants}
                 />
-                <button
+                <KarbarButton
+                    type="submit"
+                    className={`flex items-center gap-2 px-[19px] md:px-[30px] py-[19px] md:py-[18px] transition duration-150 rounded-md capitalize ${
+                        isFormValid ? '' : 'cursor-not-allowed'
+                    }`}
+                    disabled={stock < 1 || (productStock < 1 && showStock)}
+                >
+                    <BsCart3 />
+                    <span className="hidden md:inline-block">{addToCart}</span>
+                </KarbarButton>
+                <KarbarButton
+                    type="submit"
+                    onClick={() => {
+                        if (productStock >= 1 && buttonActive) {
+                            router.push('/checkout');
+                        }
+                    }}
+                    className={`flex items-center gap-2 px-[19px] md:px-[30px] py-[19px] md:py-[18px] transition duration-150 rounded-md capitalize ${
+                        stock < 1 ? 'cursor-not-allowed' : ''
+                    }`}
+                    disabled={stock < 1 || (productStock < 1 && showStock)}
+                >
+                    {order}
+                </KarbarButton>
+                {/* <button
                     type="submit"
                     className={`flex items-center gap-2 px-[19px] md:px-[30px] py-[19px] md:py-4 text-gray-900 border border-gray-900 hover:text-white hover:bg-gray-900 transition duration-150 rounded-md capitalize ${
                         isFormValid ? '' : 'cursor-not-allowed'
@@ -259,8 +284,8 @@ const ProductOrder = ({ product, dictionary }) => {
                 >
                     <BsCart3 />
                     <span className="hidden md:inline-block">{addToCart}</span>
-                </button>
-                <button
+                </button> */}
+                {/* <button
                     type="submit"
                     onClick={() => {
                         if (productStock >= 1 && buttonActive) {
@@ -273,7 +298,7 @@ const ProductOrder = ({ product, dictionary }) => {
                     disabled={stock < 1 || (productStock < 1 && showStock)}
                 >
                     {order}
-                </button>
+                </button> */}
             </div>
             {showStockMsg && stock >= 1 && (
                 <p className="text-red-500">

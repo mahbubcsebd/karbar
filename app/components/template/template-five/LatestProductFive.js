@@ -3,12 +3,12 @@
 
 import latestBg from '@/assets/images/latest-product-bg-4.svg';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useDictionary from '../../../hooks/useDictionary';
 import { getAllProduct } from '../../../utils/getProduct';
 import ProductCardFive from './ProductCardFive';
 
+import KarbarButton from '../../KarbarButton';
 import SectionTitleFive from '../../SectionTitleFive';
 const LatestProductFive = () => {
     const { language, dictionary } = useDictionary();
@@ -67,12 +67,20 @@ const LatestProductFive = () => {
                         <div>No products found</div>
                     )}
                     <div className="flex justify-center pt-10 md:pt-[70px]">
-                        <Link
+                        <KarbarButton
+                            asLink
+                            href="/collections/all"
+                            variant="default"
+                            className="text-base md:text-[20px] font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-lg"
+                        >
+                            {seeMore}
+                        </KarbarButton>
+                        {/* <Link
                             href="/collections/all"
                             className="text-base md:text-[20px] text-white font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-lg  bg-[#F3832D] hover:bg-transparent hover:text-[#F3832D] border border-[#F3832D]"
                         >
                             {seeMore}
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

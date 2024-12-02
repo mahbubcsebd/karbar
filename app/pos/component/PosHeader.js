@@ -55,7 +55,12 @@ const PosHeader = () => {
                         <div className="flex items-center justify-between header-content">
                             <div className="flex items-center gap-[50px]">
                                 <div className={`header-logo`}>
-                                    <Link href="/">
+                                    <Link
+                                        href={process.env.NEXT_PUBLIC_API_BASE_URL.replace(
+                                            '/api',
+                                            ''
+                                        )}
+                                    >
                                         <Image
                                             src={
                                                 header_logo ? header_logo : logo

@@ -36,8 +36,8 @@ const Advertisement = ({ position }) => {
 
     if (loading) {
         return (
-            <div className="container bg-white py-[60px]">
-                <div className="grid grid-cols-12 items-stretch gap-4 h-[400px]">
+            <div className="bg-white py-[60px]">
+                <div className="container grid grid-cols-12 items-stretch gap-4 h-[400px]">
                     <div className="grid h-full col-span-4 grid-rows-2 gap-4">
                         <div className="h-full bg-gray-300 animate-pulse"></div>
                         <div className="h-full bg-gray-300 animate-pulse"></div>

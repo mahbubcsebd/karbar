@@ -180,7 +180,7 @@ const PosProductsList = () => {
         <div className="pb-8">
             <div className="px-5">
                 <div className="grid grid-cols-12 gap-[30px] ">
-                    <div className="col-span-7">
+                    <div className="col-span-12 xl:col-span-7 order-2 xl:order-1">
                         <div className="mb-5">
                             <PosSearch
                                 search={search}
@@ -262,7 +262,7 @@ const PosProductsList = () => {
                             </div>
                         </Suspense>
                     </div>
-                    <div className="col-span-5">
+                    <div className="col-span-12 xl:col-span-5 order-1 xl:order-2">
                         <div className="bg-white rounded-xl p-[18px]">
                             <div className="mb-8">
                                 <CustomerList

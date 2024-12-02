@@ -2,6 +2,7 @@
 
 import { getAdvertisement } from '@/utils/getAdvertisement';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useDictionary from '../hooks/useDictionary';
 
@@ -34,12 +35,15 @@ const Banner = () => {
                   height={300}
               />
               <div className="container">
-                  <div className="flex justify-center items-center h-[150px] relative z-20">
+                  <Link
+                      href={banner[0].images[0].url}
+                      className="flex justify-center items-center h-[150px] relative z-20 w-full"
+                  >
                       <h2 className="text-2xl font-semibold text-white capitalize md:text-4xl">
                           {/* {dictionary.Banner.shopBanner} */}
                           {banner[0].name}
                       </h2>
-                  </div>
+                  </Link>
               </div>
           </div>
       </div>

@@ -8,9 +8,9 @@ import useDictionary from '../../../hooks/useDictionary';
 import { getAllProduct } from '../../../utils/getProduct';
 // import ProductCard from './ProductCard';
 // import { getAllCategories } from '../../../utils/categories';
-import Link from 'next/link';
 import { getAllCategories } from '../../../utils/categories';
 import AbayaProductCard from '../../AbayaProductCard';
+import KarbarButton from '../../KarbarButton';
 import SkeletonCard from '../../skeleton/SkeletonCard';
 
 const AbayaAllProducts = () => {
@@ -24,6 +24,7 @@ const AbayaAllProducts = () => {
     const [isSeeMoreClick, setIsSeeMoreClick] = useState(false);
     const { language, dictionary } = useDictionary();
     const [categories, setCategories] = useState([]);
+    const { seeMore } = dictionary.ProductCard;
 
     const memoizedProductsArray = useMemo(() => {
         return productItem;
@@ -213,12 +214,20 @@ const AbayaAllProducts = () => {
                             )}
                     </div> */}
                     <div className="flex justify-center md:pt-[70px] mt-6">
-                        <Link
+                        <KarbarButton
+                            asLink
+                            href={`/collections/${selectedCategory}`}
+                            variant="outline"
+                            className="text-base md:text-[20px] font-normal border-2 px-6 py-3 rounded-lg md:px-[30px] md:py-4 transition duration-150"
+                        >
+                            {seeMore}
+                        </KarbarButton>
+                        {/* <Link
                             href={`/collections/${selectedCategory}`}
                             className="text-base md:text-[20px] text-gray-900 font-normal border-2 border-gray-900 px-6 py-3 rounded-lg md:px-[30px] md:py-4 hover:bg-gray-900 hover:text-white transition duration-150"
                         >
                             {loading ? 'Loading...' : dictionary.Global.seeMore}
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

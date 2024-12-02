@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import noAvailableImg from "../assets/icons/no-available.svg";
 import { ProductContext } from "../context/cartContext";
 import useDictionary from "../hooks/useDictionary";
+import KarbarButton from "./KarbarButton";
 // import { ProductContext } from "../context/cartContext";
 
 
@@ -96,12 +97,19 @@ const ProductCard = ({ product }) => {
                     </span>
                 </p>
                 <div className="flex items-center gap-2">
-                    <Link
+                    <KarbarButton
+                        asLink
+                        href={`/products/${slug}`}
+                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-[4px]"
+                    >
+                        {seeDetails}
+                    </KarbarButton>
+                    {/* <Link
                         href={`/products/${slug}`}
                         className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal text-white bg-purple-900 rounded-[4px] product-button"
                     >
                         {seeDetails}
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </div>

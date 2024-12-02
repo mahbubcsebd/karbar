@@ -11,6 +11,13 @@ export async function generateMetadata() {
             icon: siteSetting.data.fev_icon,
             apple: siteSetting.data.fev_icon,
         },
+        openGraph: {
+            title: 'Karbar Ecommerce',
+            description: 'Karbar makes online store creation, design, and management easy for small companies, startups & entrepreneurs.',
+            images: [
+                `https://karbar.shop/wp-content/uploads/2024/09/karbar-logo.svg`,
+            ],
+        },
     };
 }
 

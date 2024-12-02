@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import Link from "next/link";
 import { BiEditAlt } from 'react-icons/bi';
 import { FaStar } from 'react-icons/fa';
 import borderImg from "../assets/icons/border.svg";
+import KarbarButton from './KarbarButton';
 import RatingReadOnly from "./RatingReadOnly";
 
 const Ratings = ({ reviewHandler, ratings, dictionary }) => {
@@ -66,7 +66,19 @@ const Ratings = ({ reviewHandler, ratings, dictionary }) => {
                                 alt="border img"
                             />
                         </div>
-                        <Link
+                        <KarbarButton
+                            asLink
+                            href="#product-review"
+                            onClick={reviewHandler}
+                            variant="outline"
+                            className="hidden md:flex justify-center items-center gap-[6px] font-medium px-6 py-4 text-base  rounded-md hover:bg-transparent transition duration-150"
+                        >
+                            <span className="inline-block text-xl">
+                                <BiEditAlt />
+                            </span>
+                            {writeReview}
+                        </KarbarButton>
+                        {/* <Link
                             href="#product-review"
                             onClick={reviewHandler}
                             className="hidden md:flex justify-center items-center gap-[6px] text-base text-white font-medium px-6 py-4 bg-gray-900 border border-gray-900 rounded-md hover:bg-transparent hover:text-gray-900 transition duration-150"
@@ -75,7 +87,7 @@ const Ratings = ({ reviewHandler, ratings, dictionary }) => {
                                 <BiEditAlt />
                             </span>
                             {writeReview}
-                        </Link>
+                        </Link> */}
                     </div>
                     <div className="flex items-center gap-5 md:gap-10 px-3 py-[18px] bg-white rounded-lg md:px-0 md:py-0 md:bg-transparent md:rounded-none">
                         <div>

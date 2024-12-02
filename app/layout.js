@@ -18,6 +18,7 @@ import { cartReducer, initialState } from '../app/reducer/CartReducer';
 import { ModalProvider } from '../app/reducer/ModalProvider';
 import { SearchProvider } from '../app/reducer/SearchContext';
 import FBPixel from './components/add-manager/FBPixel';
+import Announcement from './components/Announcement';
 import HomePreLoader from './components/HomePreLoader';
 import FooterThemes from './components/themes/FooterTheme';
 import HeaderThemes from './components/themes/HeaderTheme';
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
     const [template, setTemplate] = useState(null);
     const [addManager, setAddManager] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Loading state for the preloader
+    const [showChat, setShowChat] = useState(true)
 
     const conditionalPath =
         pathname !== '/order-successfull' &&
@@ -123,6 +125,7 @@ export default function RootLayout({ children }) {
                                                             }
                                                         />
                                                         <main>
+                                                            <Announcement />
                                                             {conditionalPath &&
                                                                 template?.template_name && (
                                                                     <HeaderThemes
@@ -146,39 +149,44 @@ export default function RootLayout({ children }) {
 
                                                         <ScrollToTop />
                                                         <div className="fixed z-[99999999] grid gap-3 md:gap-2 bottom-10 md:bottom-[85px] right-4">
-                                                            {siteSetting?.whatsapp_id && (
-                                                                <Link
-                                                                    className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
-                                                                    target="_blank"
-                                                                    href={`https://wa.me/${siteSetting.whatsapp_id}`}
-                                                                >
-                                                                    <Image
-                                                                        className="w-full h-full"
-                                                                        src={
-                                                                            whatsapp
-                                                                        }
-                                                                        alt="whatsapp"
-                                                                        priority
-                                                                    />
-                                                                </Link>
-                                                            )}
-                                                            {siteSetting?.fb_page_id && (
-                                                                <Link
-                                                                    className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
-                                                                    target="_blank"
-                                                                    href={`https://m.me/${siteSetting.fb_page_id}`}
-                                                                >
-                                                                    <Image
-                                                                        className="w-full h-full"
-                                                                        src={
-                                                                            messanger
-                                                                        }
-                                                                        alt="messanger"
-                                                                        priority
-                                                                    />
-                                                                </Link>
-                                                            )}
+                                                            {siteSetting?.whatsapp_id &&
+                                                                pathname !==
+                                                                    '/pos' && (
+                                                                    <Link
+                                                                        className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
+                                                                        target="_blank"
+                                                                        href={`https://wa.me/${siteSetting.whatsapp_id}`}
+                                                                    >
+                                                                        <Image
+                                                                            className="w-full h-full"
+                                                                            src={
+                                                                                whatsapp
+                                                                            }
+                                                                            alt="whatsapp"
+                                                                            priority
+                                                                        />
+                                                                    </Link>
+                                                                )}
+                                                            {siteSetting?.fb_page_id &&
+                                                                pathname !==
+                                                                    '/pos' && (
+                                                                    <Link
+                                                                        className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
+                                                                        target="_blank"
+                                                                        href={`https://m.me/${siteSetting.fb_page_id}`}
+                                                                    >
+                                                                        <Image
+                                                                            className="w-full h-full"
+                                                                            src={
+                                                                                messanger
+                                                                            }
+                                                                            alt="messanger"
+                                                                            priority
+                                                                        />
+                                                                    </Link>
+                                                                )}
                                                         </div>
+
                                                         <ToastContainer />
                                                     </OrderProvider>
                                                 </SiteSettingProvider>

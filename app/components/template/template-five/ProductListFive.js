@@ -8,8 +8,9 @@ import { getAllProduct } from '../../../utils/getProduct';
 // import ProductCard from './ProductCard';
 // import { getAllCategories } from '../../../../../utils/categories';
 // import ourProductsbg from '@/assets/images/our-product-bg-4.svg';
-import Link from 'next/link';
+import useSiteSetting from '../../../hooks/useSiteSetting';
 import { getAllCategories } from '../../../utils/categories';
+import KarbarButton from '../../KarbarButton';
 import SkeletonCard from '../../skeleton/SkeletonCard';
 import ProductCardFive from './ProductCardFive';
 
@@ -24,6 +25,7 @@ const ProductListFive = () => {
     const [isSeeMoreClick, setIsSeeMoreClick] = useState(false);
     const { language, dictionary } = useDictionary();
     const [categories, setCategories] = useState([]);
+    const {siteSetting} = useSiteSetting();
 
     const memoizedProductsArray = useMemo(() => {
         return productItem;
@@ -129,10 +131,13 @@ const ProductListFive = () => {
                     className="absolute top-0 left-0 z-[-1] w-full h-full object-cover object-center"
                 /> */}
                 <div className="container">
-                    <div className="flex flex-col items-center gap-5 lg:gap-10 mb-10 product-filter">
+                    <div className="flex flex-col items-center gap-5 mb-10 lg:gap-10 product-filter">
                         <h2 className="text-2xl font-semibold text-gray-800 capitalize md:text-4xl">
                             {dictionary.TemplateFour.our}
-                            <span className="text-[#F3832D]">
+                            <span
+                                style={{ color: siteSetting?.btn_bg_color }}
+                                // className="text-[#F3832D]"
+                            >
                                 {' '}
                                 {dictionary.TemplateFour.product}
                             </span>
@@ -145,7 +150,7 @@ const ProductListFive = () => {
                                 <button
                                     onClick={handleAllFilter}
                                     type="button"
-                                    className={`text-xs xl:text-2xl font-normal text-gray-500  transition duration-150 ${
+                                    className={`whitespace-nowrap text-xs xl:text-2xl font-normal text-gray-500  transition duration-150 ${
                                         selectedCategory == 'all'
                                             ? 'border-b border-[#2A51C6] text-[#2A51C6]'
                                             : ''
@@ -161,7 +166,7 @@ const ProductListFive = () => {
                                             handleCategory(category.slug)
                                         }
                                         type="button"
-                                        className={`text-xs xl:text-2xl font-normal text-gray-500  transition duration-150 ${
+                                        className={`whitespace-nowrap text-xs xl:text-2xl font-normal text-gray-500  transition duration-150 ${
                                             selectedCategory == category.slug
                                                 ? 'border-b border-[#2A51C6] text-[#2A51C6]'
                                                 : ''
@@ -202,12 +207,20 @@ const ProductListFive = () => {
                         )}
                     </Suspense>
                     <div className="flex justify-center md:pt-[70px] mt-6">
-                        <Link
+                        <KarbarButton
+                            asLink
+                            href={`/collections/${selectedCategory}`}
+                            variant="outline"
+                            className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-lg"
+                        >
+                            {loading ? 'Loading...' : dictionary.Global.seeMore}
+                        </KarbarButton>
+                        {/* <Link
                             href={`/collections/${selectedCategory}`}
                             className="text-base md:text-[20px] text-[#F3832D] font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-lg bg-transparent hover:text-white hover:bg-[#F3832D] border border-[#F3832D]"
                         >
                             {loading ? 'Loading...' : dictionary.Global.seeMore}
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

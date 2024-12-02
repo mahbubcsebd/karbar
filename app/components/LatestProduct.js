@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useDictionary from '../hooks/useDictionary';
 import { getAllProduct } from '../utils/getProduct';
+import KarbarButton from './KarbarButton';
 import ProductCard from './ProductCard';
 import SectionTitle from './SectionTitle';
 import DaribProductLoader from './loader/DaribProductLoader';
@@ -94,12 +94,20 @@ const LatestProduct = () => {
 
                     {!loading && (
                         <div className="flex justify-center pt-10 md:pt-[70px]">
-                            <Link
+                            <KarbarButton
+                                asLink
+                                href="/collections/all"
+                                variant="outline"
+                                className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                            >
+                                {seeMore}
+                            </KarbarButton>
+                            {/* <Link
                                 href="/collections/all"
                                 className="text-base md:text-[20px] text-purple-900 font-normal border md:border-2 border-purple-900 px-6 py-[10px] md:px-[30px] md:py-4 hover:bg-purple-900 hover:text-white transition duration-150 rounded-full"
                             >
                                 {seeMore}
-                            </Link>
+                            </Link> */}
                         </div>
                     )}
                 </div>

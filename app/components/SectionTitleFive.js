@@ -1,6 +1,8 @@
 import React from 'react';
+import useSiteSetting from '../hooks/useSiteSetting';
 
 const SectionTitleFive = ({ preTitle, postTitle, position }) => {
+    const {siteSetting} = useSiteSetting()
     return (
         <div
             className={`flex md:mb-[60px] mb-6 ${
@@ -8,7 +10,14 @@ const SectionTitleFive = ({ preTitle, postTitle, position }) => {
             }`}
         >
             <h2 className="text-2xl font-semibold text-gray-800 capitalize md:text-4xl">
-                {preTitle} <span className="text-[#F3832D]"> {postTitle}</span>
+                {preTitle}{' '}
+                <span
+                    style={{ color: siteSetting?.btn_bg_color }}
+                    // className="text-[#F3832D]"
+                >
+                    {' '}
+                    {postTitle}
+                </span>
             </h2>
         </div>
     );

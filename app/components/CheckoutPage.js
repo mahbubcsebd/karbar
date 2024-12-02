@@ -18,6 +18,7 @@ import useOrderId from '../hooks/useOrderId';
 import { trackEvent } from '../utils/facebookPixel';
 import { getCoupon } from '../utils/getCoupon';
 import { orderPost } from '../utils/orderPost';
+import KarbarButton from './KarbarButton';
 
 const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const [total, setTotal] = useState(0);
@@ -62,6 +63,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
         areaLabel,
         insideDhaka,
         outsideDhaka,
+        dhakaSubArea,
         freeDelevery,
         currency,
         addressLabel,
@@ -82,10 +84,17 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
         (method) => method.name === 'nagad'
     )?.number;
 
-    const { inside_dhaka, outside_dhaka } = siteSettings;
+
+    const bkashDetails = paymentMethod.find( (method) => method.name === 'bkash')?.details;
+    const nagadDetails = paymentMethod.find(
+        (method) => method.name === 'nagad'
+    )?.details;
+
+    const { inside_dhaka, outside_dhaka, dhaka_sub_area } = siteSettings;
 
     const insideDhakaDC = inside_dhaka ? Number(inside_dhaka) : 0;
     const outsideDhakaDC = outside_dhaka ? Number(outside_dhaka) : 0;
+    const dhakaSub = dhaka_sub_area ? Number(dhaka_sub_area) : 0;
 
     const router = useRouter();
     const [selectedValue, setSelectedValue] = useState('inside_dhaka');
@@ -118,6 +127,8 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
             setShippingCost(insideDhakaDC);
         } else if (value === 'outside_dhaka') {
             setShippingCost(outsideDhakaDC);
+        } else if (value === 'dhaka_sub_area') {
+            setShippingCost(dhakaSub);
         }
     };
 
@@ -228,6 +239,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     //         setShippingCost(120);
     //     }
     // };
+
 
     const handlePaymentChange = (event) => {
         setSelectedPayment(event.target.value);
@@ -411,6 +423,12 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                 <option value="outside_dhaka">
                                                     {outsideDhaka} -{' '}
                                                     {outsideDhakaDC > 0
+                                                        ? `${outsideDhakaDC} ${currency}`
+                                                        : { freeDelevery }}
+                                                </option>
+                                                <option value="dhaka_sub_area">
+                                                    {dhakaSubArea} -{' '}
+                                                    {outsideDhakaDC > 0 // dhakaSub hobe
                                                         ? `${outsideDhakaDC} ${currency}`
                                                         : { freeDelevery }}
                                                 </option>
@@ -764,19 +782,11 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                         <div>
                                             {selectedPayment === 'bkash' ? (
                                                 <p className="pt-[30px] text-base text-gray-700 font-normal">
-                                                    {bkashMsgBefore}{' '}
-                                                    <span className="inline-block font-semibold">
-                                                        {bkashNum}
-                                                    </span>{' '}
-                                                    {bkashMsgAfter}
+                                                    {bkashDetails}
                                                 </p>
                                             ) : (
                                                 <p className="pt-[30px] text-base text-gray-700 font-normal">
-                                                    {nagadMsgBefore}{' '}
-                                                    <span className="inline-block font-semibold">
-                                                        {nagadNum}
-                                                    </span>{' '}
-                                                    {nagadMsgAfter}
+                                                    {nagadDetails}
                                                 </p>
                                             )}
                                             <div className="grid sm:grid-cols-2 gap-[18px] lg:gap-6 pt-6">
@@ -818,7 +828,23 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                         </div>
                                     )}
                                     <div className=" mt-[30px]">
-                                        <button
+                                        <KarbarButton
+                                            type="submit"
+                                            className={`gap-2 px-[30px] py-4 rounded-md w-full capitalize text-lg ${
+                                                orderLoading
+                                                    ? 'bg-gray-500'
+                                                    : 'bg-gray-900 '
+                                            }`}
+                                            disabled={orderLoading}
+                                        >
+                                            {orderLoading
+                                                ? dicConfirmProcessing
+                                                : dicConfirm}
+                                            {orderLoading && (
+                                                <div className="spin-loader"></div>
+                                            )}
+                                        </KarbarButton>
+                                        {/* <button
                                             type="submit"
                                             className={`flex justify-center items-center capitalize text-center gap-2 px-[30px] py-4 text-white rounded-md w-full ${
                                                 orderLoading
@@ -833,7 +859,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                             {orderLoading && (
                                                 <div className="spin-loader"></div>
                                             )}
-                                        </button>
+                                        </button> */}
                                     </div>
                                 </div>
                             </div>

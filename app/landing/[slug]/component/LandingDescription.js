@@ -3,7 +3,7 @@ import LandingKeyFetures from './LandingKeyFetures';
 import LandingSave from './LandingSave';
 import LandingSizes from './LandingSizes';
 
-const LandingDescription = ({landing}) => {
+const LandingDescription = ({ landing, button_text, button_color }) => {
     const {
         section_three_video,
         section_three_key_feature,
@@ -34,6 +34,8 @@ const LandingDescription = ({landing}) => {
                             section_three_offer_order={
                                 section_three_offer_order
                             }
+                            button_text={button_text}
+                            button_color={button_color}
                         />
                     )}
                     {section_four_available_size && (
@@ -41,6 +43,8 @@ const LandingDescription = ({landing}) => {
                             section_four_available_size={
                                 section_four_available_size
                             }
+                            button_text={button_text}
+                            button_color={button_color}
                         />
                     )}
                 </div>

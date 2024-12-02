@@ -58,14 +58,14 @@ const getBlock3Layout = (layout, images, gap) => {
     const layouts = {
         layout_1: images.map(() => `col-span-12 lg:col-span-4`), // 4/4/4
         layout_2: [
-            `col-span-12 lg:col-span-12 lg:col-span-8 h-full`,
-            `col-span-12 lg:col-span-6 lg:col-span-2 h-full`,
-            `col-span-12 lg:col-span-6 lg:col-span-2 h-full`,
+            `col-span-12 lg:col-span-12 xl:col-span-8 h-full`,
+            `col-span-12 lg:col-span-6 xl:col-span-2 h-full`,
+            `col-span-12 lg:col-span-6 xl:col-span-2 h-full`,
         ], // 8/2/2
         layout_3: [
-            `col-span-12 lg:col-span-6 lg:col-span-2 h-full`,
-            `col-span-12 lg:col-span-6 lg:col-span-2 h-full`,
-            `col-span-12 lg:col-span-12 lg:col-span-8 h-full`,
+            `col-span-12 lg:col-span-6 xl:col-span-2 h-full`,
+            `col-span-12 lg:col-span-6 xl:col-span-2 h-full`,
+            `col-span-12 lg:col-span-12 xl:col-span-8 h-full`,
         ], // 2/2/8
         layout_4: [
             // 4[2split]/8

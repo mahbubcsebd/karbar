@@ -2,6 +2,7 @@
 
 import { getHeroImage } from '@/utils/getHeroImage';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -61,13 +62,15 @@ const AbayaHeroSlider = () => {
                             >
                                 {images?.map((img) => (
                                     <SwiperSlide key={img.id}>
-                                        <Image
-                                            src={img.image_url}
-                                            alt={img.title}
-                                            width={900}
-                                            height={500}
-                                            className="object-cover w-full h-full"
-                                        />
+                                        <Link href={img.url}>
+                                            <Image
+                                                src={img.image_url}
+                                                alt={img.title}
+                                                width={900}
+                                                height={500}
+                                                className="object-cover w-full h-full"
+                                            />
+                                        </Link>
                                     </SwiperSlide>
                                 ))}
                             </Swiper>

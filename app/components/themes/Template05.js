@@ -1,10 +1,10 @@
 import Advertisement from '../Advertisement';
 import Categories from '../Categories';
 import HeroSlider from '../HeroSlider';
-import RecentlyViewedThree from '../RecentlyViewedThree';
 import Testimonials from '../Testimonials';
 import LatestProductFive from '../template/template-five/LatestProductFive';
 import ProductListFive from '../template/template-five/ProductListFive';
+import RecentlyViewedFive from '../template/template-five/RecentlyViewedFive';
 
 const TemplateFive = () => {
     return (
@@ -16,7 +16,7 @@ const TemplateFive = () => {
             <ProductListFive />
             <Advertisement position="home_middle" />
             <Testimonials bg={true} />
-            <RecentlyViewedThree />
+            <RecentlyViewedFive />
             <Advertisement position="home_bottom" />
         </>
     );
