@@ -12,15 +12,15 @@ export async function generateMetadata() {
             apple: siteSetting.data.fev_icon,
         },
        openGraph: {
-            title: 'Karbar Ecommerce',
-            description: 'Karbar makes online store creation, design, and management easy for small companies, startups & entrepreneurs.',
-            url: 'https://karbar.shop/',
+            title: siteSetting.data.title,
+            description: siteSetting.data.footer_description,
+            url: siteSetting.data.website,
             type: 'website',
             images: [
                 {
-                    url: 'https://karbar.shop/wp-content/uploads/2024/09/karbar-logo.svg',
-                    width: 1200, // Add width if possible
-                    height: 630, // Add height if possible
+                    url: siteSetting.data.header_logo,
+                    width: 1200,
+                    height: 630,
                     alt: 'Karbar Logo',
                 },
             ],
