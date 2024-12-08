@@ -50,7 +50,6 @@ const ImageMagnifier = ({ src, width, height, zoomLevel = 2 }) => {
         >
             <Image
                 src={src}
-                priority
                 alt="Zoomable"
                 width={width}
                 height={height}

@@ -75,7 +75,6 @@ const HeroSlider = () => {
                                             src={img.image_url}
                                             alt={img.title}
                                             width={900}
-                                            priority
                                             height={500}
                                             className="object-cover w-full h-full"
                                         />

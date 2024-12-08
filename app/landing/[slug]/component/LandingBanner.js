@@ -8,7 +8,6 @@ const LandingBanner = ({ landing }) => {
             <div className="w-full landing-banner-area">
                 {section_one_image && (
                     <Image
-                        priority
                         src={section_one_image}
                         alt="landing-bg"
                         width={1920}

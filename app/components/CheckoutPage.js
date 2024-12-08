@@ -428,8 +428,8 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                 </option>
                                                 <option value="dhaka_sub_area">
                                                     {dhakaSubArea} -{' '}
-                                                    {outsideDhakaDC > 0 // dhakaSub hobe
-                                                        ? `${outsideDhakaDC} ${currency}`
+                                                    {dhakaSub > 0 // dhakaSub hobe
+                                                        ? `${dhakaSub} ${currency}`
                                                         : { freeDelevery }}
                                                 </option>
                                             </select>

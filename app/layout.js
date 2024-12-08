@@ -45,7 +45,18 @@ export default function RootLayout({ children }) {
     const [template, setTemplate] = useState(null);
     const [addManager, setAddManager] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Loading state for the preloader
-    const [showChat, setShowChat] = useState(true)
+    const [showChat, setShowChat] = useState(true);
+    const [showAnnouncement, setShowAnnouncement] = useState(false);
+
+    useEffect(() => {
+        if (pathname === '/') {
+            const hasVisited = sessionStorage.getItem('homeVisited');
+            if (!hasVisited) {
+                setShowAnnouncement(true);
+                sessionStorage.setItem('homeVisited', 'true');
+            }
+        }
+    }, [pathname]);
 
     const conditionalPath =
         pathname !== '/order-successfull' &&
@@ -125,7 +136,14 @@ export default function RootLayout({ children }) {
                                                             }
                                                         />
                                                         <main>
-                                                            <Announcement />
+                                                            <div>
+                                                                {/* {pathname ===
+                                                                    '/' &&
+                                                                    showAnnouncement && (
+                                                                        <Announcement />
+                                                                    )} */}
+                                                                <Announcement />
+                                                            </div>
                                                             {conditionalPath &&
                                                                 template?.template_name && (
                                                                     <HeaderThemes
