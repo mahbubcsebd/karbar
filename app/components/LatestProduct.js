@@ -80,7 +80,7 @@ const LatestProduct = () => {
                             <KarbarButton
                                 asLink
                                 href="/collections/all"
-                                variant="outline"
+                                // variant="outline"
                                 className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
                             >
                                 {seeMore}
