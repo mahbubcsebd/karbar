@@ -1,20 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import landingBg from "../../../assets/images/landing-banner-bg.png";
 
 const LandingBanner = ({ landing }) => {
     const { section_one_title, section_one_image } = landing || {};
     return (
         <div className="landing-banner mb-[60px] relative">
             <div className="w-full landing-banner-area">
-                {section_one_image && (
                     <Image
-                        src={section_one_image}
+                        src={section_one_image ? section_one_image : landingBg}
                         alt="landing-bg"
                         width={1920}
                         height={310}
-                        className="absolute top-0 left-0 z-10 object-fill w-full h-full"
+                        className="absolute top-0 left-0 z-10 object-cover w-full h-full"
                     />
-                )}
                 {section_one_title && (
                     <div className="h-[240px] md:h-[270px] lg:h-[310px] flex items-center justify-center w-full relative z-50">
                         <div className="container grid items-center justify-center">

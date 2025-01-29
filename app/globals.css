@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -137,6 +139,7 @@ body {
 /* width */
 .search-scroll::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 /* Track */
@@ -284,4 +287,26 @@ button:focus {
 
 #nprogress {
     z-index: 999999999999999999999999999999999;
+}
+
+.css-hlgwow {
+    padding: 5px 8px !important;
+}
+
+.testimonial-six .swiper-pagination-bullet {
+    background: #e5e5e5 !important;
+}
+
+.testimonial-six .swiper-pagination-bullet-active {
+    opacity: var(--swiper-pagination-bullet-opacity, 1);
+    background: #fd9c02 !important;
+}
+
+.cart-btn,
+.cart-icon {
+    transition: all 0.3s ease;
+}
+
+.cart-btn:hover .cart-icon {
+    filter: brightness(0) invert(1); /* Simulates white color */
 }

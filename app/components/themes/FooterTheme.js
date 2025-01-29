@@ -15,6 +15,8 @@ function FooterThemes({ template }) {
             setComponent(lazy(() => import('../Footer')));
         } else if (template === 'Template02') {
             setComponent(lazy(() => import('../template/abaya/AbayaFooter')));
+        } else if (template === 'Template06') {
+            setComponent(lazy(() => import('../template/template-six/FooterSix')));
         } else {
             setComponent(lazy(() => import('../Footer')));
         }

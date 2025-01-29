@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import noAvailableImg from '../assets/icons/no-available.svg';
 import { ProductContext } from '../context/cartContext';
 import useDictionary from '../hooks/useDictionary';
+import useSiteSetting from '../hooks/useSiteSetting';
 import KarbarButton from './KarbarButton';
 // import { ProductContext } from "../context/cartContext";
 
@@ -15,6 +16,7 @@ const  ProductCardThree = ({ product }) => {
     const productCardRef = useRef(null);
     const [width, setWidth] = useState(0);
     const { dictionary } = useDictionary();
+    const { siteSetting, loading, error } = useSiteSetting();
 
     const { priceCurrency, seeDetails } = dictionary.ProductCard;
 
@@ -53,6 +55,12 @@ const  ProductCardThree = ({ product }) => {
         }
     };
 
+function calculateDiscount(unitPrice, salePrice) {
+    const discount = ((unitPrice - salePrice) / unitPrice) * 100;
+    return Math.round(discount);
+    // return discount % 1 === 0 ? discount.toFixed(0) : discount.toFixed(2);
+}
+
     return (
         <div
             ref={productCardRef}
@@ -69,11 +77,13 @@ const  ProductCardThree = ({ product }) => {
                     height={320}
                     className="object-cover w-full h-full"
                 />
-                <div
-                    className={`absolute top-3 left-3 px-[14px] py-[10px] rounded-full text-[10px] bg-white shadow-md`}
-                >
-                    <p className="text-[#484848]">20% Off</p>
-                </div>
+                {sale_price > 0 && (
+                    <div
+                        className={`absolute top-3 left-3 px-[14px] py-[10px] rounded-full text-[10px] bg-white shadow-md`}
+                    >
+                        {calculateDiscount(unit_price, sale_price)}% Off
+                    </div>
+                )}
                 <div className="absolute -bottom-[60px] flex items-center w-full gap-2 px-5 -translate-x-1/2 left-1/2 group-hover:bottom-5 transition-all duration-300">
                     <KarbarButton
                         asLink
@@ -81,18 +91,12 @@ const  ProductCardThree = ({ product }) => {
                         href={`/products/${slug}`}
                         className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-full"
                     >
-                        {seeDetails}
+                        {siteSetting.button_text ? siteSetting.button_text : 'Order Now'}
                     </KarbarButton>
-                    {/* <Link
-                        href={`/products/${slug}`}
-                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal text-white bg-[#4C20CD] rounded-full product-button"
-                    >
-                        {seeDetails}
-                    </Link> */}
                 </div>
                 {stock < 1 && (
                     <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">
-                        স্টক আউট
+                        Out of stock
                     </div>
                 )}
             </Link>

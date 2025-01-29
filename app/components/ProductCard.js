@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from 'react';
 // import { useContext } from "react";
+import useSiteSetting from "@/hooks/useSiteSetting";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import noAvailableImg from "../assets/icons/no-available.svg";
@@ -12,10 +13,11 @@ import KarbarButton from "./KarbarButton";
 // import { ProductContext } from "../context/cartContext";
 
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isPriority }) => {
     const productCardRef = useRef(null);
     const [width, setWidth] = useState(0);
     const { dictionary } = useDictionary();
+    const { siteSetting, loading, error } = useSiteSetting();
 
     const { priceCurrency, seeDetails } = dictionary.ProductCard;
 
@@ -69,10 +71,13 @@ const ProductCard = ({ product }) => {
                     width={270}
                     height={320}
                     className="object-cover w-full h-full"
+                    loading={isPriority ? 'eager' : 'lazy'}
+                    priority={isPriority}
+                    quality={75}
                 />
                 {stock < 1 && (
                     <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">
-                        স্টক আউট
+                        Out of stock
                     </div>
                 )}
             </Link>
@@ -100,16 +105,12 @@ const ProductCard = ({ product }) => {
                     <KarbarButton
                         asLink
                         href={`/products/${slug}`}
-                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-[4px]"
+                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-[4px] capitalize"
                     >
-                        {seeDetails}
+                        {siteSetting.button_text
+                            ? siteSetting.button_text
+                            : 'Order Now'}
                     </KarbarButton>
-                    {/* <Link
-                        href={`/products/${slug}`}
-                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal text-white bg-purple-900 rounded-[4px] product-button"
-                    >
-                        {seeDetails}
-                    </Link> */}
                 </div>
             </div>
         </div>

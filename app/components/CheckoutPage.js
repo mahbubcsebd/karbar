@@ -1,5 +1,9 @@
 'use client';
 
+import { Checkbox } from '@/components/ui/checkbox';
+import useUser from '@/hooks/useUser';
+import { decrypt } from '@/services/encryption';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
@@ -20,6 +24,7 @@ import { getCoupon } from '../utils/getCoupon';
 import { orderPost } from '../utils/orderPost';
 import KarbarButton from './KarbarButton';
 
+
 const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const [total, setTotal] = useState(0);
     const [couponApply, setCouponApply] = useState(true);
@@ -30,6 +35,10 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const { dictionary } = useDictionary();
     const { adManager } = useAdManager();
     const {orderId, setOrderId} = useOrderId();
+    const [isUser, setIsUser] = useState(false);
+    const [userAuthToken, setUserAuthToken] = useState(null);
+    const {user} = useUser();
+
 
     const {
         formTitle,
@@ -86,6 +95,9 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
 
 
     const bkashDetails = paymentMethod.find( (method) => method.name === 'bkash')?.details;
+    const cashDetails = paymentMethod.find(
+        (method) => method.name === 'cash'
+    )?.details;
     const nagadDetails = paymentMethod.find(
         (method) => method.name === 'nagad'
     )?.details;
@@ -106,7 +118,6 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const [phoneWarningMessage, setPhoneWarningMessage] = useState(null);
     const [phoneValidMsg, setPhoneValidMsg] = useState(null);
     const [addressWarningMessage, setAddressWarningMessage] = useState(null);
-
     const { state, dispatch } = useContext(ProductContext);
     const { cartItems, cartTotal } = state;
     const [subTotal, setSubtotal] = useState(null);
@@ -115,6 +126,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     useEffect(() => {
         setSubtotal(cartTotal);
     }, [cartTotal]);
+
     useEffect(() => {
         setTotal(subTotal + shippingCost);
     }, [subTotal, shippingCost, cartTotal]);
@@ -131,6 +143,10 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
             setShippingCost(dhakaSub);
         }
     };
+
+    useEffect(() => {
+        setUserAuthToken(Cookies.get('userToken'));
+    }, [userAuthToken]);
 
     const handleApply = async () => {
         try {
@@ -285,11 +301,19 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
             currency: 'bdt',
             discount_amount: discountValue ? discountValue : 0,
             sub_total: subTotal,
+            create_account: isUser,
+
         };
 
         try {
             setOrderLoading(true);
-            const response = await orderPost(JSON.stringify(orderData));
+            const response = userAuthToken
+                ? await orderPost(
+                      JSON.stringify(orderData),
+                      decrypt(userAuthToken)
+                  )
+                : await orderPost(JSON.stringify(orderData));
+
             if (response.ok) {
                 setOrderLoading(false);
                 const responseData = await response.json();
@@ -372,22 +396,23 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                 <div className="lg:p-[30px] lg:rounded-[20px] lg:bg-white">
                                     <div className="grid gap-[18px] lg:gap-6">
                                         <Input
-                                            label={nameLabel}
+                                            label="Name"
                                             type="text"
                                             name="name"
-                                            placeholder={namePlaceholder}
+                                            placeholder="Enter your name"
+                                            defaultValue={user?.name || ''} // If `user.name` exists, it will be shown
                                             message={
                                                 nameWarningMessage
                                                     ? nameWarningMessage
                                                     : null
                                             }
-                                            required
                                         />
                                         <Input
                                             label={phoneLabel}
                                             type="number"
                                             name="phone"
                                             placeholder={phonePlaceholder}
+                                            defaultValue={user?.phone || ''} // Show user.phone if available
                                             message={
                                                 phoneWarningMessage
                                                     ? phoneWarningMessage
@@ -395,13 +420,16 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                             }
                                             required
                                         />
+
                                         <Input
                                             label={emailLabel}
                                             type="text"
                                             name="email"
                                             placeholder={emailPlaceholder}
+                                            defaultValue={user?.email || ''} // Show user.email if available
                                             optional={optional}
                                         />
+
                                         <div className="delivary-area">
                                             <label className="block text-gray-700 text-sm font-semibold mb-[6px]">
                                                 {areaLabel}
@@ -418,68 +446,78 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                     {insideDhaka} -{' '}
                                                     {insideDhakaDC > 0
                                                         ? `${insideDhakaDC} ${currency}`
-                                                        : { freeDelevery }}
+                                                        : freeDelevery}
                                                 </option>
                                                 <option value="outside_dhaka">
                                                     {outsideDhaka} -{' '}
                                                     {outsideDhakaDC > 0
                                                         ? `${outsideDhakaDC} ${currency}`
-                                                        : { freeDelevery }}
+                                                        : freeDelevery}
                                                 </option>
                                                 <option value="dhaka_sub_area">
                                                     {dhakaSubArea} -{' '}
                                                     {dhakaSub > 0 // dhakaSub hobe
                                                         ? `${dhakaSub} ${currency}`
-                                                        : { freeDelevery }}
+                                                        : freeDelevery}
                                                 </option>
                                             </select>
                                         </div>
-                                        <div>
-                                            <label className="block text-gray-700 text-sm font-semibold mb-[6px]">
-                                                {addressLabel}
-                                            </label>
-                                            <textarea
-                                                type="text"
-                                                name="address"
-                                                placeholder={addressPlaceholder}
-                                                message={
-                                                    addressWarningMessage
-                                                        ? addressWarningMessage
-                                                        : null
-                                                }
-                                                rows="3"
-                                                required
-                                                className="block w-full px-6 py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow"
-                                            />
-                                            <small
-                                                className={`mt-1 text-red-500 ${
-                                                    addressWarningMessage ===
-                                                        '' ||
-                                                    addressWarningMessage ===
-                                                        null ||
-                                                    addressWarningMessage
-                                                        ? ''
-                                                        : 'hidden'
-                                                }`}
-                                            >
-                                                {addressWarningMessage}
-                                            </small>
-                                        </div>
-                                        <div>
-                                            <label className="block text-gray-700 text-sm font-semibold mb-[6px]">
-                                                {noteLabel}
-                                                <span className="text-gray-600">
-                                                    ({optional})
-                                                </span>
-                                            </label>
-                                            <textarea
-                                                type="text"
-                                                name="spacial_instruction"
-                                                placeholder={notePlaceholder}
-                                                rows="3"
-                                                className="block w-full px-6 py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow"
-                                            />
-                                        </div>
+                                        <Input
+                                            label={addressLabel}
+                                            type="textarea"
+                                            name="address"
+                                            placeholder={addressPlaceholder}
+                                            defaultValue={user?.address || ''}
+                                            message={
+                                                addressWarningMessage || null
+                                            }
+                                            rows="3"
+                                            required
+                                        />
+                                        <Input
+                                            label={noteLabel}
+                                            type="textarea"
+                                            name="spacial_instruction"
+                                            placeholder={notePlaceholder}
+                                            optional={optional}
+                                            rows="3"
+                                        />
+
+                                        {!userAuthToken && (
+                                            <div className="auth-pass-box">
+                                                <div className="flex items-center mb-6 space-x-2">
+                                                    <Checkbox
+                                                        id="user-checkbox"
+                                                        onCheckedChange={
+                                                            setIsUser
+                                                        }
+                                                    />
+                                                    <label
+                                                        htmlFor="user-checkbox"
+                                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                    >
+                                                        Do you want to be a
+                                                        user?
+                                                    </label>
+                                                </div>
+                                                {isUser && (
+                                                    <div className="grid gap-5 pass-input-wrapper">
+                                                        <Input
+                                                            label="Password"
+                                                            type="password"
+                                                            name="password"
+                                                            placeholder="********"
+                                                        />
+                                                        <Input
+                                                            label="Confirm Password"
+                                                            type="password"
+                                                            name="password_confirmation"
+                                                            placeholder="********"
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -776,7 +814,11 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                             );
                                         })}
                                     </div>
-
+                                    {selectedPayment === 'cash' && (
+                                        <p className="pt-[30px] text-base text-gray-700 font-normal">
+                                            {cashDetails}
+                                        </p>
+                                    )}
                                     {(selectedPayment === 'bkash' ||
                                         selectedPayment === 'nagad') && (
                                         <div>

@@ -34,14 +34,25 @@ const Announcement = () => {
                     <div className="container">
                         <div className="flex items-center justify-between py-4">
                             {announcement?.textAnnounce?.marque ? (
-                                <marquee className="w-full text-white">
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: announcement?.textAnnounce
-                                                ?.text,
-                                        }}
-                                    />
-                                </marquee>
+                                <div className="flex items-center justify-between w-full gap-5 text-white">
+                                    <marquee className="w-full text-white">
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: announcement
+                                                    ?.textAnnounce?.text,
+                                            }}
+                                        />
+                                    </marquee>
+                                    {announcement?.is_countdown && (
+                                        <div>
+                                            <KarbarCountdown
+                                                endingDate={
+                                                    announcement?.end_date
+                                                }
+                                            />
+                                        </div>
+                                    )}
+                                </div>
                             ) : (
                                 <div className="flex items-center justify-between w-full gap-5 text-white">
                                     <div
@@ -100,7 +111,7 @@ const Announcement = () => {
                         open={isModalOpen}
                         onOpenChange={setIsModalOpen}
                     >
-                        <DialogContent className="max-w-[350px] sm:max-w-[800px] p-0 overflow-hidden border-0">
+                        <DialogContent className="max-w-[350px] max-h-[250px] sm:max-w-[800px] sm:max-h-[500px] p-0 overflow-hidden border-0">
                             <Link
                                 href={announcement?.modalAnnounce?.url}
                                 className=""
@@ -108,7 +119,7 @@ const Announcement = () => {
                                 <Image
                                     src={announcement?.modalAnnounce?.image}
                                     alt="announcement"
-                                    className="object-fill w-full h-auto"
+                                    className="object-fill w-full h-full"
                                     width={1920}
                                     height={1080}
                                 />

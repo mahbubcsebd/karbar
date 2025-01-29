@@ -9,24 +9,6 @@ import ProductCard from './ProductCard';
 import SectionTitle from './SectionTitle';
 import DaribProductLoader from './loader/DaribProductLoader';
 
-// const SkeletonLoader = () => (
-//     <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px] ">
-//         {Array.from({ length: 8 }).map((_, index) => (
-//             <div
-//                 key={index}
-//                 className="block w-full h-full overflow-hidden bg-white rounded-lg animate-pulse"
-//             >
-//                 <div className="block w-full h-[180px] sm:h-[373px] md:h-[232px] lg:h-[306px] xl:h-[281px] 1xl:h-[417px] 2xl:h-[337px] rounded-tl-lg rounded-tr-lg overflow-hidden relative"></div>
-//                 <div className="p-4 bg-white">
-//                     <div className="block h-4 mb-1 bg-gray-200"></div>
-//                     <div className="h-4 mb-2 bg-gray-200"></div>
-//                     <div className="h-10 bg-gray-200"></div>
-//                 </div>
-//             </div>
-//         ))}
-//     </div>
-// );
-
 const LatestProduct = () => {
     const { language, dictionary } = useDictionary();
     const { sectionTitle, seeMore } = dictionary.ProductCard;
@@ -77,10 +59,11 @@ const LatestProduct = () => {
                             <SectionTitle title={sectionTitle} />
                             {products.length > 0 ? (
                                 <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px] ">
-                                    {products.map((product) => (
+                                    {products.map((product, index) => (
                                         <ProductCard
                                             key={product.id}
                                             product={product}
+                                            isPriority={index < 4}
                                         />
                                     ))}
                                 </div>

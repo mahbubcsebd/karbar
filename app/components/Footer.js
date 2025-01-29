@@ -3,32 +3,48 @@
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CiLocationOn, CiMail } from 'react-icons/ci';
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
-import bkash from '../assets/icons/bkash.svg';
-import cod from '../assets/icons/cod.svg';
+import bkashIcon from '../assets/icons/bkash.svg';
+import codIcon from '../assets/icons/cod.svg';
 import footerBg from '../assets/icons/footer-bg.svg';
 import logo from '../assets/icons/footer-logo.svg';
 import karbar from '../assets/icons/karbar-logo.svg';
-import nagad from '../assets/icons/nagad.svg';
+import nagadIcon from '../assets/icons/nagad.svg';
 import useDictionary from '../hooks/useDictionary';
 import useSiteSetting from '../hooks/useSiteSetting';
+import getPages from '../utils/getPages';
 
 const Footer = () => {
     const [paymentMethod, setPaymentMethod] = useState([]);
+    const [pages, setPages] = useState([]);
     const { language, dictionary } = useDictionary();
     const { siteSetting, loading, error } = useSiteSetting();
 
-        useEffect(() => {
-            const fetchPaymentMethod = async () => {
+    const fetchPaymentMethod = useCallback(async () => {
+            try {
                 const paymentMethodData = await getPaymentMethod();
                 setPaymentMethod(paymentMethodData.data);
-            };
+            } catch (error) {
+                console.error('Error fetching payment methods:', error);
+            }
+        }, []);
 
+        const fetchPages = useCallback(async () => {
+            try {
+                const response = await getPages();
+                setPages(response.data);
+            } catch (error) {
+                console.error('Error fetching pages:', error);
+            }
+        }, []);
+
+        useEffect(() => {
             fetchPaymentMethod();
-        }, [language]);
+            fetchPages();
+        }, [fetchPaymentMethod, fetchPages]);
 
     const {
         contact,
@@ -55,6 +71,12 @@ const Footer = () => {
         footer_description,
     } = siteSetting;
 
+    const paymentIcons = {
+        'bkash': bkashIcon,
+        'nagad': nagadIcon,
+        'cod': codIcon
+    };
+
     return (
         <footer
             id="footer"
@@ -77,6 +99,8 @@ const Footer = () => {
                                         height={115}
                                         width={115}
                                         className="max-w-[115px] lg:max-w-[200px] md:w-auto h-auto max-h-[56px]"
+                                        loading="lazy"
+                                        quality={60}
                                     />
                                 </Link>
                             </div>
@@ -159,38 +183,16 @@ const Footer = () => {
                                 {company}
                             </h3>
                             <ul className="grid gap-4 md:gap-6">
-                                {/* <li>
-                                    <Link
-                                        className="text-lg font-normal text-gray-400"
-                                        href="#"
-                                    >
-                                        {aboutUs}
-                                    </Link>
-                                </li> */}
-                                <li>
-                                    <Link
-                                        className="text-lg font-normal text-gray-400"
-                                        href="/privacy-policy"
-                                    >
-                                        {privacyPolicy}
-                                    </Link>
-                                </li>
-                                {/* <li>
-                                    <Link
-                                        className="text-lg font-normal text-gray-400"
-                                        href="#"
-                                    >
-                                        {returnPolicy}
-                                    </Link>
-                                </li> */}
-                                <li>
-                                    <Link
-                                        className="text-lg font-normal text-gray-400"
-                                        href="/terms-and-conditions"
-                                    >
-                                        {termsAndConditions}
-                                    </Link>
-                                </li>
+                                {pages.map((page) => (
+                                    <li key={page.id}>
+                                        <Link
+                                            className="text-lg font-normal text-gray-400"
+                                            href={`/company/${page.slug}`}
+                                        >
+                                            {page.title}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                         <div>
@@ -253,6 +255,10 @@ const Footer = () => {
                                     src={karbar}
                                     alt="karbar"
                                     className="w-[65px] lg:w-[70px] pt-[4px]"
+                                    loading="lazy"
+                                    quality={60}
+                                    width={70}
+                                    height={30}
                                 />
                             </Link>
                         </p>
@@ -263,18 +269,17 @@ const Footer = () => {
                                 </p>
                                 <ul className="flex items-center gap-2">
                                     {paymentMethod.map((method) => {
-                                        const icon =
-                                            method.name === 'nagad'
-                                                ? nagad
-                                                : method.name === 'bkash'
-                                                ? bkash
-                                                : cod;
+                                        const icon = paymentIcons[method.name];
 
                                         return (
                                             <li key={method.id}>
                                                 <Image
                                                     src={icon}
                                                     alt={method.name}
+                                                    loading="lazy"
+                                                    quality={60}
+                                                    width={50}
+                                                    height={50}
                                                 />
                                             </li>
                                         );
@@ -294,18 +299,17 @@ const Footer = () => {
                                 </p>
                                 <ul className="flex items-center gap-2 w-[300px] overflow-hidden">
                                     {paymentMethod.map((method) => {
-                                        const icon =
-                                            method.name === 'nagad'
-                                                ? nagad
-                                                : method.name === 'bkash'
-                                                ? bkash
-                                                : cod;
+                                        const icon = paymentIcons[method.name];
 
                                         return (
                                             <li key={method.id}>
                                                 <Image
                                                     src={icon}
                                                     alt={method.name}
+                                                    loading="lazy"
+                                                    quality={60}
+                                                    width={50}
+                                                    height={50}
                                                 />
                                             </li>
                                         );
@@ -330,6 +334,10 @@ const Footer = () => {
                                     src={karbar}
                                     alt="karbar"
                                     className="w-[65px] lg:w-[70px] pt-[4px]"
+                                    loading="lazy"
+                                    quality={60}
+                                    width={70}
+                                    height={30}
                                 />
                             </Link>
                         </p>

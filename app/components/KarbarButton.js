@@ -1,5 +1,6 @@
 import useSiteSetting from '@/hooks/useSiteSetting';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 const KarbarButton = ({
     children,
@@ -64,15 +65,15 @@ const KarbarButton = ({
         }
     `;
 
-    const Component = asLink ? 'a' : 'button';
+    const Component = asLink ? Link : 'button';
 
     return (
         <>
             <style>{hoverStyles}</style>
             <Component
+                href={asLink ? href : undefined}
                 className={cn(baseStyles, 'custom-button', className)}
                 style={getStylesForVariant(variant)}
-                href={asLink ? href : undefined}
                 onClick={onClick}
                 disabled={disabled}
                 {...props}

@@ -24,6 +24,7 @@ import useAuth from '@/hooks/useAuth';
 import useDictionary from '@/hooks/useDictionary';
 import usePos from '@/hooks/usePos';
 import { getSiteSettings } from '@/utils/getSiteSettings';
+import { getPosUser } from '@/utils/pos/getPosUser';
 import { useEffect, useState } from 'react';
 import { BiSolidEdit } from 'react-icons/bi';
 import { FaMinus, FaPlus } from 'react-icons/fa';
@@ -62,6 +63,7 @@ const BillTable = ({
     const [card, setCard] = useState(0);
     const [due, setDue] = useState(0);
     const [partial, setPartial] = useState(0);
+    const [user, setUser] = useState(0);
 
     const { authToken } = useAuth();
     // Separate isOpen states for each field
@@ -100,6 +102,19 @@ const BillTable = ({
     const couponChange = (event) => {
         setCouponCode(event.target.value);
     };
+
+        useEffect(() => {
+            const fetchUser = async () => {
+                try {
+                    const userData = await getPosUser(authToken);
+                    setUser(userData.data);
+                } catch (error) {
+                    console.error('Failed to fetch pos user:', error);
+                }
+            };
+
+            fetchUser();
+        }, [authToken]);
 
     // setSubtotal(cartTotal);
     useEffect(() => {
@@ -383,7 +398,16 @@ const BillTable = ({
             payment_method: selectedMethod,
             shipping_address: shipping,
             note: note,
+            billed_by: user.id,
+            order_type: 'pos',
         };
+
+        if (selectedMethod === 'partial') {
+            orderData.paid_amount = formData.payment_amount;
+            orderData.due_amount = Math.abs(formData.change_amount);
+        } else if (selectedMethod === 'due') {
+            orderData.due_amount = grandTotal;
+        }
 
         try {
             // setOrderLoading(true);
@@ -748,7 +772,7 @@ const BillTable = ({
                         {selectedMethod === 'due' ? (
                             <button
                                 onClick={submitSaleHandler}
-                                className="w-full h-[64px] bg-[#4C20CD] text-white flex justify-center items-center gap-1 rounded-md"
+                                className="w-full text-sm h-12 md:h-[64px] bg-[#4C20CD] text-white flex justify-center items-center gap-1 rounded-md"
                             >
                                 <IoCartOutline />
                                 Sale
@@ -759,7 +783,7 @@ const BillTable = ({
                                 onOpenChange={setIsCardOpen}
                             >
                                 <DialogTrigger asChild>
-                                    <button className="w-full h-[64px] bg-[#4C20CD] text-white flex justify-center items-center gap-1 rounded-md">
+                                    <button className="w-full text-sm h-12 md:h-[64px] bg-[#4C20CD] text-white flex justify-center items-center gap-1 rounded-md">
                                         <IoCartOutline />
                                         Sale
                                     </button>
@@ -813,12 +837,12 @@ const BillTable = ({
                                                 {/* Change Amount Input */}
                                                 <div className="single-input">
                                                     <label className="block text-gray-700 text-sm font-semibold mb-[6px] capitalize">
-                                                        Change Amount
+                                                        {selectedMethod === 'partial' ? 'Due Amount' : 'Change Amount'}
                                                     </label>
                                                     <input
                                                         type="number"
                                                         name="change_amount"
-                                                        value={change_amount}
+                                                        value={selectedMethod === 'partial' ? Math.abs(change_amount) : change_amount}
                                                         placeholder="Enter change amount"
                                                         onChange={handleAmount}
                                                         readOnly

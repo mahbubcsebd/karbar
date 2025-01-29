@@ -1,5 +1,6 @@
 'use client';
 
+import AuthModal from '@/components/AuthModal';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -8,14 +9,18 @@ import { RxCross1 } from 'react-icons/rx';
 import logo from '../../../assets/icons/logo.svg';
 import useDictionary from '../../../hooks/useDictionary';
 import useSiteSetting from '../../../hooks/useSiteSetting';
+import AuthUser from '../../AuthUser';
 import HeaderCart from '../../HeaderCart';
 import LanguageSwitcher from '../../LanguageSwitcher';
+// import useUser from '../hooks/useUser';
+import useUser from '@/hooks/useUser';
 import AbayaHeaderSearch from './AbayaHeaderSearch';
 
 const AbayaHeader = () => {
     const [showSearchModal, setShowSearchModal] = useState(false);
     const { siteSetting, loading, error } = useSiteSetting();
     const { dictionary } = useDictionary();
+    const { user } = useUser();
 
     const handleSearch = () => {
         setShowSearchModal(!showSearchModal);
@@ -24,10 +29,10 @@ const AbayaHeader = () => {
     const { header_logo } = siteSetting;
 
     return (
-        <div className="mb-[90px]">
+        <div className="">
             <header
                 id="header"
-                className="header py-[17px] bg-gray-900 fixed top-0 left-0 w-full z-[99999999]"
+                className="header py-[17px] bg-gray-900 w-full z-[99999999]"
             >
                 <div className="header-area">
                     <div className="container">
@@ -67,6 +72,21 @@ const AbayaHeader = () => {
                             <div className="flex items-center gap-4">
                                 <LanguageSwitcher template="Template02" />
                                 <HeaderCart dictionary={dictionary.Header} />
+                                <div className="flex items-center gap-4">
+                                    {!user ? (
+                                        <div className="flex space-x-4">
+                                            <AuthModal>
+                                                <button className="px-5 py-3 text-base text-white capitalize bg-purple-900 rounded-md">
+                                                    Sign In
+                                                </button>
+                                            </AuthModal>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <AuthUser theme="dark" />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

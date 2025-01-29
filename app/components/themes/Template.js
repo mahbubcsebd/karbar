@@ -1,7 +1,6 @@
 'use client';
 
-import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
-import HomePreLoader from '../HomePreLoader';
+import { lazy, useCallback, useEffect, useState } from 'react';
 
 // Placeholder components
 const ErrorComponent = () => <div>Error loading theme component.</div>;
@@ -46,9 +45,7 @@ function Template({ template }) {
     return (
         <div>
             {Component && (
-                <Suspense fallback={<HomePreLoader />}>
-                    <Component />
-                </Suspense>
+                <Component />
             )}
         </div>
     );

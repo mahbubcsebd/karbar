@@ -6,7 +6,7 @@ const KarbarCountdown = ({ endingDate }) => {
 
     // Renderer callback with condition
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
-        const formatNumber = (num) => String(num).padStart(2, '0'); // Format numbers as 2 digits
+        const formatNumber = (num) => String(num).padStart(2, '0');
 
         if (completed) {
             return <Completionist />;

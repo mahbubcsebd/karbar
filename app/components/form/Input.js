@@ -5,6 +5,9 @@ const Input = ({
     placeholder,
     optional,
     message,
+    defaultValue = '', // Default value for input
+    rows,
+    required,
 }) => {
     return (
         <div className="single-input">
@@ -16,25 +19,34 @@ const Input = ({
                     )}
                 </label>
             )}
-            <input
-                type={type}
-                name={name}
-                placeholder={placeholder}
-                className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
-            />
-            {/* {message && ( */}
+            {type === 'textarea' ? (
+                <textarea
+                    name={name}
+                    placeholder={placeholder}
+                    defaultValue={defaultValue}
+                    rows={rows}
+                    required={required}
+                    className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
+                />
+            ) : (
+                <input
+                    type={type}
+                    name={name}
+                    placeholder={placeholder}
+                    defaultValue={defaultValue}
+                    required={required}
+                    className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
+                />
+            )}
             <small
                 className={`mt-1 text-red-500 ${
-                    message === '' ||
-                    message === null ||
-                    message
+                    message === '' || message === null || message
                         ? ''
                         : 'hidden'
                 }`}
             >
                 {message}
             </small>
-            {/* )} */}
         </div>
     );
 };

@@ -11,7 +11,7 @@ export async function getPrintInvoice(token, id) {
     });
 
     if (!res.ok) {
-        throw new Error('Failed to fetch pos categories');
+        throw new Error('Failed to fetch invoice');
     }
 
     return res.json();

@@ -16,7 +16,7 @@ const RecentSaleModal = ({ submitHandler, isOpen, setIsOpen }) => {
                 onOpenChange={setIsOpen}
             >
                 <DialogTrigger asChild>
-                    <button className="w-full h-[64px] bg-purple-900 text-white flex justify-center items-center gap-1 rounded-md">
+                    <button className="w-full text-sm h-12 md:h-[64px] bg-purple-900 text-white flex justify-center items-center gap-1 rounded-md">
                         {/* <PiPrinterDuotone /> */}
                         Recent Sale
                     </button>

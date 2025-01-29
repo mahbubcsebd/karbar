@@ -15,6 +15,8 @@ function HeaderThemes({ template }) {
             setComponent(lazy(() => import('../Header')));
         } else if (template === 'Template02') {
             setComponent(lazy(() => import('../template/abaya/AbayaHeader')));
+        } else if (template === 'Template06') {
+            setComponent(lazy(() => import('../template/template-six/HeaderSix')));
         } else {
             setComponent(lazy(() => import('../Header')));
         }

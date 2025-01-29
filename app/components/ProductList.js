@@ -10,12 +10,14 @@ import {
     useState,
 } from 'react';
 
+import BrandContext from '@/context/brandContext';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { IoOptions } from 'react-icons/io5';
 import SortContext from '../context/SortContext';
 import useDictionary from '../hooks/useDictionary';
 import SearchContext from '../reducer/SearchContext';
 import { getAllCategories } from '../utils/categories';
+import { getBrands } from '../utils/getBrands';
 import { getAllProduct } from '../utils/getProduct';
 import CategoryWiseFilter from './CategoryWiseFilter';
 import GlobalProductCard from './GlobalProductCard';
@@ -35,10 +37,13 @@ const ProductList = ({ category }) => {
     const [hasMore, setHasMore] = useState(true);
     const loaderRef = useRef(null);
     const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
     const { language, dictionary } = useDictionary();
     const router = useRouter();
     const { sortQuery, setSortQuery } = useContext(SortContext);
+    const { brandQuery, setBrandQuery } = useContext(BrandContext);
     const [sortValue, setSortValue] = useState(sortQuery);
+    const [brandValue, setBrandValue] = useState(sortQuery);
 
     // ----------------------------
     const pathname = usePathname();
@@ -64,7 +69,7 @@ const ProductList = ({ category }) => {
     const [subCategories, setSubCategories] = useState([]);
     // ----------------------------
 
-    const { sortBy, all, newArrival, bestSelling, discount } =
+    const { sortBy, brandsLang, all, newArrival, bestSelling, discount } =
         dictionary.ProductCard.SortBy;
 
     const memoizedProductsArray = useMemo(() => {
@@ -88,13 +93,24 @@ const ProductList = ({ category }) => {
         setSortQuery(event.target.value);
     };
 
+    const handleBrandChange = (event) => {
+        setBrandValue(event.target.value);
+        setBrandQuery(event.target.value);
+    };
+
     useEffect(() => {
         const fetchCategory = async () => {
             try {
                 const categoriesData = await getAllCategories(language);
+                const brandsData = await getBrands();
                 setCategories(categoriesData.data);
+                setCategories(categoriesData.data);
+                setBrands(brandsData.data);
+
+                console.log(brandsData.data);
             } catch (error) {
                 console.error('Failed to fetch products:', error);
+                console.error('Failed to fetch brands:', error);
             }
         };
 
@@ -112,7 +128,8 @@ const ProductList = ({ category }) => {
                     sortQuery,
                     searchQuery,
                     page,
-                    showProduct
+                    showProduct,
+                    brandQuery
                 );
                 const newProducts = productsData.data;
                 setTotalProduct(productsData.meta.total);
@@ -141,6 +158,7 @@ const ProductList = ({ category }) => {
         searchQuery,
         selectedSubCategory,
         page,
+        brandQuery,
     ]);
 
     const options = [
@@ -225,7 +243,7 @@ const ProductList = ({ category }) => {
                                 <IoOptions />
                             </div>
                             <div className="mt-[5px] hidden md:block">
-                                <p className="text-base text-gray-700 font-normal">
+                                <p className="text-base font-normal text-gray-700">
                                     Filter by:
                                 </p>
                             </div>
@@ -277,26 +295,57 @@ const ProductList = ({ category }) => {
                                 ))}
                             </ul> */}
                         </div>
-                        <div>
-                            <div className="flex items-center gap-2 min-w-[250px]">
-                                <p className="text-xs font-normal text-gray-700 lg:text-base">
-                                    {sortBy} :
-                                </p>
-                                <div className="">
-                                    <select
-                                        className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-600 border-0 rounded-md focus:outline-none focus:ring-0 mr-4 bg-gray-300 cursor-pointer"
-                                        value={sortValue}
-                                        onChange={handleSortChange}
-                                    >
-                                        {options.map((option) => (
+                        <div className="flex items-center gap-4">
+                            <div>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <p className="text-xs font-normal text-gray-700 lg:text-base">
+                                        {brandsLang} :
+                                    </p>
+                                    <div className="">
+                                        <select
+                                            className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-600 border-0 rounded-md focus:outline-none focus:ring-0 mr-4 bg-gray-300 cursor-pointer"
+                                            value={brandValue}
+                                            onChange={handleBrandChange}
+                                        >
                                             <option
-                                                key={option.value}
-                                                value={option.value}
+                                                key={0}
+                                                value='all'
                                             >
-                                                {option.label}
+                                                All Brand
                                             </option>
-                                        ))}
-                                    </select>
+                                            {brands.map((brand) => (
+                                                <option
+                                                    key={brand.id}
+                                                    value={brand.id}
+                                                >
+                                                    {brand.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex items-center gap-2 min-w-[250px]">
+                                    <p className="text-xs font-normal text-gray-700 lg:text-base">
+                                        {sortBy} :
+                                    </p>
+                                    <div className="">
+                                        <select
+                                            className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-600 border-0 rounded-md focus:outline-none focus:ring-0 mr-4 bg-gray-300 cursor-pointer"
+                                            value={sortValue}
+                                            onChange={handleSortChange}
+                                        >
+                                            {options.map((option) => (
+                                                <option
+                                                    key={option.value}
+                                                    value={option.value}
+                                                >
+                                                    {option.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>

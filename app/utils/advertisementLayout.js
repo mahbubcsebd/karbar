@@ -161,7 +161,7 @@ const getBlock4Layout = (layout, images, gap) => {
     return layouts[layout] || layouts.layout_1;
 };
 
-const renderBlock1Image = (ad, gap) => {
+const renderBlock1Image = (ad, gap, position) => {
     return (
         <Link
             href={ad.images[0].url}
@@ -174,12 +174,15 @@ const renderBlock1Image = (ad, gap) => {
                 width={1000}
                 height={600}
                 className="object-cover w-full h-full"
+                priority={position === 'home_top'}
+                loading={position === 'home_top' ? 'eager' : 'lazy'}
+                quality={75}
             />
         </Link>
     );
 };
 
-const renderBlock2Images = (ad, gap) => {
+const renderBlock2Images = (ad, gap, position) => {
     const layout = getBlock2Layout(ad.layout, ad.images, gap);
 
     return ad.images.map((imageData, index) => (
@@ -195,12 +198,15 @@ const renderBlock2Images = (ad, gap) => {
                 width={1000}
                 height={600}
                 className="object-cover w-full h-full"
+                priority={position === 'home_top'}
+                loading={position === 'home_top' ? 'eager' : 'lazy'}
+                quality={75}
             />
         </Link>
     ));
 };
 
-const renderBlock3Images = (ad, gap) => {
+const renderBlock3Images = (ad, gap, position) => {
     const layout = getBlock3Layout(ad.layout, ad.images, gap);
 
     if (
@@ -239,6 +245,13 @@ const renderBlock3Images = (ad, gap) => {
                                     width={1000}
                                     height={600}
                                     className="object-cover w-full h-full"
+                                    priority={position === 'home_top'}
+                                    loading={
+                                        position === 'home_top'
+                                            ? 'eager'
+                                            : 'lazy'
+                                    }
+                                    quality={75}
                                 />
                             </Link>
                             <Link
@@ -252,6 +265,13 @@ const renderBlock3Images = (ad, gap) => {
                                     width={1000}
                                     height={600}
                                     className="object-cover w-full h-full"
+                                    priority={position === 'home_top'}
+                                    loading={
+                                        position === 'home_top'
+                                            ? 'eager'
+                                            : 'lazy'
+                                    }
+                                    quality={75}
                                 />
                             </Link>
                         </div>
@@ -266,6 +286,11 @@ const renderBlock3Images = (ad, gap) => {
                                 width={1000}
                                 height={600}
                                 className="object-cover w-full h-full"
+                                priority={position === 'home_top'}
+                                loading={
+                                    position === 'home_top' ? 'eager' : 'lazy'
+                                }
+                                quality={75}
                             />
                         </Link>
                     </>
@@ -282,6 +307,11 @@ const renderBlock3Images = (ad, gap) => {
                                 width={1000}
                                 height={600}
                                 className="object-cover w-full h-full"
+                                priority={position === 'home_top'}
+                                loading={
+                                    position === 'home_top' ? 'eager' : 'lazy'
+                                }
+                                quality={75}
                             />
                         </Link>
                         <div className={layout[1]}>
@@ -296,6 +326,13 @@ const renderBlock3Images = (ad, gap) => {
                                     width={1000}
                                     height={600}
                                     className="object-cover w-full h-full"
+                                    priority={position === 'home_top'}
+                                    loading={
+                                        position === 'home_top'
+                                            ? 'eager'
+                                            : 'lazy'
+                                    }
+                                    quality={75}
                                 />
                             </Link>
                             <Link
@@ -309,6 +346,13 @@ const renderBlock3Images = (ad, gap) => {
                                     width={1000}
                                     height={600}
                                     className="object-cover w-full h-full"
+                                    priority={position === 'home_top'}
+                                    loading={
+                                        position === 'home_top'
+                                            ? 'eager'
+                                            : 'lazy'
+                                    }
+                                    quality={75}
                                 />
                             </Link>
                         </div>
@@ -336,7 +380,7 @@ const renderBlock3Images = (ad, gap) => {
     ));
 };
 
-const renderBlock4Images = (ad, gap) => {
+const renderBlock4Images = (ad, gap, position) => {
     const layout = getBlock4Layout(ad.layout, ad.images);
 
     if (['layout_4', 'layout_5'].includes(ad.layout)) {
@@ -356,6 +400,9 @@ const renderBlock4Images = (ad, gap) => {
                             width={1000}
                             height={600}
                             className="object-cover w-full h-full"
+                            priority={position === 'home_top'}
+                            loading={position === 'home_top' ? 'eager' : 'lazy'}
+                            quality={75}
                         />
                     </Link>
                     <Link
@@ -369,6 +416,9 @@ const renderBlock4Images = (ad, gap) => {
                             width={1000}
                             height={600}
                             className="object-cover w-full h-full"
+                            priority={position === 'home_top'}
+                            loading={position === 'home_top' ? 'eager' : 'lazy'}
+                            quality={75}
                         />
                     </Link>
                     <div className={layout[2]}>
@@ -383,6 +433,11 @@ const renderBlock4Images = (ad, gap) => {
                                 width={1000}
                                 height={600}
                                 className="object-cover w-full h-full"
+                                priority={position === 'home_top'}
+                                loading={
+                                    position === 'home_top' ? 'eager' : 'lazy'
+                                }
+                                quality={75}
                             />
                         </Link>
                         <Link
@@ -396,6 +451,11 @@ const renderBlock4Images = (ad, gap) => {
                                 width={1000}
                                 height={600}
                                 className="object-cover w-full h-full"
+                                priority={position === 'home_top'}
+                                loading={
+                                    position === 'home_top' ? 'eager' : 'lazy'
+                                }
+                                quality={75}
                             />
                         </Link>
                     </div>
@@ -429,6 +489,11 @@ const renderBlock4Images = (ad, gap) => {
                                 width={1000}
                                 height={600}
                                 className="object-cover w-full h-full"
+                                priority={position === 'home_top'}
+                                loading={
+                                    position === 'home_top' ? 'eager' : 'lazy'
+                                }
+                                quality={75}
                             />
                         </Link>
                     </div>
@@ -443,6 +508,9 @@ const renderBlock4Images = (ad, gap) => {
                             width={1000}
                             height={600}
                             className="object-cover w-full h-full"
+                            priority={position === 'home_top'}
+                            loading={position === 'home_top' ? 'eager' : 'lazy'}
+                            quality={75}
                         />
                     </Link>
                     <Link
@@ -456,6 +524,9 @@ const renderBlock4Images = (ad, gap) => {
                             width={1000}
                             height={600}
                             className="object-cover w-full h-full"
+                            priority={position === 'home_top'}
+                            loading={position === 'home_top' ? 'eager' : 'lazy'}
+                            quality={75}
                         />
                     </Link>
                 </>
@@ -476,6 +547,9 @@ const renderBlock4Images = (ad, gap) => {
                 width={1000}
                 height={600}
                 className="object-cover w-full h-full"
+                priority={position === 'home_top'}
+                loading={position === 'home_top' ? 'eager' : 'lazy'}
+                quality={75}
             />
         </Link>
     ));

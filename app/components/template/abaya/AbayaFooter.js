@@ -10,42 +10,45 @@ import nagad from '@/assets/icons/nagad.svg';
 import youtube from '@/assets/icons/youtube.svg';
 import useDictionary from '@/hooks/useDictionary';
 import useSiteSetting from '@/hooks/useSiteSetting';
+import getPages from "@/utils/getPages";
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CiLocationOn, CiMail } from 'react-icons/ci';
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa6';
 import { FiPhoneCall } from 'react-icons/fi';
 
 const AbayaFooter = () => {
-    const { language, dictionary } = useDictionary();
-    const { siteSetting, loading, error } = useSiteSetting();
+    const { dictionary } = useDictionary();
+    const { siteSetting } = useSiteSetting();
+    const [pages, setPages] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState([]);
 
-    useEffect(() => {
-        const fetchPaymentMethod = async () => {
+    const fetchPaymentMethod = useCallback(async () => {
+        try {
             const paymentMethodData = await getPaymentMethod();
-
             setPaymentMethod(paymentMethodData.data);
-        };
-
-        fetchPaymentMethod();
+        } catch (error) {
+            console.error('Error fetching payment methods:', error);
+        }
     }, []);
 
-    const {
-        contact,
-        footerDesc,
-        company,
-        aboutUs,
-        privacyPolicy,
-        returnPolicy,
-        termsAndConditions,
-        copyRight,
-        payment,
-        socialMedia,
-        developBy,
-    } = dictionary.Footer;
+    const fetchPages = useCallback(async () => {
+        try {
+            const response = await getPages();
+            setPages(response.data);
+        } catch (error) {
+            console.error('Error fetching pages:', error);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchPaymentMethod();
+        fetchPages();
+    }, [fetchPaymentMethod, fetchPages]);
+
+    const { contact, payment, socialMedia } = dictionary.Footer;
 
     const {
         title,
@@ -86,22 +89,16 @@ const AbayaFooter = () => {
                             <div className="grid items-center justify-between gap-3 lg:grid-cols-3 lg:flex-row lg:gap-4">
                                 <div>
                                     <ul className="grid gap-3">
-                                        <li>
-                                            <Link
-                                                href="/terms-and-conditions"
-                                                className="text-base font-normal text-gray-300 lg:text-lg"
-                                            >
-                                                {termsAndConditions}
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="/privacy-policy"
-                                                className="text-base font-normal text-gray-300 lg:text-lg"
-                                            >
-                                                {privacyPolicy}
-                                            </Link>
-                                        </li>
+                                        {pages.map((page) => (
+                                            <li key={page.id}>
+                                                <Link
+                                                    className="text-lg font-normal text-gray-400"
+                                                    href={`/company/${page.slug}`}
+                                                >
+                                                    {page.title}
+                                                </Link>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                                 <div className="grid gap-3">
@@ -111,7 +108,7 @@ const AbayaFooter = () => {
                                                 <FiPhoneCall />
                                             </span>
                                         </p>
-                                        {phone ? phone : '01896-088855'}
+                                        {phone ? phone : 'N/A'}
                                     </div>
                                     <div className="flex items-center gap-2 text-base font-normal text-gray-300 lg:text-lg">
                                         <p>

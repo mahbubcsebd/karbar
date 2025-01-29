@@ -26,11 +26,15 @@
         "our": "Our",
         "product": "Product"
     },
+    "TemplateSix": {
+        "ourFoodMenuTitle": "Our Food Menu"
+    },
     "Faqs": {
         "faqTitle": "Some Common Questions"
     },
     "Testimonial": {
-        "testimonialTitle": "Customer Reviews"
+        "testimonialTitle": "Customer Reviews",
+        "customerSay": "What Our Customer Says"
     },
     "RecentViewed": {
         "recentTitle": "Recently Viewed"
@@ -43,11 +47,13 @@
     },
     "ProductCard": {
         "seeDetails": "See Details",
+        "stockOut": "Out of Stock",
         "priceCurrency": "Tk",
         "seeMore": "See More",
         "sectionTitle": "Latest Product",
         "SortBy": {
             "sortBy": "Sort By",
+            "brandsLang": "Brand",
             "all": "All Product",
             "newArrival": "New Arrival",
             "bestSelling": "Best Selling",

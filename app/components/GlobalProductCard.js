@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
 // import { useContext } from "react";
+import useSiteSetting from '@/hooks/useSiteSetting';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import noAvailableImg from '../assets/icons/no-available.svg';
@@ -15,6 +16,7 @@ const GlobalProductCard = ({ product }) => {
     const productCardRef = useRef(null);
     const [width, setWidth] = useState(0);
     const { dictionary } = useDictionary();
+    const { siteSetting, loading, error } = useSiteSetting();
 
     const { priceCurrency, seeDetails } = dictionary.ProductCard;
 
@@ -53,6 +55,12 @@ const GlobalProductCard = ({ product }) => {
         }
     };
 
+    function calculateDiscount(unitPrice, salePrice) {
+        const discount = ((unitPrice - salePrice) / unitPrice) * 100;
+        return Math.round(discount);
+        // return discount % 1 === 0 ? discount.toFixed(0) : discount.toFixed(2);
+    }
+
     return (
         <div
             ref={productCardRef}
@@ -69,9 +77,16 @@ const GlobalProductCard = ({ product }) => {
                     height={320}
                     className="object-cover w-full h-full"
                 />
+                {sale_price > 0 && (
+                    <div
+                        className={`absolute top-3 left-3 px-[14px] py-[10px] rounded-full text-[10px] bg-white shadow-md`}
+                    >
+                        {calculateDiscount(unit_price, sale_price)}% Off
+                    </div>
+                )}
                 {stock < 1 && (
                     <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">
-                        স্টক আউট
+                        Out of stock
                     </div>
                 )}
             </Link>
@@ -101,14 +116,10 @@ const GlobalProductCard = ({ product }) => {
                         href={`/products/${slug}`}
                         className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-[4px]"
                     >
-                        {seeDetails}
+                        {siteSetting.button_text
+                            ? siteSetting.button_text
+                            : 'Order Now'}
                     </KarbarButton>
-                    {/* <Link
-                        href={`/products/${slug}`}
-                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal text-white bg-gray-900 rounded-[4px] product-button"
-                    >
-                        {seeDetails}
-                    </Link> */}
                 </div>
             </div>
         </div>

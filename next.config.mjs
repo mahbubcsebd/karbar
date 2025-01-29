@@ -3,8 +3,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        formats: ['image/webp'],
+        minimumCacheTTL: 60,
         // unoptimized: true,
-        formats: ['image/avif', 'image/webp'],
         // domains: [
         //     'admin.daarib.com',
         //     'shop.uibarn.com',
@@ -43,7 +46,7 @@ const nextConfig = {
             },
             {
                 protocol: 'http',
-                hostname: '192.168.0.124',
+                hostname: '192.168.0.149',
             },
             {
                 protocol: 'https',
@@ -52,6 +55,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'www.facebook.com"',
+            },
+            {
+                protocol: 'https',
+                hostname: 'admin.dhakaibd.com"',
             },
         ],
     },

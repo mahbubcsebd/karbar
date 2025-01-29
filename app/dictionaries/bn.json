@@ -26,11 +26,15 @@
         "our": "আমাদের",
         "product": "পণ্য"
     },
+    "TemplateSix": {
+        "ourFoodMenuTitle": "আমাদের খাবারের মেনু"
+    },
     "Faqs": {
         "faqTitle": "সাধারণ জিজ্ঞাসা"
     },
     "Testimonial": {
-        "testimonialTitle": "ক্রেতার রিভিউ"
+        "testimonialTitle": "ক্রেতার রিভিউ",
+        "customerSay": "আমাদের গ্রাহক কী বলছেন"
     },
     "RecentViewed": {
         "recentTitle": "সম্প্রতি দেখা"
@@ -43,11 +47,13 @@
     },
     "ProductCard": {
         "seeDetails": "বিস্তারিত দেখুন",
+        "stockOut": "স্টক আউট",
         "priceCurrency": "মূল্য",
         "seeMore": "আরো দেখুন",
         "sectionTitle": "নতুন প্রোডাক্ট",
         "SortBy": {
             "sortBy": "সর্ট করুন",
+            "brandsLang": "ব্র্যান্ড",
             "all": "সবগুলো",
             "newArrival": "নিউ এরাইভাল",
             "bestSelling": "বেস্ট সেলিং",

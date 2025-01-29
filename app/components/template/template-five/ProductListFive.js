@@ -150,10 +150,10 @@ const ProductListFive = () => {
                                 <button
                                     onClick={handleAllFilter}
                                     type="button"
-                                    className={`whitespace-nowrap text-xs xl:text-2xl font-normal text-gray-500  transition duration-150 ${
+                                    className={`whitespace-nowrap text-xs xl:text-2xl font-normal transition duration-150 ${
                                         selectedCategory == 'all'
                                             ? 'border-b border-[#2A51C6] text-[#2A51C6]'
-                                            : ''
+                                            : 'text-gray-500'
                                     }`}
                                 >
                                     {dictionary.Global.all}
@@ -166,10 +166,10 @@ const ProductListFive = () => {
                                             handleCategory(category.slug)
                                         }
                                         type="button"
-                                        className={`whitespace-nowrap text-xs xl:text-2xl font-normal text-gray-500  transition duration-150 ${
+                                        className={`whitespace-nowrap text-xs xl:text-2xl font-normal transition duration-150 ${
                                             selectedCategory == category.slug
                                                 ? 'border-b border-[#2A51C6] text-[#2A51C6]'
-                                                : ''
+                                                : 'text-gray-500'
                                         }`}
                                     >
                                         {category.name}

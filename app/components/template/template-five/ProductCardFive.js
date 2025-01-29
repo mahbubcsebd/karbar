@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import noAvailableImg from '../../../assets/icons/no-available.svg';
 import { ProductContext } from '../../../context/cartContext';
 import useDictionary from '../../../hooks/useDictionary';
+import useSiteSetting from '../../../hooks/useSiteSetting';
 import KarbarButton from '../../KarbarButton';
 // import { ProductContext } from "../context/cartContext";
 
@@ -15,6 +16,7 @@ const  ProductCardFive = ({ product }) => {
     const productCardRef = useRef(null);
     const [width, setWidth] = useState(0);
     const { dictionary } = useDictionary();
+    const { siteSetting, loading, error } = useSiteSetting();
 
     const { priceCurrency, seeDetails } = dictionary.ProductCard;
 
@@ -53,6 +55,12 @@ const  ProductCardFive = ({ product }) => {
         }
     };
 
+function calculateDiscount(unitPrice, salePrice) {
+    const discount = ((unitPrice - salePrice) / unitPrice) * 100;
+    return Math.round(discount);
+    // return discount % 1 === 0 ? discount.toFixed(0) : discount.toFixed(2);
+}
+
     return (
         <div
             ref={productCardRef}
@@ -69,14 +77,18 @@ const  ProductCardFive = ({ product }) => {
                     height={320}
                     className="object-cover w-full h-full"
                 />
-                <div
-                    className={`absolute top-2 left-2 lg:top-3 lg:left-3 px-[10px] py-[6px] lg:px-[14px] lg:py-[10px] rounded text-[10px] bg-white shadow-md`}
-                >
-                    <p className="text-[#DC2626] text-semibold">20% Off</p>
-                </div>
+                {sale_price > 0 && (
+                    <div
+                        className={`absolute top-2 left-2 lg:top-3 lg:left-3 px-[10px] py-[6px] lg:px-[14px] lg:py-[10px] rounded text-[10px] bg-white shadow-md`}
+                    >
+                        <p className="text-[#DC2626] text-semibold">
+                            {calculateDiscount(unit_price, sale_price)}% Off
+                        </p>
+                    </div>
+                )}
                 {stock < 1 && (
                     <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">
-                        স্টক আউট
+                        Out of stock
                     </div>
                 )}
             </Link>
@@ -107,14 +119,8 @@ const  ProductCardFive = ({ product }) => {
                         variant="outline"
                         className="w-full block text-center py-[10px] px-5 md:py-3 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-lg"
                     >
-                        {seeDetails}
+                        {siteSetting.button_text ? siteSetting.button_text : 'Order Now'}
                     </KarbarButton>
-                    {/* <Link
-                        href={`/products/${slug}`}
-                        className="w-full block text-center py-[10px] px-5 md:py-3 text-[10px] sm:text-base md:text-xs lg:text-base font-normal text-gray-600 bg-transparent hover:bg-[#2A51C6] border border-gray-600 hover:border-[#2A51C6] hover:text-white rounded-lg product-button"
-                    >
-                        {seeDetails}
-                    </Link> */}
                 </div>
             </div>
         </div>

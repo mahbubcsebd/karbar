@@ -8,9 +8,10 @@ export async function getAllProduct(
     search = '',
     page = 1,
     perPage = 12,
+    brandId= 'all'
 ) {
     const res = await fetch(
-        `${baseUrl}/${lang}/products?search=${search}&category=${category}&sub_category=${subCategory}&page=${page}&perPage=${perPage}&sort_by=${sort_by}`,
+        `${baseUrl}/${lang}/products?search=${search}&category=${category}&sub_category=${subCategory}&page=${page}&perPage=${perPage}&sort_by=${sort_by}&brand_id=${brandId}`,
         { cache: 'no-store' }
     );
 

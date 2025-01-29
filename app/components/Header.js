@@ -8,6 +8,9 @@ import { RxCross1 } from 'react-icons/rx';
 import logo from '../assets/icons/logo.svg';
 import useDictionary from '../hooks/useDictionary';
 import useSiteSetting from '../hooks/useSiteSetting';
+import useUser from '../hooks/useUser';
+import AuthModal from './AuthModal';
+import AuthUser from './AuthUser';
 import HeaderCart from './HeaderCart';
 import HeaderSearch from './HeaderSearch';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -16,6 +19,7 @@ const Header = () => {
     const [showSearchModal, setShowSearchModal] = useState(false);
     const { siteSetting, loading, error } = useSiteSetting();
     const { dictionary } = useDictionary();
+    const {user} = useUser();
 
     const handleSearch = () => {
         setShowSearchModal(!showSearchModal);
@@ -25,8 +29,8 @@ const Header = () => {
 
     return (
         <div
-            // className="mb-[76px] lg:mb-[90px]"
-            >
+        // className="mb-[76px] lg:mb-[90px]"
+        >
             <header
                 id="header"
                 // className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1] fixed top-0 left-0 w-full z-[9999999999999]"
@@ -35,18 +39,6 @@ const Header = () => {
                 <div className="header-area">
                     <div className="container">
                         <div className="flex items-center justify-between header-content">
-                            {/* <div className="relative lg:hidden">
-                              <button
-                                  onClick={handleSearch}
-                                  className="absolute left-0 text-2xl text-purple-900 -translate-y-1/2 top-1/2 "
-                              >
-                                  {showSearchModal ? (
-                                      <RxCross1 />
-                                  ) : (
-                                      <FiSearch />
-                                  )}
-                              </button>
-                          </div> */}
                             <div
                                 className={`header-logo ${
                                     showSearchModal ? 'hidden' : 'block'
@@ -74,18 +66,6 @@ const Header = () => {
                                         dictionary={dictionary.Header}
                                     />
                                 )}
-                                {/* <div className="relative lg:hidden">
-                                  <button
-                                      onClick={handleSearch}
-                                      className="absolute left-0 text-2xl text-purple-900 -translate-y-1/2 top-1/2 "
-                                  >
-                                      {showSearchModal ? (
-                                          <RxCross1 />
-                                      ) : (
-                                          <FiSearch />
-                                      )}
-                                  </button>
-                              </div> */}
                                 <div className="relative lg:hidden">
                                     <button
                                         type="button"
@@ -98,6 +78,21 @@ const Header = () => {
                                             <FiSearch />
                                         )}
                                     </button>
+                                </div>
+                                <div className="flex gap-4 items-center">
+                                    {!user ? (
+                                        <div className="flex space-x-4">
+                                            <AuthModal>
+                                                <button className="px-5 py-3 bg-purple-900 rounded-md text-base text-white capitalize">
+                                                    Sign In
+                                                </button>
+                                            </AuthModal>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <AuthUser />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

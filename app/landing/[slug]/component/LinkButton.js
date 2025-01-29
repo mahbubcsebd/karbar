@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import React from 'react';
 
-const LinkButton = ({ button_color , button_text }) => {
+const LinkButton = ({ button_color = '#4C20CD', button_text }) => {
     // Convert hex color to RGB for style computation
     const hexToRgb = (hex) => {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -46,7 +45,7 @@ const LinkButton = ({ button_color , button_text }) => {
                             hover:text-[var(--button-color)]
                         `}
         >
-            {button_text}
+            {button_text || 'Shop Now'}
         </Link>
     );
 };

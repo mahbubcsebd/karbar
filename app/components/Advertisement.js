@@ -68,13 +68,13 @@ const Advertisement = ({ position }) => {
                     >
                         {ad.block_style === 'block_1' &&
                         ad.layout === 'layout_1'
-                            ? renderBlock1Image(ad, ad.gap)
+                            ? renderBlock1Image(ad, ad.gap, position)
                             : ad.block_style === 'block_2'
-                            ? renderBlock2Images(ad, ad.gap)
+                            ? renderBlock2Images(ad, ad.gap, position)
                             : ad.block_style === 'block_3'
-                            ? renderBlock3Images(ad, ad.gap)
+                            ? renderBlock3Images(ad, ad.gap, position)
                             : ad.block_style === 'block_4'
-                            ? renderBlock4Images(ad, ad.gap)
+                            ? renderBlock4Images(ad, ad.gap, position)
                             : ad.images.map((imageData, index) => (
                                   <Link
                                       key={index}
@@ -91,6 +91,13 @@ const Advertisement = ({ position }) => {
                                           width={1000}
                                           height={600}
                                           className="object-cover"
+                                          priority={position === 'home_top'}
+                                          loading={
+                                              position === 'home_top'
+                                                  ? 'eager'
+                                                  : 'lazy'
+                                          }
+                                          quality={75}
                                       />
                                   </Link>
                               ))}

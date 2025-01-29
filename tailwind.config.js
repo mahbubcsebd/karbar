@@ -117,6 +117,7 @@ module.exports = {
             },
             fontFamily: {
                 poppins: ['Poppins', 'sans-serif'],
+                cormorant: ['Cormorant Upright', 'sans-serif'],
             },
             keyframes: {
                 'accordion-down': {

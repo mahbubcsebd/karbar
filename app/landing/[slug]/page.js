@@ -1,11 +1,11 @@
 // import landingBg from "@/assets/images/landing-banner-bg.svg";
-import CheckoutPage from '@/components/CheckoutPage';
 import Testimonials from '@/components/Testimonials';
 import { getLanding } from '@/utils/getLanding';
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
 import { getSiteSettings } from '@/utils/getSiteSettings';
 import { getTestimonials } from '@/utils/getTestimonial';
 import LandingBanner from './component/LandingBanner';
+import LandingCheckoutPage from './component/LandingCheckoutPage';
 import LandingChoose from './component/LandingChoose';
 import LandingDescription from './component/LandingDescription';
 import LandingShopWithUs from './component/LandingShopWithUs';
@@ -66,6 +66,11 @@ const LandingPage = async ({params : {slug}}) => {
         products,
         button_text,
         button_color,
+        package_title,
+        is_combo_product,
+        is_multiple_quantity_allow,
+        combo,
+        is_coupon_field_visible,
     } = landingData.data;
 
     return (
@@ -96,10 +101,17 @@ const LandingPage = async ({params : {slug}}) => {
                 button_text={button_text}
                 button_color={button_color}
             />
-            <OurPackages products={products} />
-            <CheckoutPage
+            {products.length > 0 && <OurPackages
+                package_title={package_title}
+                products={products}
+            />}
+            <LandingCheckoutPage
                 siteSettings={siteSettings.data}
                 paymentMethod={paymentMethod.data}
+                is_multiple_quantity_allow={is_multiple_quantity_allow}
+                is_combo_product={is_combo_product}
+                combo={combo}
+                is_coupon_field_visible={is_coupon_field_visible}
             />
         </div>
     );

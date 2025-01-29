@@ -1,7 +1,7 @@
 import getTemplate from '@/utils/getTemplate';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSiteSetting from '../hooks/useSiteSetting';
 import { getMultipleBanner } from '../utils/getBanner';
 
@@ -24,7 +24,7 @@ const MultipleCampain = () => {
         }
     }, [siteSetting]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p></p>;
     if (error) return <p>Error: {error}</p>;
 
     if (!banner) {
