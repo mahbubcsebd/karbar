@@ -90,7 +90,7 @@ const AbayaProductCard = ({ product }) => {
                     <span
                         className={`inline-block ${
                             sale_price > 0
-                                ? 'line-through text-red-500 text-sm'
+                                ? 'ine-through text-red-700 text-sm'
                                 : ''
                         }`}
                     >

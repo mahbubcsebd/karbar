@@ -77,15 +77,16 @@ const HeaderSearch = ({ showSearchModal, setShowSearchModal, dictionary }) => {
                         id="header-search"
                         value={search}
                         onChange={handleInputChange}
-                        className="w-full h-full block pl-[45px] pr-[14px] py-3 bg-white border border-[#D14BF8] text-gray-600 placeholder:text-gray-500 placeholder:text-base outline-none rounded-full search-shadow"
+                        className="w-full h-full block pl-[60px] pr-[14px] py-4 bg-white border border-[#D14BF8] text-gray-600 placeholder:text-gray-500 placeholder:text-base outline-none rounded-full search-shadow"
                         placeholder={dictionary.searchPlaceholder}
                     />
                     <button
                         type="submit"
                         onClick={handleSearch}
-                        className="absolute top-1/2 -translate-y-1/2 left-[18px] text-gray-500 text-xl font-normal flex items-center"
+                        aria-label="Search"
+                        className="absolute top-1/2 -translate-y-1/2 left-[12px] text-gray-500 text-xl font-normal flex items-center justify-center w-[44px] h-[44px] hover:bg-gray-100 rounded-full transition-colors"
                     >
-                        <IoSearchOutline />
+                        <IoSearchOutline className="text-2xl" />
                     </button>
                 </form>
                 {search && search.trim().length > 0 && (
