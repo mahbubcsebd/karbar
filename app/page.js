@@ -7,6 +7,7 @@ export async function generateMetadata() {
 
     return {
         title: `${siteSetting.data.title} | Home`,
+        description: siteSetting.data.footer_description,
         icons: {
             icon: siteSetting.data.fev_icon,
             apple: siteSetting.data.fev_icon,
@@ -21,9 +22,15 @@ export async function generateMetadata() {
                     url: siteSetting.data.header_logo,
                     width: 1200,
                     height: 630,
-                    alt: 'Karbar Logo',
+                    alt: siteSetting.data.title,
                 },
             ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: siteSetting.data.title,
+            description: siteSetting.data.footer_description,
+            images: [siteSetting.data.header_logo],
         },
     };
 }
