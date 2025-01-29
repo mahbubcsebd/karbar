@@ -76,6 +76,7 @@ const Announcement = () => {
                             <button
                                 onClick={() => setIsTextOpen(false)}
                                 className="ml-4 text-white"
+                                aria-label="Close announcement"
                             >
                                 <X />
                             </button>
@@ -86,9 +87,8 @@ const Announcement = () => {
             {announcement?.bannerAnnounce && isBannerOpen && (
                 <div className="relative overflow-hidden">
                     <button
-                        onClick={() => setIsTextOpen(false)}
-                        className="ml-4 text-white"
-                        aria-label="Close announcement"
+                        className="absolute z-50 top-4 right-4"
+                        onClick={() => setIsBannerOpen(false)}
                     >
                         <X />
                     </button>

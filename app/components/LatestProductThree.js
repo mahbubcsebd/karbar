@@ -66,6 +66,7 @@ const LatestProductThree = () => {
                                 onClick={() => swiperRef.current?.slidePrev()}
                                 type="button"
                                 className="w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-base rounded-full flex justify-center items-center text-gray-900 bg-white ${`swiper-button-prev-latest"
+                                aria-label="slider prev button"
                             >
                                 <FaArrowLeftLong />
                             </button>
@@ -73,6 +74,7 @@ const LatestProductThree = () => {
                                 onClick={() => swiperRef.current?.slideNext()}
                                 type="button"
                                 className="w-8 h-8 sm:w-10 sm:h-10 r text-xs sm:text-base rounded-full flex justify-center items-center text-gray-900 bg-white swiper-button-next-latest"
+                                aria-label="slider next button"
                             >
                                 <FaArrowRightLong />
                             </button>

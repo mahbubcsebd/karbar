@@ -301,6 +301,7 @@ const FooterSix = () => {
                                                     }`}
                                                     rel="noopener noreferrer"
                                                     target="_blank"
+                                                    aria-label="facebook url"
                                                 >
                                                     <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
                                                         <FaFacebookF />
@@ -318,6 +319,7 @@ const FooterSix = () => {
                                                     }`}
                                                     rel="noopener noreferrer"
                                                     target="_blank"
+                                                    aria-label="instagram url"
                                                 >
                                                     <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
                                                         <FaInstagram />
@@ -335,6 +337,7 @@ const FooterSix = () => {
                                                     }`}
                                                     rel="noopener noreferrer"
                                                     target="_blank"
+                                                    aria-label="youtube url"
                                                 >
                                                     <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
                                                         <FaYoutube />
@@ -352,6 +355,7 @@ const FooterSix = () => {
                                                     }`}
                                                     rel="noopener noreferrer"
                                                     target="_blank"
+                                                    aria-label="tiktok url"
                                                 >
                                                     <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
                                                         <FaTiktok />

@@ -56,19 +56,20 @@ const HeaderSearch = ({ showSearchModal, setShowSearchModal, dictionary }) => {
                         className="w-full h-full block pl-[45px] pr-[14px] py-3 bg-white border border-[#D14BF8] text-gray-600 placeholder:text-gray-500 placeholder:text-base outline-none rounded-full search-shadow"
                         placeholder={dictionary.searchPlaceholder}
                     />
-                    {
-                        search && <button
+                    {search && (
+                        <button
                             type="button"
                             onClick={() => setSearch('')}
                             className="absolute top-1/2 -translate-y-1/2 right-[18px] text-gray-500 text-xl font-normal flex items-center"
                         >
                             <RxCross2 />
                         </button>
-                    }
+                    )}
                     <button
                         type="submit"
                         onClick={handleSearch}
                         className="absolute top-1/2 -translate-y-1/2 left-[18px] text-gray-500 text-xl font-normal flex items-center"
+                        aria-label="product search button"
                     >
                         <IoSearchOutline />
                     </button>

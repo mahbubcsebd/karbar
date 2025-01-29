@@ -118,6 +118,7 @@ const Footer = () => {
                                             }`}
                                             rel="noopener noreferrer"
                                             target="_blank"
+                                            aria-label="facebook url"
                                         >
                                             <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
                                                 <FaFacebookF />
@@ -135,6 +136,7 @@ const Footer = () => {
                                             }`}
                                             rel="noopener noreferrer"
                                             target="_blank"
+                                            aria-label="instagram url"
                                         >
                                             <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
                                                 <FaInstagram />
@@ -152,6 +154,7 @@ const Footer = () => {
                                             }`}
                                             rel="noopener noreferrer"
                                             target="_blank"
+                                            aria-label="youtube url"
                                         >
                                             <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
                                                 <FaYoutube />
@@ -169,6 +172,7 @@ const Footer = () => {
                                             }`}
                                             rel="noopener noreferrer"
                                             target="_blank"
+                                            aria-label="tiktok url"
                                         >
                                             <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
                                                 <FaTiktok />

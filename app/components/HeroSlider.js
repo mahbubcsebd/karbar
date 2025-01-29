@@ -75,7 +75,10 @@ const HeroSlider = () => {
                             >
                                 {images?.map((img, index) => (
                                     <SwiperSlide key={img.id}>
-                                        <Link href={img.url}>
+                                        <Link
+                                            href={img.url}
+                                            aria-label={`View details for ${img.title}`}
+                                        >
                                             <Image
                                                 src={img.image_url}
                                                 alt={img.title}
@@ -83,7 +86,11 @@ const HeroSlider = () => {
                                                 height={500}
                                                 className="object-cover w-full h-auto"
                                                 priority={index === 0}
-                                                loading={index === 0 ? "eager" : "lazy"}
+                                                loading={
+                                                    index === 0
+                                                        ? 'eager'
+                                                        : 'lazy'
+                                                }
                                                 quality={75}
                                             />
                                         </Link>

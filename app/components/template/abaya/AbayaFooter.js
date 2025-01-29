@@ -194,6 +194,7 @@ const AbayaFooter = () => {
                                         }`}
                                         rel="noopener noreferrer"
                                         target="_blank"
+                                        aria-label="facebook url"
                                     >
                                         <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-gray-600 hover:border-gray-600">
                                             <FaFacebookF />
@@ -211,6 +212,7 @@ const AbayaFooter = () => {
                                         }`}
                                         rel="noopener noreferrer"
                                         target="_blank"
+                                        aria-label="instagram url"
                                     >
                                         <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-gray-600 hover:border-gray-600">
                                             <FaInstagram />
@@ -228,6 +230,7 @@ const AbayaFooter = () => {
                                         }`}
                                         rel="noopener noreferrer"
                                         target="_blank"
+                                        aria-label="youtube url"
                                     >
                                         <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-gray-600 hover:border-gray-600">
                                             <FaYoutube />
@@ -245,6 +248,7 @@ const AbayaFooter = () => {
                                         }`}
                                         rel="noopener noreferrer"
                                         target="_blank"
+                                        aria-label="tiktok url"
                                     >
                                         <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-gray-600 hover:border-gray-600">
                                             <FaTiktok />
