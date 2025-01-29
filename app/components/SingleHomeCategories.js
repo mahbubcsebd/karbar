@@ -42,6 +42,7 @@ const SingleHomeCategories = ({ category }) => {
                         onClick={() => swiperRef.current?.slidePrev()}
                         type="button"
                         className={`w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-base rounded-full flex justify-center items-center text-gray-900 bg-[#D9D9D9] ${`swiper-button-prev-${key}`}`}
+                        aria-label="slider prev button"
                     >
                         <FaArrowLeftLong />
                     </button>
@@ -49,6 +50,7 @@ const SingleHomeCategories = ({ category }) => {
                         onClick={() => swiperRef.current?.slideNext()}
                         type="button"
                         className="w-8 h-8 sm:w-10 sm:h-10 r text-xs sm:text-base rounded-full flex justify-center items-center text-gray-900 bg-[#D9D9D9] ${`swiper-button-next-${key}`}"
+                        aria-label="slider next button"
                     >
                         <FaArrowRightLong />
                     </button>
