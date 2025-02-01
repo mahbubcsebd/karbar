@@ -74,35 +74,43 @@ const ProductCounter = ({
     };
 
     return (
-        <>
-            <div className="flex justify-between items-center w-[112px] h-14 border border-gray-400 rounded-md">
-                <button
-                    type="button"
-                    onClick={() => handleDecrementQuantity(id)}
-                    disabled={decrementDisable}
-                    className="h-full px-[14px] text-gray-600 quantity-decrement"
-                >
-                    <FaMinus />
-                </button>
-                <div className="text-gray-600 text base quantity">
-                    {productCount}
-                </div>
-                <button
-                    type="button"
-                    onClick={() => handleIncrementQuantity(id)}
-                    disabled={
-                        variants.length > 0
-                            ? incrementDisable ||
-                              stock < 1 ||
-                              (productStock < 1 && showStock)
-                            : false
-                    }
-                    className="h-full px-[14px] text-gray-600 quantity-increment"
-                >
-                    <FaPlus />
-                </button>
+        <div className="flex justify-between items-center w-[112px] h-14 border border-gray-400 rounded-md">
+            <button
+                type="button"
+                onClick={() => handleDecrementQuantity(id)}
+                disabled={decrementDisable}
+                className={`flex items-center justify-center h-full w-[40px] text-gray-600 ${
+                    decrementDisable ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'
+                }`}
+                aria-label="Decrease quantity"
+            >
+                <FaMinus className="w-3 h-3" />
+            </button>
+
+            <div className="flex items-center justify-center w-[32px] text-gray-600 text-base">
+                {productCount}
             </div>
-        </>
+
+            <button
+                type="button"
+                onClick={() => handleIncrementQuantity(id)}
+                disabled={
+                    variants.length > 0
+                        ? incrementDisable ||
+                          stock < 1 ||
+                          (productStock < 1 && showStock)
+                        : false
+                }
+                className={`flex items-center justify-center h-full w-[40px] text-gray-600 ${
+                    incrementDisable || stock < 1 || (productStock < 1 && showStock)
+                        ? 'opacity-50 cursor-not-allowed'
+                        : 'hover:bg-gray-100'
+                }`}
+                aria-label="Increase quantity"
+            >
+                <FaPlus className="w-3 h-3" />
+            </button>
+        </div>
     );
 };
 
