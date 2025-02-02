@@ -12,20 +12,16 @@ export async function generateMetadata() {
             .toLowerCase()
             .replace(/[^a-z0-9\s]/g, '')
             .split(/\s+/)
-            .filter(word => word.length > 2)
+            .filter((word) => word.length > 2)
             .join(', ');
     };
 
     const titleKeywords = generateKeywords(siteSetting.data.title);
 
     return {
-        title: `${siteSetting.data.title} | Checkout Page`,
-        description: `Complete your order at ${siteSetting.data.title} - Safe and secure checkout process`,
-        keywords: `${titleKeywords}, checkout, secure payment, online shopping, ecommerce`,
-        icons: {
-            icon: siteSetting.data.fev_icon,
-            apple: siteSetting.data.fev_icon,
-        },
+        title: `Checkout | ${siteSetting.data.title}`,
+        description: `Complete your purchase at ${siteSetting.data.title}. Secure checkout process with multiple payment options.`,
+        keywords: `${titleKeywords}, checkout, payment, order, secure payment`,
         openGraph: {
             title: `Checkout - ${siteSetting.data.title}`,
             description: siteSetting.data.footer_description,
@@ -36,7 +32,7 @@ export async function generateMetadata() {
                     url: siteSetting.data.header_logo,
                     width: 1200,
                     height: 630,
-                    alt: 'Karbar Logo',
+                    alt: `${siteSetting.data.title} Logo`,
                 },
             ],
             siteName: siteSetting.data.title,
@@ -51,10 +47,17 @@ export async function generateMetadata() {
             canonical: `${siteSetting.data.website}/checkout`,
         },
         robots: {
-            index: false, // Don't index checkout pages
+            index: false, // Don't index checkout pages for security
             follow: false,
-            'max-image-preview': 'large',
-            'max-snippet': -1,
+            nocache: true,
+            googleBot: {
+                index: false,
+                follow: false,
+                noimageindex: true,
+                'max-video-preview': -1,
+                'max-image-preview': 'large',
+                'max-snippet': -1,
+            },
         },
     };
 }
