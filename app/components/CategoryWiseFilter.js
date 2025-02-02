@@ -122,7 +122,7 @@ export default function CategorySelectForm({
                         className="relative z-[9999999]"
                     >
                         <SelectTrigger
-                            className={`w-[150px] md:w-[200px] bg-gray-300 text-xs lg:text-sm text-gray-600 font-normal justify-between px-3 py-2 border-gray-300 focus:ring-0 shadow-none ${
+                            className={`w-[150px] md:w-[200px] bg-white text-xs lg:text-sm text-gray-900 font-normal justify-between px-3 py-2 border-gray-300 focus:ring-0 shadow-none ${
                                 showSubCategory
                                     ? 'rounded-none rounded-l-md border-r-0'
                                     : 'rounded-md'
@@ -153,7 +153,7 @@ export default function CategorySelectForm({
                     </Select>
                 </div>
                 {showSubCategory && (
-                    <div className="flex items-center justify-center h-full bg-gray-300 border-t border-b border-gray-300">
+                    <div className="flex items-center justify-center h-full bg-white border-t border-b border-gray-300">
                         <p className="font-light text-gray-500">|</p>
                     </div>
                 )}
@@ -164,7 +164,7 @@ export default function CategorySelectForm({
                             onValueChange={handleSubCategoryChange}
                             className="relative z-[9999999]"
                         >
-                            <SelectTrigger className="w-[150px] md:w-[200px] bg-gray-300 text-xs lg:text-sm text-gray-600 font-normal justify-between px-3 py-2 border-gray-300 rounded-none rounded-r-md border-l-0 shadow-none focus:ring-0">
+                            <SelectTrigger className="w-[150px] md:w-[200px] bg-white text-xs lg:text-sm text-gray-900 font-normal justify-between px-3 py-2 border-gray-300 rounded-none rounded-r-md border-l-0 shadow-none focus:ring-0">
                                 <SelectValue placeholder="All Sub Categories" />
                             </SelectTrigger>
                             <SelectContent className="z-[9999999] max-h-[250px] lg:max-h-[300px]">
@@ -193,6 +193,7 @@ export default function CategorySelectForm({
                         <button
                             onClick={() => router.push('/collections/all')}
                             className="hover:text-gray-900"
+                            area-label="filter all button"
                         >
                             Collections
                         </button>
@@ -202,6 +203,7 @@ export default function CategorySelectForm({
                                 <button
                                     onClick={handleBreadcrumbCategoryClick}
                                     className="hover:text-gray-900"
+                                    area-label="filter by category button"
                                 >
                                     {
                                         categories.find(
@@ -233,6 +235,7 @@ export default function CategorySelectForm({
                         size="sm"
                         onClick={handleReset}
                         className="h-8"
+                        area-label="filter reset button"
                     >
                         <X className="w-4 h-4 mr-1" />
                         Clear
