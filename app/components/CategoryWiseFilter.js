@@ -120,6 +120,7 @@ export default function CategorySelectForm({
                         value={selectedCategory}
                         onValueChange={handleCategoryChange}
                         className="relative z-[9999999]"
+                        aria-label="Select category"
                     >
                         <SelectTrigger
                             className={`w-[150px] md:w-[200px] bg-white text-xs lg:text-sm text-gray-900 font-normal justify-between px-3 py-2 border-gray-300 focus:ring-0 shadow-none ${
@@ -127,7 +128,10 @@ export default function CategorySelectForm({
                                     ? 'rounded-none rounded-l-md border-r-0'
                                     : 'rounded-md'
                             }`}
-                            area-label="combobox button"
+                            role="combobox"
+                            aria-label="Category selector"
+                            aria-expanded="false"
+                            aria-controls="category-select"
                         >
                             <SelectValue
                                 placeholder={
@@ -137,7 +141,10 @@ export default function CategorySelectForm({
                                 }
                             />
                         </SelectTrigger>
-                        <SelectContent className="z-[9999999] max-h-[250px] lg:max-h-[300px]">
+                        <SelectContent
+                            className="z-[9999999] max-h-[250px] lg:max-h-[300px]"
+                            id="category-select"
+                        >
                             <SelectGroup>
                                 <SelectLabel>Categories</SelectLabel>
                                 <SelectItem value="all">All</SelectItem>
@@ -154,36 +161,46 @@ export default function CategorySelectForm({
                     </Select>
                 </div>
                 {showSubCategory && (
-                    <div className="flex items-center justify-center h-full bg-white border-t border-b border-gray-300">
-                        <p className="font-light text-gray-500">|</p>
-                    </div>
-                )}
-                {showSubCategory && (
-                    <div>
-                        <Select
-                            value={selectedSubCategory}
-                            onValueChange={handleSubCategoryChange}
-                            className="relative z-[9999999]"
-                        >
-                            <SelectTrigger className="w-[150px] md:w-[200px] bg-white text-xs lg:text-sm text-gray-900 font-normal justify-between px-3 py-2 border-gray-300 rounded-none rounded-r-md border-l-0 shadow-none focus:ring-0">
-                                <SelectValue placeholder="All Sub Categories" />
-                            </SelectTrigger>
-                            <SelectContent className="z-[9999999] max-h-[250px] lg:max-h-[300px]">
-                                <SelectGroup>
-                                    <SelectLabel>Sub Categories</SelectLabel>
-                                    <SelectItem value="all">All</SelectItem>
-                                    {subCategories.map((subCat) => (
-                                        <SelectItem
-                                            key={subCat.id}
-                                            value={subCat.slug}
-                                        >
-                                            {subCat.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
+                    <>
+                        <div className="flex items-center justify-center h-full bg-white border-t border-b border-gray-300">
+                            <span className="font-light text-gray-500" aria-hidden="true">|</span>
+                        </div>
+                        <div>
+                            <Select
+                                value={selectedSubCategory}
+                                onValueChange={handleSubCategoryChange}
+                                className="relative z-[9999999]"
+                                aria-label="Select subcategory"
+                            >
+                                <SelectTrigger
+                                    className="w-[150px] md:w-[200px] bg-white text-xs lg:text-sm text-gray-900 font-normal justify-between px-3 py-2 border-gray-300 rounded-none rounded-r-md border-l-0 shadow-none focus:ring-0"
+                                    role="combobox"
+                                    aria-label="Subcategory selector"
+                                    aria-expanded="false"
+                                    aria-controls="subcategory-select"
+                                >
+                                    <SelectValue placeholder="All Sub Categories" />
+                                </SelectTrigger>
+                                <SelectContent
+                                    className="z-[9999999] max-h-[250px] lg:max-h-[300px]"
+                                    id="subcategory-select"
+                                >
+                                    <SelectGroup>
+                                        <SelectLabel>Sub Categories</SelectLabel>
+                                        <SelectItem value="all">All</SelectItem>
+                                        {subCategories.map((subCat) => (
+                                            <SelectItem
+                                                key={subCat.id}
+                                                value={subCat.slug}
+                                            >
+                                                {subCat.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </>
                 )}
             </div>
 

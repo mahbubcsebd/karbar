@@ -27,7 +27,10 @@ const SocialShare = ({dictionary}) => {
                     {dictionary.socialShareDic}:
                 </h3>
                 <div className="flex items-center gap-2">
-                    <FacebookShareButton url={shareUrl}>
+                    <FacebookShareButton
+                        url={shareUrl}
+                        aria-label="Share on Facebook"
+                    >
                         <FacebookIcon
                             size={24}
                             round
@@ -51,7 +54,10 @@ const SocialShare = ({dictionary}) => {
                         round
                     />
                 </TelegramShareButton> */}
-                    <WhatsappShareButton url={shareUrl}>
+                    <WhatsappShareButton
+                        url={shareUrl}
+                        aria-label="Share on WhatsApp"
+                    >
                         <WhatsappIcon
                             size={24}
                             round

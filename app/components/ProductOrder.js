@@ -257,6 +257,7 @@ const ProductOrder = ({ product, dictionary }) => {
                         isFormValid ? '' : 'cursor-not-allowed'
                     }`}
                     disabled={stock < 1 || (productStock < 1 && showStock)}
+                    area-label="add to cart button"
                 >
                     <BsCart3 />
                     <span className="hidden md:inline-block">{addToCart}</span>
@@ -272,33 +273,10 @@ const ProductOrder = ({ product, dictionary }) => {
                         stock < 1 ? 'cursor-not-allowed' : ''
                     }`}
                     disabled={stock < 1 || (productStock < 1 && showStock)}
+                    area-label="order now button"
                 >
                     {order}
                 </KarbarButton>
-                {/* <button
-                    type="submit"
-                    className={`flex items-center gap-2 px-[19px] md:px-[30px] py-[19px] md:py-4 text-gray-900 border border-gray-900 hover:text-white hover:bg-gray-900 transition duration-150 rounded-md capitalize ${
-                        isFormValid ? '' : 'cursor-not-allowed'
-                    }`}
-                    disabled={stock < 1 || (productStock < 1 && showStock)}
-                >
-                    <BsCart3 />
-                    <span className="hidden md:inline-block">{addToCart}</span>
-                </button> */}
-                {/* <button
-                    type="submit"
-                    onClick={() => {
-                        if (productStock >= 1 && buttonActive) {
-                            router.push('/checkout');
-                        }
-                    }}
-                    className={`flex items-center gap-2 px-[30px] py-4 text-white bg-gray-900 border border-gray-900 rounded-md hover:bg-transparent hover:text-gray-900 transition duration-150 capitalize ${
-                        stock < 1 ? 'cursor-not-allowed' : ''
-                    }`}
-                    disabled={stock < 1 || (productStock < 1 && showStock)}
-                >
-                    {order}
-                </button> */}
             </div>
             {showStockMsg && stock >= 1 && (
                 <p className="text-red-500">

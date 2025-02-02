@@ -117,6 +117,7 @@ const HeaderCart = ({dictionary}) => {
                                                         }
                                                         type="button"
                                                         className="text-2xl text-gray-400"
+                                                        area-label="remove from cart button"
                                                     >
                                                         <RxCrossCircled />
                                                     </button>
