@@ -120,6 +120,7 @@ export default function CategorySelectForm({
                         value={selectedCategory}
                         onValueChange={handleCategoryChange}
                         className="relative z-[9999999]"
+                        area-label="combobox select button"
                     >
                         <SelectTrigger
                             className={`w-[150px] md:w-[200px] bg-white text-xs lg:text-sm text-gray-900 font-normal justify-between px-3 py-2 border-gray-300 focus:ring-0 shadow-none ${
