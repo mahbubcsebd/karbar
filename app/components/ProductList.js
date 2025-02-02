@@ -303,9 +303,11 @@ const ProductList = ({ category }) => {
                                     </p>
                                     <div className="">
                                         <select
+                                            id="brandFilter"
                                             className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-600 border-0 rounded-md focus:outline-none focus:ring-0 mr-4 bg-gray-300 cursor-pointer"
                                             value={brandValue}
                                             onChange={handleBrandChange}
+                                            aria-label={`${brandsLang} filter`}
                                         >
                                             <option
                                                 key={0}
@@ -327,14 +329,19 @@ const ProductList = ({ category }) => {
                             </div>
                             <div>
                                 <div className="flex items-center gap-2 min-w-[250px]">
-                                    <p className="text-xs font-normal text-gray-700 lg:text-base">
+                                    <label
+                                        htmlFor="sortFilter"
+                                        className="text-xs font-normal text-gray-700 lg:text-base"
+                                    >
                                         {sortBy} :
-                                    </p>
+                                    </label>
                                     <div className="">
                                         <select
+                                            id="sortFilter"
                                             className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-600 border-0 rounded-md focus:outline-none focus:ring-0 mr-4 bg-gray-300 cursor-pointer"
                                             value={sortValue}
                                             onChange={handleSortChange}
+                                            aria-label={`${sortBy} options`}
                                         >
                                             {options.map((option) => (
                                                 <option
