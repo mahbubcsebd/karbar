@@ -83,12 +83,26 @@ const ProfileEditContent = () => {
                 decrypt(token)
             );
 
+            const updatedUser = { ...user, ...response.data };
+            setUser(updatedUser);
+
+            const existingCookie = Cookies.get('user');
+            if (existingCookie) {
+                const parsedCookie = JSON.parse(existingCookie);
+                const newCookieData = { ...parsedCookie, ...response.data };
+
+                Cookies.set('user', JSON.stringify(newCookieData), {
+                    expires: 3,
+                    secure: true,
+                    sameSite: 'Strict'
+                });
+            }
+
             toast.success('Profile updated successfully', {
                 position: 'bottom-right',
             });
 
-            setUser((prev) => ({ ...prev, ...response.data }));
-            router.push(`/dashboard/user/${user?.username}`);
+            router.push(`/dashboard/user/${updatedUser?.username}`);
         } catch (error) {
             toast.error(error.message, {
                 position: 'bottom-right',

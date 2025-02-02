@@ -85,12 +85,6 @@ const LatestProduct = () => {
                             >
                                 {seeMore}
                             </KarbarButton>
-                            {/* <Link
-                                href="/collections/all"
-                                className="text-base md:text-[20px] text-purple-900 font-normal border md:border-2 border-purple-900 px-6 py-[10px] md:px-[30px] md:py-4 hover:bg-purple-900 hover:text-white transition duration-150 rounded-full"
-                            >
-                                {seeMore}
-                            </Link> */}
                         </div>
                     )}
                 </div>

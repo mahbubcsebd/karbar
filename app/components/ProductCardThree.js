@@ -113,7 +113,7 @@ function calculateDiscount(unitPrice, salePrice) {
                     <span
                         className={`inline-block ${
                             sale_price > 0
-                                ? 'ine-through text-red-700 text-sm'
+                                ? 'line-through text-red-700 text-sm'
                                 : ''
                         }`}
                     >

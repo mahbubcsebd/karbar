@@ -49,7 +49,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
             const userData = {
                 name: data.fullName,
                 phone: data.phone,
-                email: data.email,
+                email: data.username,
                 password: data.password,
                 password_confirmation: data.confirmPassword,
             };
@@ -82,7 +82,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
             }
         } else if (authType === 'signIn') {
             const userData = {
-                email_username: data.email,
+                email_username: data.username,
                 password: data.password,
                 remember: data.remember,
             };
@@ -231,35 +231,46 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                         )}
                         <div>
                             <label
-                                htmlFor="email"
+                                htmlFor="username"
                                 className="block mb-1 text-sm font-medium text-gray-900"
                             >
-                                Email Address
+                                Email Address{' '}
+                                {authType === 'signIn' ? 'or Phone Number' : ''}
                             </label>
                             <input
-                                type="email"
-                                id="email"
-                                {...register('email', {
-                                    required: 'Email is required',
-                                    pattern: {
-                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                        message: 'Invalid email address',
+                                type="text"
+                                id="username"
+                                {...register('username', {
+                                    required:
+                                        'Email or phone number is required',
+                                    validate: (value) => {
+                                        // ইমেইল ভ্যালিডেশন
+                                        const emailRegex =
+                                            /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+                                        // ফোন নাম্বার ভ্যালিডেশন (৯-১৫ ডিজিট)
+                                        const phoneRegex = /^[0-9]{9,15}$/;
+
+                                        return (
+                                            emailRegex.test(value) ||
+                                            phoneRegex.test(value) ||
+                                            'Please enter a valid email or phone number'
+                                        );
                                     },
                                 })}
                                 className={`block w-full px-3 py-2 border ${
-                                    errors.email
+                                    errors.username
                                         ? 'border-red-500'
                                         : 'border-[#D0D5DD]'
                                 } text-gray-700 ring-1 ring-inset ${
-                                    errors.email
+                                    errors.username
                                         ? 'ring-red-500'
                                         : 'ring-[#D0D5DD]'
                                 } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-none rounded-md input-shadow bg-white`}
-                                placeholder="Enter your email"
+                                placeholder={`Enter your email ${authType === 'signIn' ? 'or Phone Number' : ''}`}
                             />
-                            {errors.email && (
+                            {errors.username && (
                                 <p className="mt-1 text-sm text-red-500">
-                                    {errors.email.message}
+                                    {errors.username.message}
                                 </p>
                             )}
                         </div>

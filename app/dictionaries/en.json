@@ -148,5 +148,21 @@
         "payment": "Payment With",
         "socialMedia": "Social Media",
         "developBy": "developed by"
+    },
+    "AuthModal": {
+        "emailOrPhone": "Email or Phone Number",
+        "emailOrPhonePlaceholder": "Enter your email or phone number",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "loginButton": "Login",
+        "allFieldsRequired": "All fields are required",
+        "invalidIdentifier": "Please enter a valid email or phone number",
+        "loginFailed": "Login failed. Please check your credentials",
+        "serverError": "Something went wrong. Please try again",
+        "phonePlaceholder": "Enter your phone number (9-15 digits)",
+        "phoneRequired": "Phone Number is required",
+        "phoneMinLength": "Phone number must be at least 9 digits",
+        "phoneMaxLength": "Phone number cannot exceed 15 digits",
+        "phoneInvalid": "Please enter only numbers"
     }
 }

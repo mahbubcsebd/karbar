@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { IoArrowForward } from 'react-icons/io5';
 import errorImg from '../app/assets/images/404.png';
 import '../app/globals.css';
 import logo from './assets/icons/logo.svg';
@@ -18,10 +19,10 @@ export default function NotFound() {
         }, 7000);
     }, [router]);
     return (
-        <html>
-        <head>
-            <title>404 | Page not found</title>
-        </head>
+        <html lang="en">
+            <head>
+                <title>404 | Page not found</title>
+            </head>
             <body className="text-center">
                 <header
                     id="header"
@@ -53,18 +54,20 @@ export default function NotFound() {
                                 </div>
                                 <div>
                                     <h1 className="text-5xl font-semibold text-gray-900 mb-3">
-                                        Oops! Page Not found.
+                                        404 - Page Not Found
                                     </h1>
-                                    <p className="text-lg text-[#6E758D] font-normal mb-6">
+                                    <p className="text-lg text-gray-700 font-normal mb-6">
                                         This page no longer exists or has been
                                         moved
                                     </p>
                                     <div className="flex justify-center">
                                         <Link
-                                            href="/product"
-                                            className="text-base md:text-[20px] text-white font-normal border-2 border-purple-900 px-6 py-3 rounded-lg md:px-[30px] md:py-4 bg-purple-900  hover:bg-trasnparent hover:text-purple-900 transition duration-150"
+                                            href="/"
+                                            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-900 text-white rounded-md hover:bg-purple-800 transition-colors"
+                                            aria-label="Return to homepage"
                                         >
-                                            Return Home
+                                            <span>Back to Homepage</span>
+                                            <IoArrowForward aria-hidden="true" />
                                         </Link>
                                     </div>
                                 </div>

@@ -148,5 +148,21 @@
         "payment": "পেমেন্ট করুন",
         "socialMedia": "সোশ্যাল মিডিয়া",
         "developBy": "ডেভেলপড বাই"
+    },
+    "AuthModal": {
+        "emailOrPhone": "ইমেইল অথবা ফোন নাম্বার",
+        "emailOrPhonePlaceholder": "আপনার ইমেইল অথবা ফোন নাম্বার দিন",
+        "password": "পাসওয়ার্ড",
+        "passwordPlaceholder": "আপনার পাসওয়ার্ড দিন",
+        "loginButton": "লগইন",
+        "allFieldsRequired": "সব তথ্য দিতে হবে",
+        "invalidIdentifier": "সঠিক ইমেইল অথবা ফোন নাম্বার দিন",
+        "loginFailed": "লগইন ব্যর্থ হয়েছে। আপনার তথ্য চেক করুন",
+        "serverError": "কিছু সমস্যা হয়েছে। আবার চেষ্টা করুন",
+        "phonePlaceholder": "আপনার ফোন নাম্বার দিন (৯-১৫ ডিজিট)",
+        "phoneRequired": "ফোন নাম্বার দিতে হবে",
+        "phoneMinLength": "ফোন নাম্বার কমপক্ষে ৯ ডিজিট হতে হবে",
+        "phoneMaxLength": "ফোন নাম্বার ১৫ ডিজিটের বেশি হতে পারবে না",
+        "phoneInvalid": "শুধুমাত্র নাম্বার দিন"
     }
 }

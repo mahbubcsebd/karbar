@@ -47,6 +47,37 @@ const poppins = Poppins({
     subsets: ['latin'],
 });
 
+// export const metadata = {
+//     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL),
+//     alternates: {
+//         canonical: '/',
+//         languages: {
+//             'en-US': '/en',
+//             'bn-BD': '/bn',
+//         },
+//     },
+//     viewport: {
+//         width: 'device-width',
+//         initialScale: 1,
+//         maximumScale: 1,
+//     },
+//     robots: {
+//         index: true,
+//         follow: true,
+//         googleBot: {
+//             index: true,
+//             follow: true,
+//             'max-image-preview': 'large',
+//             'max-video-preview': -1,
+//             'max-snippet': -1,
+//         },
+//     },
+//     verification: {
+//         google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+//         facebook: process.env.NEXT_PUBLIC_FACEBOOK_VERIFICATION,
+//     },
+// };
+
 export default function RootLayout({ children }) {
     const pathname = usePathname();
     const [state, dispatch] = useReducer(cartReducer, initialState);
@@ -121,6 +152,13 @@ export default function RootLayout({ children }) {
 
         fetchData();
     }, []);
+
+       useEffect(() => {
+           dispatch({
+               type: 'SET_CART',
+           });
+       }, []);
+
 
     return (
         <html lang="en">

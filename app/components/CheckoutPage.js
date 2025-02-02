@@ -151,7 +151,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const handleApply = async () => {
         try {
             if (couponCode === '') {
-                toast.error(`কুপন কোড দিন`, {
+                toast.error(`Enter the coupon code`, {
                     position: 'bottom-right',
                 });
             }
@@ -159,7 +159,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
             let couponData = await getCoupon(couponCode);
             if (couponData.success && couponCode) {
                 if (!couponApply) {
-                    toast.error(`আপনি কুপন ব্যবহার করে ফেলেছেন`, {
+                    toast.error(`You are already use this coupon`, {
                         position: 'bottom-right',
                     });
                 }
@@ -169,7 +169,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                     setSubtotal(subTotal - discount);
                     setDiscountValue(discount);
                     setCouponApply(false);
-                    toast.success(`"কুপন সফল হয়েছে"`, {
+                    toast.success(`"Coupon applied successful"`, {
                         position: 'bottom-right',
                     });
                 }
@@ -179,13 +179,13 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                     setSubtotal(subTotal - discountAmount);
                     setDiscountValue(discountAmount);
                     setCouponApply(false);
-                    toast.success(`"কুপন সফল হয়েছে"`, {
+                    toast.success(`"Coupon applied successful"`, {
                         position: 'bottom-right',
                     });
                 }
             } else {
                 if (couponCode) {
-                    toast.error(`"কুপন সফল হয়নি"`, {
+                    toast.error(`Coupon apply failed`, {
                         position: 'bottom-right',
                     });
                 }
@@ -268,24 +268,24 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
         const { name, address, phone, spacial_instruction } = data;
 
         if (name === '' || name === null || name === undefined) {
-            setNameWarningMessage('নাম আবশ্যক');
+            setNameWarningMessage('Name is required');
         } else {
             setNameWarningMessage(null);
         }
 
         if (phone === '' || phone === null || phone === undefined) {
-            setPhoneWarningMessage('ফোন নাম্বার আবশ্যক');
+            setPhoneWarningMessage('Phone number is required');
         } else {
             if (phone.length === 11) {
                 setPhoneWarningMessage(null);
             } else {
-                setPhoneWarningMessage('আপনি ভুল নাম্বার দিয়েছেন');
+                setPhoneWarningMessage('You enter wrong number');
                 return;
             }
         }
 
         if (address === '' || address === null || address === undefined) {
-            setAddressWarningMessage('ঠিকানা আবশ্যক');
+            setAddressWarningMessage('Address is required');
         } else {
             setAddressWarningMessage(null);
         }
@@ -345,7 +345,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                 } else {
                     setOrderLoading(false);
                     toast.error(
-                        `দুঃখিত! আপনার অর্ডারটি সফল হয়নি। ${responseData.message}`,
+                        `Sorry! your order is not placed. ${responseData.message}`,
                         {
                             position: 'bottom-right',
                         }

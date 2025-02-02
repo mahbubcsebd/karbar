@@ -41,19 +41,25 @@ const UserPageContent = ({userName}) => {
             );
 
             if (response && response.data) {
-                setProfileImg(response.data); // Update the local profile image state
+                // Update local state
+                setProfileImg(response.data);
 
-                // Update user context state with the new avatar
-                setUser((prevUser) => ({
-                    ...prevUser,
-                    avatar: response.data,
-                }));
+                // Update user context with new avatar
+                const updatedUser = { ...user, avatar: response.data };
+                setUser(updatedUser);
 
-                // Update cookies with the new user data
-                document.cookie = `user=${JSON.stringify({
-                    ...user,
-                    avatar: response.data,
-                })}; path=/; secure; samesite=strict`;
+                // Update cookies properly
+                const existingCookie = Cookies.get('user');
+                if (existingCookie) {
+                    const parsedCookie = JSON.parse(existingCookie);
+                    const newCookieData = { ...parsedCookie, avatar: response.data };
+
+                    Cookies.set('user', JSON.stringify(newCookieData), {
+                        expires: 3,
+                        secure: true,
+                        sameSite: 'Strict'
+                    });
+                }
 
                 toast.success('Profile picture updated successfully!', {
                     position: 'bottom-right',
