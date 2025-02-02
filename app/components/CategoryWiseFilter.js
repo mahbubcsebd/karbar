@@ -127,6 +127,7 @@ export default function CategorySelectForm({
                                     ? 'rounded-none rounded-l-md border-r-0'
                                     : 'rounded-md'
                             }`}
+                            area-label="combobox button"
                         >
                             <SelectValue
                                 placeholder={
@@ -189,7 +190,10 @@ export default function CategorySelectForm({
             {((selectedCategory && selectedCategory !== 'all') ||
                 selectedSubCategory) && (
                 <div className="flex items-center gap-4">
-                    <nav className="flex items-center space-x-1 text-xs text-gray-600 md:text-sm" aria-label="Category navigation">
+                    <nav
+                        className="flex items-center space-x-1 text-xs text-gray-600 md:text-sm"
+                        aria-label="Category navigation"
+                    >
                         <button
                             onClick={() => router.push('/collections/all')}
                             className="hover:text-gray-900"
@@ -200,35 +204,48 @@ export default function CategorySelectForm({
                         </button>
                         {selectedCategory && selectedCategory !== 'all' && (
                             <>
-                                <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                                <ChevronRight
+                                    className="w-4 h-4"
+                                    aria-hidden="true"
+                                />
                                 <button
                                     onClick={handleBreadcrumbCategoryClick}
                                     className="hover:text-gray-900"
-                                    aria-label={`Show all products in ${categories.find(
-                                        (cat) => cat.slug === selectedCategory
-                                    )?.name} category`}
+                                    aria-label={`Show all products in ${
+                                        categories.find(
+                                            (cat) =>
+                                                cat.slug === selectedCategory
+                                        )?.name
+                                    } category`}
                                     type="button"
                                 >
                                     {
                                         categories.find(
-                                            (cat) => cat.slug === selectedCategory
+                                            (cat) =>
+                                                cat.slug === selectedCategory
                                         )?.name
                                     }
                                 </button>
                             </>
                         )}
-                        {selectedSubCategory && selectedSubCategory !== 'all' && (
-                            <>
-                                <ChevronRight className="w-4 h-4" aria-hidden="true" />
-                                <span className="text-gray-900">
-                                    {
-                                        subCategories.find(
-                                            (sub) => sub.slug === selectedSubCategory
-                                        )?.name
-                                    }
-                                </span>
-                            </>
-                        )}
+                        {selectedSubCategory &&
+                            selectedSubCategory !== 'all' && (
+                                <>
+                                    <ChevronRight
+                                        className="w-4 h-4"
+                                        aria-hidden="true"
+                                    />
+                                    <span className="text-gray-900">
+                                        {
+                                            subCategories.find(
+                                                (sub) =>
+                                                    sub.slug ===
+                                                    selectedSubCategory
+                                            )?.name
+                                        }
+                                    </span>
+                                </>
+                            )}
                     </nav>
                     <Button
                         variant="outline"
@@ -238,7 +255,10 @@ export default function CategorySelectForm({
                         aria-label="Clear all filters"
                         type="button"
                     >
-                        <X className="w-4 h-4 mr-1" aria-hidden="true" />
+                        <X
+                            className="w-4 h-4 mr-1"
+                            aria-hidden="true"
+                        />
                         Clear
                     </Button>
                 </div>

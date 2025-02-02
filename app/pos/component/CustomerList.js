@@ -163,6 +163,7 @@ const CustomerList = ({
                                 role="combobox"
                                 aria-expanded={open}
                                 className="w-[200px] text-xs font-normal justify-between px-3 py-2 border-[#E7E6EC] rounded-none rounded-r-md"
+                                area-label="combobox button"
                             >
                                 {customervalue
                                     ? customers.find(
