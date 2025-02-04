@@ -33,14 +33,14 @@ const Modal = ({videoUrl}) => {
     return (
         <>
             {isOpen && (
-                <div className="fixed inset-0 flex items-center justify-center z-[9999999999] bg-black bg-opacity-70 transition-opacity duration-300">
+                <div className="fixed inset-0 flex items-center justify-center z-9999999999 bg-black bg-opacity-70 transition-opacity duration-300">
                     <div
                         ref={modalRef}
                         className="p-2 transition-transform duration-300 transform scale-100 bg-white rounded-lg shadow-lg md:p-4"
                     >
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="absolute top-0 flex items-center justify-center w-5 h-5 text-lg text-gray-700 bg-white rounded-full shadow-sm md:text-2xl md:w-7 md:h-7 -right-6 md:-right-8 hover:text-gray-900 focus:outline-none"
+                            className="absolute top-0 flex items-center justify-center w-5 h-5 text-lg text-gray-700 bg-white rounded-full shadow-xs md:text-2xl md:w-7 md:h-7 -right-6 md:-right-8 hover:text-gray-900 focus:outline-hidden"
                         >
                             &times;
                         </button>

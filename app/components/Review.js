@@ -19,7 +19,7 @@ const Review = ({ id, showReview, setShowReview, dictionary }) => {
                                 ক্রমানুসারে :
                             </p>
                             <div className="">
-                                <select className="py-[7px] px-[10px] text-base text-gray-500 border-0 rounded-md focus:outline-none focus:ring-0 mr-4">
+                                <select className="py-[7px] px-[10px] text-base text-gray-500 border-0 rounded-md focus:outline-hidden focus:ring-0 mr-4">
                                     <option value="new">নতুন</option>
                                     <option value="popular">জনপ্রিয়</option>
                                     <option value="rating">রেটিং</option>

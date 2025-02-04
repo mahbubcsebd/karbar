@@ -79,7 +79,7 @@ const SearchResult = ({ search, closeSearchResults }) => {
     }, [products.length]);
 
     return (
-        <div className="absolute left-1/2 -translate-x-1/2 top-[70px] lg:top-[74px] z-[999] rounded-md bg-white p-4 shadow min-w-[300px] lg:min-w-full">
+        <div className="absolute left-1/2 -translate-x-1/2 top-[70px] lg:top-[74px] z-999 rounded-md bg-white p-4 shadow-sm min-w-[300px] lg:min-w-full">
             <div className="">
                 <p className="mb-4 text-base font-normal text-gray-700">
                     Search results for

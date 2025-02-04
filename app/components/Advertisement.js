@@ -79,7 +79,7 @@ const Advertisement = ({ position }) => {
                                   <Link
                                       key={index}
                                       href={imageData.url}
-                                      className="relative overflow-hidden bg-gray-100"
+                                      className="relative overflow-hidden block bg-gray-100 col-span-12"
                                       target="_blank"
                                   >
                                       <Image
@@ -90,7 +90,7 @@ const Advertisement = ({ position }) => {
                                           }
                                           width={1000}
                                           height={600}
-                                          className="object-cover"
+                                          className="w-full h-full object-cover"
                                           priority={position === 'home_top'}
                                           loading={
                                               position === 'home_top'

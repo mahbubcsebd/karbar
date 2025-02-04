@@ -119,7 +119,7 @@ export default function CategorySelectForm({
                     <Select
                         value={selectedCategory}
                         onValueChange={handleCategoryChange}
-                        className="relative z-[9999999]"
+                        className="relative z-9999999"
                         aria-label="Select category"
                     >
                         <SelectTrigger
@@ -142,7 +142,7 @@ export default function CategorySelectForm({
                             />
                         </SelectTrigger>
                         <SelectContent
-                            className="z-[9999999] max-h-[250px] lg:max-h-[300px]"
+                            className="z-9999999 max-h-[250px] lg:max-h-[300px]"
                             id="category-select"
                         >
                             <SelectGroup>
@@ -169,7 +169,7 @@ export default function CategorySelectForm({
                             <Select
                                 value={selectedSubCategory}
                                 onValueChange={handleSubCategoryChange}
-                                className="relative z-[9999999]"
+                                className="relative z-9999999"
                                 aria-label="Select subcategory"
                             >
                                 <SelectTrigger
@@ -182,7 +182,7 @@ export default function CategorySelectForm({
                                     <SelectValue placeholder="All Sub Categories" />
                                 </SelectTrigger>
                                 <SelectContent
-                                    className="z-[9999999] max-h-[250px] lg:max-h-[300px]"
+                                    className="z-9999999 max-h-[250px] lg:max-h-[300px]"
                                     id="subcategory-select"
                                 >
                                     <SelectGroup>

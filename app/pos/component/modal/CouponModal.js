@@ -16,7 +16,7 @@ const CouponModal = ({ submitHandler, isOpen, setIsOpen, discountValue }) => {
                 onOpenChange={setIsOpen}
             >
                 <DialogTrigger asChild>
-                    <button className="flex items-center gap-1 text-xs font-medium text-gray-700 focus-visible:outline-none">
+                    <button className="flex items-center gap-1 text-xs font-medium text-gray-700 focus-visible:outline-hidden">
                         Coupon{' '}
                         {discountValue > 0 ? `(${discountValue} Tk)` : ''}
                         <span>
@@ -47,7 +47,7 @@ const CouponModal = ({ submitHandler, isOpen, setIsOpen, discountValue }) => {
                                         name="coupon"
                                         placeholder="Enter coupon code"
                                         required
-                                        className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
+                                        className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                                     />
                                 </div>
                             </div>

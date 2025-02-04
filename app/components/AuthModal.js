@@ -182,7 +182,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                             errors.fullName
                                                 ? 'ring-red-500'
                                                 : 'ring-[#D0D5DD]'
-                                        } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-none rounded-md input-shadow bg-white`}
+                                        } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
                                         placeholder="Enter your full name"
                                     />
                                     {errors.fullName && (
@@ -218,7 +218,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                             errors.phone
                                                 ? 'ring-red-500'
                                                 : 'ring-[#D0D5DD]'
-                                        } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-none rounded-md input-shadow bg-white`}
+                                        } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
                                         placeholder="Enter your phone number"
                                     />
                                     {errors.phone && (
@@ -265,7 +265,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                     errors.username
                                         ? 'ring-red-500'
                                         : 'ring-[#D0D5DD]'
-                                } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-none rounded-md input-shadow bg-white`}
+                                } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
                                 placeholder={`Enter your email ${authType === 'signIn' ? 'or Phone Number' : ''}`}
                             />
                             {errors.username && (
@@ -301,7 +301,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                     errors.password
                                         ? 'ring-red-500'
                                         : 'ring-[#D0D5DD]'
-                                } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-none rounded-md input-shadow bg-white`}
+                                } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
                                 placeholder="Enter your password"
                             />
                             <button
@@ -348,7 +348,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                         errors.confirmPassword
                                             ? 'ring-red-500'
                                             : 'ring-[#D0D5DD]'
-                                    } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-none rounded-md input-shadow bg-white`}
+                                    } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
                                     placeholder="Confirm your password"
                                 />
                                 <button

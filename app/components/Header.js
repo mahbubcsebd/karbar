@@ -33,7 +33,7 @@ const Header = () => {
         >
             <header
                 id="header"
-                // className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1] fixed top-0 left-0 w-full z-[9999999999999]"
+                // className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1] fixed top-0 left-0 w-full z-9999999999999"
                 className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1]"
             >
                 <div className="header-area">
@@ -69,7 +69,7 @@ const Header = () => {
                                 <div className="relative lg:hidden">
                                     <button
                                         type="button"
-                                        className="relative flex items-center justify-center gap-1 text-lg md:text-[22px] text-gray-800 border border-[#D14BF8] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white z-[9999999]"
+                                        className="relative flex items-center justify-center gap-1 text-lg md:text-[22px] text-gray-800 border border-[#D14BF8] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white z-9999999"
                                         onClick={handleSearch}
                                         aria-label="search toggle button"
                                     >

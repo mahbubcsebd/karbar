@@ -32,7 +32,7 @@ const AbayaHeader = () => {
         <div className="">
             <header
                 id="header"
-                className="header py-[17px] bg-gray-900 w-full z-[99999999]"
+                className="header py-[17px] bg-gray-900 w-full z-99999999"
             >
                 <div className="header-area">
                     <div className="container">

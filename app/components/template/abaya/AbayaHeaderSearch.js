@@ -54,7 +54,7 @@ const AbayaHeaderSearch = ({
                         id="header-search"
                         value={search}
                         onChange={handleInputChange}
-                        className="w-full h-full block pl-[18px] pr-[120px] py-3 bg-white rounded-lg border-0 text-gray-600  placeholder:text-gray-500 placeholder:text-base outline-none"
+                        className="w-full h-full block pl-[18px] pr-[120px] py-3 bg-white rounded-lg border-0 text-gray-600  placeholder:text-gray-500 placeholder:text-base outline-hidden"
                         placeholder={dictionary.searchPlaceholder}
                     />
                     <button

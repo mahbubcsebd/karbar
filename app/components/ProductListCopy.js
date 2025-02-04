@@ -214,7 +214,7 @@ const ProductList = () => {
                                 </p>
                                 <div className="">
                                     <select
-                                        className="py-[7px] px-[10px] text-base text-gray-600 border-0 rounded-md focus:outline-none focus:ring-0 mr-4 bg-gray-300 cursor-pointer"
+                                        className="py-[7px] px-[10px] text-base text-gray-600 border-0 rounded-md focus:outline-hidden focus:ring-0 mr-4 bg-gray-300 cursor-pointer"
                                         value={sortValue}
                                         onChange={handleSortChange}
                                     >

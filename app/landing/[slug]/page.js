@@ -10,7 +10,8 @@ import LandingChoose from './component/LandingChoose';
 import LandingDescription from './component/LandingDescription';
 import LandingShopWithUs from './component/LandingShopWithUs';
 import OurPackages from './component/OurPackages';
-  export async function generateMetadata({ params: {slug} }) {
+  export async function generateMetadata({ params }) {
+     const slug = (await params).slug;
     function capitalizeEachWord(text) {
         return text
             .split(' ')
@@ -46,7 +47,8 @@ import OurPackages from './component/OurPackages';
       };
   }
 
-const LandingPage = async ({params : {slug}}) => {
+const LandingPage = async ({ params }) => {
+     const slug = (await params).slug;
     const siteSettings = await getSiteSettings('en');
     const paymentMethod = await getPaymentMethod('en');
     const testimonials = await getTestimonials('en');

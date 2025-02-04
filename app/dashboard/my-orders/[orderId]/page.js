@@ -2,6 +2,7 @@ import { getSiteSettings } from '@/utils/getSiteSettings';
 import OrderDetailsPageContent from '../../components/OrderDetailsPageContent';
 
 export async function generateMetadata({ params }) {
+     const orderId = (await params).orderId
     const siteSetting = await getSiteSettings();
 
     // Generate keywords from title
@@ -17,17 +18,17 @@ export async function generateMetadata({ params }) {
     const titleKeywords = generateKeywords(siteSetting.data.title);
 
     return {
-        title: `Order #${params.orderId} Details | ${siteSetting.data.title}`,
-        description: `View details for order #${params.orderId} at ${siteSetting.data.title}. Track your order status and delivery information.`,
-        keywords: `${titleKeywords}, order details, order tracking, order status, order ${params.orderId}`,
+        title: `Order #${orderId} Details | ${siteSetting.data.title}`,
+        description: `View details for order #${orderId} at ${siteSetting.data.title}. Track your order status and delivery information.`,
+        keywords: `${titleKeywords}, order details, order tracking, order status, order ${orderId}`,
         icons: {
             icon: siteSetting.data.fev_icon,
             apple: siteSetting.data.fev_icon,
         },
         openGraph: {
-            title: `Order #${params.orderId} Details - ${siteSetting.data.title}`,
+            title: `Order #${orderId} Details - ${siteSetting.data.title}`,
             description: siteSetting.data.footer_description,
-            url: `${siteSetting.data.website}/dashboard/my-orders/${params.orderId}`,
+            url: `${siteSetting.data.website}/dashboard/my-orders/${orderId}`,
             type: 'website',
             images: [
                 {
@@ -41,12 +42,12 @@ export async function generateMetadata({ params }) {
         },
         twitter: {
             card: 'summary',
-            title: `Order #${params.orderId} Details - ${siteSetting.data.title}`,
+            title: `Order #${orderId} Details - ${siteSetting.data.title}`,
             description: siteSetting.data.footer_description,
             images: siteSetting.data.header_logo,
         },
         alternates: {
-            canonical: `${siteSetting.data.website}/dashboard/my-orders/${params.orderId}`,
+            canonical: `${siteSetting.data.website}/dashboard/my-orders/${orderId}`,
         },
         robots: {
             index: false, // Don't index individual order pages
@@ -61,15 +62,17 @@ export async function generateMetadata({ params }) {
     };
 }
 
-const OrderDetailsPage = ({ params }) => {
+const OrderDetailsPage = async ({ params }) => {
+     const orderId = (await params).orderId;
+
     return (
         <main
             role="main"
-            aria-label={`Order #${params.orderId} Details`}
+            aria-label={`Order #${orderId} Details`}
             className="order-details-container"
         >
             <section className="order-details-content">
-                <OrderDetailsPageContent orderId={params.orderId} />
+                <OrderDetailsPageContent orderId={orderId} />
             </section>
         </main>
     );

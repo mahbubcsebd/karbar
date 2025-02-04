@@ -4,8 +4,9 @@ import { getProduct } from "../../utils/getProduct";
 import { getSiteSettings } from "../../utils/getSiteSettings";
 
 export async function generateMetadata({ params }) {
+     const slug = (await params).slug;
     const siteSetting = await getSiteSettings();
-    const product = await getProduct('en', params.slug);
+    const product = await getProduct('en', slug);
 
     const {
         name,
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }) {
             title: name,
             description: description,
             type: 'website',
-            url: `${siteSetting.data.website}/products/${params.slug}`,
+            url: `${siteSetting.data.website}/products/${slug}`,
             images: [
                 {
                     url: product_images[0].original_url,
@@ -59,7 +60,7 @@ export async function generateMetadata({ params }) {
             images: product_images[0].original_url,
         },
         alternates: {
-            canonical: `${siteSetting.data.website}/products/${params.slug}`,
+            canonical: `${siteSetting.data.website}/products/${slug}`,
         },
         robots: {
             index: true,
@@ -79,10 +80,11 @@ export async function generateMetadata({ params }) {
 }
 
 const ProductDetails = async ({params}) => {
+     const slug = (await params).slug;
     return (
         <>
-            <ProductDetailsPage slug={params.slug} />
-            <RelatedProducts slug={params.slug} />
+            <ProductDetailsPage slug={slug} />
+            <RelatedProducts slug={slug} />
         </>
     );
 };

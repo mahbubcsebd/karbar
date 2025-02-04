@@ -1,7 +1,8 @@
 import { getPageDetails } from "@/utils/getPages";
 import { getSiteSettings } from "@/utils/getSiteSettings";
 
-export async function generateMetadata({ params: { slug } }) {
+export async function generateMetadata({ params }) {
+     const slug = (await params).slug;
     const siteSetting = await getSiteSettings();
     const pageDetails = await getPageDetails(slug);
 
@@ -28,7 +29,8 @@ export async function generateMetadata({ params: { slug } }) {
     };
 }
 
-const AllPages = async ({params: {slug}}) => {
+const AllPages = async ({ params }) => {
+     const slug = (await params).slug;
   const pageDetails = await getPageDetails(slug);
 
   return (

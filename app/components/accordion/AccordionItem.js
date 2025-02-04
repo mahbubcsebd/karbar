@@ -7,7 +7,7 @@ const AccordionItem = ({ title, children, isOpen, onClick }) => {
     return (
         <div className="p-5 bg-white rounded-[10px] border border-gray-200 mb-3">
             <button
-                className="w-full flex justify-between items-center text-left focus:outline-none text-[20px] font-normal text-gray-800"
+                className="w-full flex justify-between items-center text-left focus:outline-hidden text-[20px] font-normal text-gray-800"
                 onClick={onClick}
             >
                 <span className="font-semibold">{title}</span>

@@ -3,6 +3,7 @@ import ProductList from '../../components/ProductList';
 import { getSiteSettings } from '../../utils/getSiteSettings';
 
 export async function generateMetadata({ params }) {
+     const category = (await params).category;
     const siteSetting = await getSiteSettings();
 
     // Generate keywords from title and category
@@ -16,20 +17,20 @@ export async function generateMetadata({ params }) {
     };
 
     const titleKeywords = generateKeywords(siteSetting.data.title);
-    const categoryKeywords = generateKeywords(params.category.replace(/-/g, ' '));
+    const categoryKeywords = generateKeywords(category.replace(/-/g, ' '));
 
     return {
-        title: `${params.category.replace(/-/g, ' ').toUpperCase()} | ${siteSetting.data.title}`,
-        description: `Shop our collection of ${params.category.replace(/-/g, ' ')} at ${siteSetting.data.title}. Find the best deals and latest trends.`,
+        title: `${category.replace(/-/g, ' ').toUpperCase()} | ${siteSetting.data.title}`,
+        description: `Shop our collection of ${category.replace(/-/g, ' ')} at ${siteSetting.data.title}. Find the best deals and latest trends.`,
         keywords: `${categoryKeywords}, ${titleKeywords}, shop online, best deals, latest collection`,
         icons: {
             icon: siteSetting.data.fev_icon,
             apple: siteSetting.data.fev_icon,
         },
         openGraph: {
-            title: `${params.category.replace(/-/g, ' ').toUpperCase()} - ${siteSetting.data.title}`,
+            title: `${category.replace(/-/g, ' ').toUpperCase()} - ${siteSetting.data.title}`,
             description: siteSetting.data.footer_description,
-            url: `${siteSetting.data.website}/collections/${params.category}`,
+            url: `${siteSetting.data.website}/collections/${category}`,
             type: 'website',
             images: [
                 {
@@ -43,12 +44,12 @@ export async function generateMetadata({ params }) {
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${params.category.replace(/-/g, ' ').toUpperCase()} - ${siteSetting.data.title}`,
+            title: `${category.replace(/-/g, ' ').toUpperCase()} - ${siteSetting.data.title}`,
             description: siteSetting.data.footer_description,
             images: siteSetting.data.header_logo,
         },
         alternates: {
-            canonical: `${siteSetting.data.website}/collections/${params.category}`,
+            canonical: `${siteSetting.data.website}/collections/${category}`,
         },
         robots: {
             index: true,
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }) {
 }
 
 const CategoryPage = async ({ params }) => {
-    const category = params.category;
+     const category = (await params).category;
 
     return (
         <>

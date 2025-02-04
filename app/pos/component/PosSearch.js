@@ -35,7 +35,7 @@ const PosSearch = ({ search, setSearch }) => {
                     id="header-search"
                     value={debouncedValue} // Use the debounced value
                     onChange={handleInputChange}
-                    className="w-full h-full block pl-[18px] pr-[45px] py-4 bg-white border border-[#E7E6EC] text-gray-600 placeholder:text-gray-500 placeholder:text-base outline-none rounded-lg search-shadow"
+                    className="w-full h-full block pl-[18px] pr-[45px] py-4 bg-white border border-[#E7E6EC] text-gray-600 placeholder:text-gray-500 placeholder:text-base outline-hidden rounded-lg search-shadow"
                     placeholder="Search..."
                 />
                 {debouncedValue && (

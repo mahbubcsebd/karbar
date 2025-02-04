@@ -53,7 +53,7 @@ const HeaderSearch = ({ showSearchModal, setShowSearchModal, dictionary }) => {
                         id="header-search"
                         value={search}
                         onChange={handleInputChange}
-                        className="w-full h-full block pl-[45px] pr-[14px] py-3 bg-white border border-[#D14BF8] text-gray-600 placeholder:text-gray-500 placeholder:text-base outline-none rounded-full search-shadow"
+                        className="w-full h-full block pl-[45px] pr-[14px] py-3 bg-white border border-[#D14BF8] text-gray-600 placeholder:text-gray-500 placeholder:text-base outline-hidden rounded-full search-shadow"
                         placeholder={dictionary.searchPlaceholder}
                     />
                     {search && (

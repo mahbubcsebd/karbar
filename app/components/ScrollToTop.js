@@ -29,7 +29,7 @@ function ScrollToTop() {
     }, []);
 
     return (
-        <div className="fixed right-4 bottom-[35px] z-[999999999] hidden md:block">
+        <div className="fixed right-4 bottom-[35px] z-999999999 hidden md:block">
             {showScroll && (
                 <button
                     onClick={scrollToTop}

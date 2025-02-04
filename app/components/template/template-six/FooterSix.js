@@ -69,9 +69,9 @@ const FooterSix = () => {
             <Image
                 className="absolute bottom-0 left-0 object-cover w-full h-full"
                 src={footerBg}
-                alt="footer-bg z-[10]"
+                alt="footer-bg z-10"
             />
-            <div className="footer-area relative z-[50]">
+            <div className="footer-area relative z-50">
                 <div className="container">
                     <div className="grid sm:grid-cols-2 lg:grid-cols-12 gap-[30px] md:gap-4 py-[60px]">
                         <div className="col-span-4">
@@ -92,7 +92,7 @@ const FooterSix = () => {
                             <div className="relative max-w-[310px]">
                                 <input
                                     type="text"
-                                    className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border-2 border-white text-white ring-1 ring-inset ring-white focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none input-shadow bg-transparent rounded-full h-[54px] pr-[50px]"
+                                    className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border-2 border-white text-white ring-1 ring-inset ring-white focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden input-shadow bg-transparent rounded-full h-[54px] pr-[50px]"
                                     placeholder="Enter your email here"
                                 />
                                 <button className="text-white absolute top-[5px] right-[5px] w-[44px] h-[44px] bg-[#FD9C02] rounded-full flex justify-center items-center transition duration-150 hover:bg-[#FD9C02]">

@@ -2,6 +2,7 @@ import { getSiteSettings } from '@/utils/getSiteSettings';
 import UserPageContent from '../../components/UserPageContent';
 
 export async function generateMetadata({ params }) {
+     const userName = (await params).userName;
     const siteSetting = await getSiteSettings();
 
     // Generate keywords from title
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title: `My Profile - ${siteSetting.data.title}`,
             description: siteSetting.data.footer_description,
-            url: `${siteSetting.data.website}/dashboard/user/${params.userName}`,
+            url: `${siteSetting.data.website}/dashboard/user/${userName}`,
             type: 'website',
             images: [
                 {
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }) {
             images: siteSetting.data.header_logo,
         },
         alternates: {
-            canonical: `${siteSetting.data.website}/dashboard/user/${params.userName}`,
+            canonical: `${siteSetting.data.website}/dashboard/user/${userName}`,
         },
         robots: {
             index: false, // Don't index user profile pages
@@ -62,6 +63,8 @@ export async function generateMetadata({ params }) {
 }
 
 const UserPage = async ({ params }) => {
+     const userName = (await params).userName;
+
     return (
         <main
             role="main"
@@ -69,7 +72,7 @@ const UserPage = async ({ params }) => {
             className="user-profile-container"
         >
             <section className="profile-content">
-                <UserPageContent userName={params.userName} />
+                <UserPageContent userName={userName} />
             </section>
         </main>
     );

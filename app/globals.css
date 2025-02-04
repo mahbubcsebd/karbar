@@ -1,80 +1,100 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap')
+layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
+@config '../tailwind.config.js';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
-    }
-}
-
-html,
-body {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f4;
+@utility text-balance {
+  text-wrap: balance;
 }
 
 @layer utilities {
-    .text-balance {
-        text-wrap: balance;
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground-rgb: 255, 255, 255;
+      --background-start-rgb: 0, 0, 0;
+      --background-end-rgb: 0, 0, 0;
     }
+  }
+
+  html,
+  body {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+  }
 }
 
-.active.size-varient {
+@layer utilities {
+  .active.size-varient {
     background-color: #484848;
     color: #fff;
-}
+  }
 
-.input-shadow {
+  .input-shadow {
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-}
+  }
 
-.hero-area .swiper-button-prev,
-.hero-area .swiper-button-next {
+  .hero-area .swiper-button-prev,
+  .hero-area .swiper-button-next {
     display: none;
-}
+  }
 
-.ellipsis-1 {
+  .ellipsis-1 {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-}
+  }
 
-.ellipsis-2 {
+  .ellipsis-2 {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-}
+  }
 
-.swiper-pagination-bullet-active {
+  .swiper-pagination-bullet-active {
     background-color: #000 !important;
-}
+  }
 
-.swiper-button-prev:after,
-.swiper-button-next:after {
+  .swiper-button-prev:after,
+  .swiper-button-next:after {
     font-size: 24px !important;
     color: #000 !important;
-}
+  }
 
-.iframe-wrapper iframe {
+  .iframe-wrapper iframe {
     display: block;
     width: 100% !important;
     height: 100% !important;
@@ -83,9 +103,9 @@ body {
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
     -o-border-radius: 6px;
-}
-/* Product loader */
-.loader {
+  }
+  /* Product loader */
+  .loader {
     width: 50px;
     aspect-ratio: 1;
     display: grid;
@@ -93,73 +113,73 @@ body {
     border-radius: 50%;
     border-color: #ccc #0000;
     animation: l16 1s infinite linear;
-}
-.loader::before,
-.loader::after {
+  }
+  .loader::before,
+  .loader::after {
     content: '';
     grid-area: 1/1;
     margin: 2px;
     border: inherit;
     border-radius: 50%;
-}
-.loader::before {
+  }
+  .loader::before {
     border-color: #8831e1 #0000;
     animation: inherit;
     animation-duration: 0.5s;
     animation-direction: reverse;
-}
-.loader::after {
+  }
+  .loader::after {
     margin: 8px;
-}
-@keyframes l16 {
+  }
+  @keyframes l16 {
     100% {
-        transform: rotate(1turn);
+      transform: rotate(1turn);
     }
-}
+  }
 
-.categories-scroll::-webkit-scrollbar {
+  .categories-scroll::-webkit-scrollbar {
     display: none;
-}
+  }
 
-.categories-scroll {
+  .categories-scroll {
     scroll-behavior: smooth;
     -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     scrollbar-width: none; /* Hide scrollbar for Firefox */
-}
+  }
 
-/* --------------------- */
-.d-flow {
+  /* --------------------- */
+  .d-flow {
     display: flow;
-}
-.search-shadow {
+  }
+  .search-shadow {
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     /* border: 5px solid linear-gradient(to right, red, purple); */
-}
+  }
 
-/* width */
-.search-scroll::-webkit-scrollbar {
+  /* width */
+  .search-scroll::-webkit-scrollbar {
     width: 5px;
     height: 5px;
-}
+  }
 
-/* Track */
-.search-scroll::-webkit-scrollbar-track {
+  /* Track */
+  .search-scroll::-webkit-scrollbar-track {
     background: #f1f1f1;
-}
+  }
 
-/* Handle */
-.search-scroll::-webkit-scrollbar-thumb {
+  /* Handle */
+  .search-scroll::-webkit-scrollbar-thumb {
     background: #c5c4c4;
-}
+  }
 
-/* Handle on hover */
-.search-scroll::-webkit-scrollbar-thumb:hover {
+  /* Handle on hover */
+  .search-scroll::-webkit-scrollbar-thumb:hover {
     background: #c5c4c4;
-}
+  }
 
-/* Loader for Order */
-/* HTML: <div class="loader"></div> */
-.spin-loader {
+  /* Loader for Order */
+  /* HTML: <div class="loader"></div> */
+  .spin-loader {
     width: 16px;
     padding: 2px;
     aspect-ratio: 1;
@@ -172,11 +192,12 @@ body {
     mask-composite: subtract;
     animation: l3 1s infinite linear;
     -webkit-animation: l3 1s infinite linear;
-}
-@keyframes l3 {
+  }
+  @keyframes l3 {
     to {
-        transform: rotate(1turn);
+      transform: rotate(1turn);
     }
+  }
 }
 @layer base {
     :root {

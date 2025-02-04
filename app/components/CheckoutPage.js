@@ -435,7 +435,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                 {areaLabel}
                                             </label>
                                             <select
-                                                className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white cursor-pointer"
+                                                className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white cursor-pointer"
                                                 value={selectedValue}
                                                 onChange={handleSelectChange}
                                                 area-label="delevery select"
@@ -708,7 +708,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                                 onChange={
                                                                     handleCodeChange
                                                                 }
-                                                                className="w-full px-0 text-sm font-normal text-gray-700 border-0 focus:outline-none focus:ring-0 active:outline-none lg:text-lg"
+                                                                className="w-full px-0 text-sm font-normal text-gray-700 border-0 focus:outline-hidden focus:ring-0 active:outline-hidden lg:text-lg"
                                                             />
                                                             <button
                                                                 onClick={
@@ -847,7 +847,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                         type="tel"
                                                         name="phone_number"
                                                         placeholder="017XXXXXXXX"
-                                                        className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
+                                                        className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                                                     />
                                                 </div>
                                                 <div>
@@ -864,7 +864,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                         type="text"
                                                         name="transaction_id"
                                                         placeholder="7XP59GS33F"
-                                                        className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
+                                                        className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                                                     />
                                                 </div>
                                             </div>

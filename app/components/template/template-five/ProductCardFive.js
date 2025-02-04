@@ -87,7 +87,7 @@ function calculateDiscount(unitPrice, salePrice) {
                     </div>
                 )}
                 {stock < 1 && (
-                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-[99] opacity-80">
+                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-99 opacity-80">
                         Out of stock
                     </div>
                 )}

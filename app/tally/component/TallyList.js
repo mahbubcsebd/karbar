@@ -435,7 +435,7 @@ const TallyList = () => {
                                             onKeyPress={(e) =>
                                                 handleKeyPress(e, row.id)
                                             }
-                                            className="block w-full py-[10px] px-[18px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
+                                            className="block w-full py-[10px] px-[18px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                                             min="0"
                                             disabled={!row.productId}
                                             placeholder="0"
@@ -450,7 +450,7 @@ const TallyList = () => {
                                         <input
                                             type="number"
                                             value={row.price}
-                                            className="block w-full py-[10px] px-[18px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-none rounded-md input-shadow bg-white"
+                                            className="block w-full py-[10px] px-[18px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                                             min="0"
                                             readOnly
                                         />

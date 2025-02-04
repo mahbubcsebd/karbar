@@ -15,7 +15,7 @@ const HeaderSix = () => {
     };
 
     return (
-        <div className="py-4 bg-white header relative z-[9999] shadow-md">
+        <div className="py-4 bg-white header relative z-9999 shadow-md">
             <div className="container">
                 <div className="flex items-center justify-between">
                     <div className="logo">

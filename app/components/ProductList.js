@@ -304,7 +304,7 @@ const ProductList = ({ category }) => {
                                     <div className="">
                                         <select
                                             id="brandFilter"
-                                            className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 mr-4 bg-white cursor-pointer hover:border-gray-400"
+                                            className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-900 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-gray-400 mr-4 bg-white cursor-pointer hover:border-gray-400"
                                             value={brandValue}
                                             onChange={handleBrandChange}
                                             aria-label={`${brandsLang} filter`}
@@ -338,7 +338,7 @@ const ProductList = ({ category }) => {
                                     <div className="">
                                         <select
                                             id="sortFilter"
-                                            className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 mr-4 bg-white cursor-pointer hover:border-gray-400"
+                                            className="py-1 px-2 text-xs lg:py-[7px] lg:px-[10px] lg:text-base text-gray-900 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-gray-400 mr-4 bg-white cursor-pointer hover:border-gray-400"
                                             value={sortValue}
                                             onChange={handleSortChange}
                                             aria-label={`${sortBy} options`}

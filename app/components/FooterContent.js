@@ -33,9 +33,9 @@ const { siteSetting, loading, error } = useSiteSetting();
             <Image
                 className="absolute bottom-0 left-0 w-full"
                 src={footerBg}
-                alt="footer-bg z-[10]"
+                alt="footer-bg z-10"
             />
-            <div className="footer-area relative z-[50]">
+            <div className="footer-area relative z-50">
                 <div className="container">
                     <div className="grid grid-cols-3 gap-4 py-[60px]">
                         <div>

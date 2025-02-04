@@ -76,7 +76,7 @@ const LanguageSwitcher = ({ template }) => {
                     </span>
                 </div>
                 <div
-                    className={`block w-full md:py-[10px] md:h-12 md:rounded-full font-normal md:border border-[#D14BF8] appearance-none md:px-9 focus:outline-none focus:ring-2 focus:ring-purple-400 cursor-pointer capitalize md:bg-white pr-4 ${
+                    className={`block w-full md:py-[10px] md:h-12 md:rounded-full font-normal md:border border-[#D14BF8] appearance-none md:px-9 focus:outline-hidden focus:ring-2 focus:ring-purple-400 cursor-pointer capitalize md:bg-white pr-4 ${
                         template === 'Template02'
                             ? 'text-white md:text-gray-800'
                             : 'text-gray-800'
@@ -91,7 +91,7 @@ const LanguageSwitcher = ({ template }) => {
 
                 {/* Dropdown Menu */}
                 {isOpen && (
-                    <div className="absolute z-[9999] w-full mt-1 bg-white rounded-md shadow-lg min-w-[150px] right-0">
+                    <div className="absolute z-9999 w-full mt-1 bg-white rounded-md shadow-lg min-w-[150px] right-0">
                         <ul className="py-1 text-gray-700">
                             {languages.map((lang) => (
                                 <li
