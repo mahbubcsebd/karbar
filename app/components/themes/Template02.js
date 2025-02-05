@@ -3,7 +3,7 @@ import AbayaAllProducts from '../template/abaya/AbayaAllProducts';
 import AbayaHeroSlider from '../template/abaya/AbayaHeroSlider';
 import Testimonials from '../Testimonials';
 
-const Template02 = async () => {
+export default function Template02() {
     return (
         <div>
             <AbayaHeroSlider />
@@ -14,6 +14,4 @@ const Template02 = async () => {
             <Advertisement position="home_bottom" />
         </div>
     );
-};
-
-export default Template02;
+}

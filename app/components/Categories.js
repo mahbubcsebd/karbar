@@ -30,6 +30,7 @@ const Categories = () => {
                                     handleCategoryClick('new_arrival')
                                 }
                                 className={`text-base text-gray-600 font-normal hover:text-gray-800 transition duration-150`}
+                                area-label="category change button"
                             >
                                 {newArrival}
                             </button>
@@ -40,6 +41,7 @@ const Categories = () => {
                                     handleCategoryClick('best_selling')
                                 }
                                 className={`text-base text-gray-600 font-normal hover:text-gray-800 transition duration-150`}
+                                area-label="category change button"
                             >
                                 {bestSelling}
                             </button>
@@ -48,6 +50,7 @@ const Categories = () => {
                             <button
                                 onClick={() => handleCategoryClick('discount')}
                                 className={`text-base text-gray-600 font-normal hover:text-gray-800 transition duration-150`}
+                                area-label="category change button"
                             >
                                 {discount}
                             </button>

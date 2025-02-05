@@ -6,7 +6,6 @@ import {
     renderBlock3Images,
     renderBlock4Images
 } from '@/utils/advertisementLayout';
-import getTemplate from '@/utils/getTemplate';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -16,16 +15,17 @@ import { getAdvertisement } from '../utils/getAdvertisement';
 const Advertisement = ({ position }) => {
     const { siteSetting, loading, error } = useSiteSetting();
     const [advertisements, setAdvertisements] = useState([]);
-    const [template, setTemplate] = useState(null);
+    // const [template, setTemplate] = useState(null);
+    // const {template} = useTemplate()
 
     useEffect(() => {
         if (siteSetting?.module?.includes('advertisement')) {
             const fetchAdvertisement = async () => {
                 try {
                     const advertisementData = await getAdvertisement(position);
-                    const templateData = await getTemplate();
+                    // const templateData = await getTemplate();
                     setAdvertisements(advertisementData?.data || []);
-                    setTemplate(templateData?.template_name || null);
+                    // setTemplate(templateData?.template_name || null);
                 } catch (err) {
                     console.error('Error fetching advertisements:', err);
                 }
@@ -51,6 +51,8 @@ const Advertisement = ({ position }) => {
     }
     if (error) return <p>Error: {error}</p>;
     if (!advertisements || advertisements.length === 0) return null;
+
+    console.log("-------------------------" + advertisements.length);
 
     return (
         <div className="py-[60px]">

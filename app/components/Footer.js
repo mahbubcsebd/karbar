@@ -74,7 +74,7 @@ const Footer = () => {
     const paymentIcons = {
         'bkash': bkashIcon,
         'nagad': nagadIcon,
-        'cod': codIcon
+        'cash': codIcon
     };
 
     return (
