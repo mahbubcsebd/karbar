@@ -8,6 +8,7 @@ const KarbarButton = ({
     variant = 'default',
     asLink,
     href,
+    title,
     onClick,
     disabled,
     preserveHover = false,
@@ -67,11 +68,29 @@ const KarbarButton = ({
 
     const Component = asLink ? Link : 'button';
 
+    // Get text content from children for default title
+    const getDefaultTitle = () => {
+        if (typeof children === 'string') return children;
+        if (Array.isArray(children)) {
+            return children
+                .map(child =>
+                    typeof child === 'string' ? child : ''
+                )
+                .join(' ')
+                .trim();
+        }
+        return '';
+    };
+
+    // Use provided title or generate default from children
+    const buttonTitle = title || getDefaultTitle();
+
     return (
         <>
             <style>{hoverStyles}</style>
             <Component
                 href={asLink ? href : undefined}
+                title={buttonTitle}
                 className={cn(baseStyles, 'custom-button', className)}
                 style={getStylesForVariant(variant)}
                 onClick={onClick}
