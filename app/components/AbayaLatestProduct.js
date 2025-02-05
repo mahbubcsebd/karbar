@@ -52,9 +52,9 @@ const AbayaLatestProduct = () => {
                         <Link
                             href="/collections/all"
                             className="text-base md:text-[20px] text-gray-900 font-normal border md:border-2 border-gray-900 px-6 py-[10px] md:px-[30px] md:py-4 hover:bg-gray-900 hover:text-white transition duration-150 rounded-full"
-                            aria-label={`See more ${seeMore} products in our collection`}
+                            aria-label={`See more products in our collection`}
                         >
-                            {seeMore}
+                            {seeMore ?? 'See More'}
                         </Link>
                     </div>
                 </div>

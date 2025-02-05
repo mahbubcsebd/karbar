@@ -1,55 +1,53 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { lazy, useCallback, useEffect, useState } from 'react';
 
-// Fallback components
-const LoadingComponent = () => <div></div>;
-const ErrorComponent = () => <div></div>;
+// Placeholder components
+const ErrorComponent = () => <div>Error loading theme component.</div>;
 
 function Template({ template }) {
-    const [ThemeComponent, setThemeComponent] = useState(null);
+    const [Component, setComponent] = useState(null);
     const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [cachedTemplate, setCachedTemplate] = useState(null);
 
-    const loadTemplate = useCallback(async (templateName) => {
-        try {
-            setIsLoading(true);
-            setError(false);
+    const fetchAndRender = useCallback(
+        async (newTemplate) => {
+            const templateName =
+                newTemplate && typeof newTemplate === 'string'
+                    ? newTemplate
+                    : 'Template01';
 
-            // Normalize template name
-            const normalizedTemplate = templateName?.trim() || 'Template01';
-
-            // Dynamic import with proper error handling
-            const module = await import(`./${normalizedTemplate}`).catch(() => {
-                console.warn(`Failed to load ${normalizedTemplate}, falling back to Template01`);
-                return import('./Template01');
-            });
-
-            setThemeComponent(() => module.default);
-        } catch (err) {
-            console.error('Template loading error:', err);
-            setError(true);
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
+            if (templateName !== cachedTemplate) {
+                try {
+                    const Component = lazy(() =>
+                        import(`./${templateName}`).catch(() =>
+                            import(`./Template01`)
+                        )
+                    );
+                    setComponent(Component);
+                    setCachedTemplate(templateName);
+                } catch (error) {
+                    setError(true);
+                }
+            }
+        },
+        [cachedTemplate]
+    );
 
     useEffect(() => {
-        loadTemplate(template);
-    }, [template, loadTemplate]);
+        fetchAndRender(template);
+    }, [template, fetchAndRender]);
 
     if (error) {
         return <ErrorComponent />;
     }
 
-    if (isLoading) {
-        return <LoadingComponent />;
-    }
-
     return (
-        <Suspense fallback={<LoadingComponent />}>
-            {ThemeComponent && <ThemeComponent />}
-        </Suspense>
+        <div>
+            {Component && (
+                <Component />
+            )}
+        </div>
     );
 }
 
