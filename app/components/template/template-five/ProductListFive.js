@@ -153,7 +153,7 @@ const ProductListFive = () => {
                                     className={`whitespace-nowrap text-xs xl:text-2xl font-normal transition duration-150 ${
                                         selectedCategory == 'all'
                                             ? 'border-b border-[#2A51C6] text-[#2A51C6]'
-                                            : 'text-gray-500'
+                                            : 'text-gray-700'
                                     }`}
                                 >
                                     {dictionary.Global.all}
@@ -169,7 +169,7 @@ const ProductListFive = () => {
                                         className={`whitespace-nowrap text-xs xl:text-2xl font-normal transition duration-150 ${
                                             selectedCategory == category.slug
                                                 ? 'border-b border-[#2A51C6] text-[#2A51C6]'
-                                                : 'text-gray-500'
+                                                : 'text-gray-700'
                                         }`}
                                     >
                                         {category.name}
@@ -210,8 +210,10 @@ const ProductListFive = () => {
                         <KarbarButton
                             asLink
                             href={`/collections/${selectedCategory}`}
-                            variant="outline"
-                            className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-lg"
+                            variant="default"
+                            className="text-base md:text-[20px] font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-lg"
+                            aria-label={`See category wise products in our collection`}
+                            title="See category wise products in our collection"
                         >
                             {loading ? 'Loading...' : dictionary.Global.seeMore}
                         </KarbarButton>
