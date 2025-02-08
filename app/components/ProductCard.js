@@ -6,12 +6,14 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import useSiteSetting from "@/hooks/useSiteSetting";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import noAvailableImg from "../assets/icons/no-available.svg";
 import { ProductContext } from "../context/cartContext";
 import useDictionary from "../hooks/useDictionary";
+import KarbarButton from "./KarbarButton";
 // import { ProductContext } from "../context/cartContext";
 
 
-const ProductCard = ({ product, isPriority = false }) => {
+const ProductCard = ({ product, isPriority }) => {
     const productCardRef = useRef(null);
     const [width, setWidth] = useState(0);
     const { dictionary } = useDictionary();
@@ -55,38 +57,62 @@ const ProductCard = ({ product, isPriority = false }) => {
     };
 
     return (
-        <div className="product-card relative">
+        <div
+            ref={productCardRef}
+            className="h-full overflow-hidden bg-white rounded-lg product-card"
+        >
             {/* Fixed aspect ratio container for image */}
-            <div className="relative aspect-[3/4] w-full bg-gray-100">
-                <Link href={`/products/${product.slug}`}>
-                    <Image
-                        src={product.product_images[0]?.original_url}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover object-center"
-                        priority={isPriority}
-                    />
+            <div className="relative pt-[100%] w-full"> {/* 1:1 aspect ratio */}
+                <Link
+                    href={`/products/${slug}`}
+                    className="absolute inset-0 block overflow-hidden rounded-tl-lg rounded-tr-lg"
+                >
+                    <div className="w-full h-full bg-gray-100"> {/* Placeholder background */}
+                        <Image
+                            src={preview_image ? preview_image : noAvailableImg}
+                            alt={name}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover w-full h-full"
+                            loading={isPriority ? 'eager' : 'lazy'}
+                            priority={isPriority}
+                            quality={75}
+                        />
+                    </div>
+                    {stock < 1 && (
+                        <div className="absolute inset-0 flex items-center justify-center text-xl text-white bg-black bg-opacity-80">
+                            Out of stock
+                        </div>
+                    )}
                 </Link>
             </div>
 
             {/* Fixed height content area */}
-            <div className="product-content h-[120px] flex flex-col justify-between p-3">
-                <h3 className="product-title text-sm font-medium text-gray-700 line-clamp-2">
-                    {product.name}
-                </h3>
+            <div className="flex flex-col justify-between h-[160px] p-[10px] md:p-[18px] bg-white">
+                <div>
+                    <Link
+                        href={`/products/${slug}`}
+                        className="block mb-1 text-xs font-medium text-gray-900 capitalize line-clamp-2 sm:text-base lg:text-base xl:text-lg md:mb-2"
+                    >
+                        {name}
+                    </Link>
+                    <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900">
+                        {priceCurrency} :{' '}
+                        {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
+                        <span className={`inline-block ${sale_price > 0 ? 'line-through text-red-700 text-sm' : ''}`}>
+                            ৳{unit_price}
+                        </span>
+                    </p>
+                </div>
 
-                <div className="price-area">
-                    <div className="flex items-center gap-2">
-                        <p className="text-base font-semibold text-gray-900">
-                            ৳{product.sale_price || product.unit_price}
-                        </p>
-                        {product.sale_price && (
-                            <p className="text-sm text-gray-500 line-through">
-                                ৳{product.unit_price}
-                            </p>
-                        )}
-                    </div>
+                <div className="flex items-center gap-2">
+                    <KarbarButton
+                        asLink
+                        href={`/products/${slug}`}
+                        className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-[4px] capitalize"
+                    >
+                        {siteSetting.button_text ? siteSetting.button_text : 'Order Now'}
+                    </KarbarButton>
                 </div>
             </div>
         </div>

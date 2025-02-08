@@ -44,40 +44,39 @@ const LatestProduct = () => {
     }, [language]);
 
     return (
-        <div
-            id="product-section"
-            className="mb-10 product-section pt-[30px] lg:pt-10"
-        >
-            <div className="product-area">
-                <div className="container">
-                    {loading ? (
+        <div className="mb-10 product-section pt-[30px] lg:pt-10">
+            <div className="container">
+                {loading ? (
+                    <div className="min-h-[400px] grid place-items-center">
                         <DaribProductLoader items={8} />
-                    ) : error ? (
-                        <div className="text-center text-red-500">{error}</div>
-                    ) : (
-                        <>
-                            <SectionTitle title={sectionTitle} />
+                    </div>
+                ) : error ? (
+                    <div className="min-h-[400px] grid place-items-center">
+                        <p className="text-red-500">{error}</p>
+                    </div>
+                ) : (
+                    <>
+                        <SectionTitle title={sectionTitle} />
+                        <div className="min-h-[400px]">
                             {products.length > 0 ? (
-                                <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px]">
-                                    <div className="min-h-[400px] grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 xl:gap-[30px]">
-                                        {products.map((product, index) => (
-                                            <ProductCard
-                                                key={product.id}
-                                                product={product}
-                                                isPriority={index < 4}
-                                            />
-                                        ))}
-                                    </div>
+                                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px]">
+                                    {products.map((product, index) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            product={product}
+                                            isPriority={index < 4}
+                                        />
+                                    ))}
                                 </div>
                             ) : (
-                                <div className="min-h-[200px] grid place-items-center">
-                                    <p className="text-xl text-gray-500">
-                                        No products found
-                                    </p>
+                                <div className="grid place-items-center h-[400px]">
+                                    <p className="text-xl text-gray-500">No products found</p>
                                 </div>
                             )}
+                        </div>
 
-                            <div className="h-[100px] flex justify-center items-center">
+                        {products.length > 0 && (
+                            <div className="h-[100px] flex items-center justify-center">
                                 <KarbarButton
                                     asLink
                                     href="/collections/all"
@@ -86,9 +85,9 @@ const LatestProduct = () => {
                                     {seeMore}
                                 </KarbarButton>
                             </div>
-                        </>
-                    )}
-                </div>
+                        )}
+                    </>
+                )}
             </div>
         </div>
     );
