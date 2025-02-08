@@ -62,12 +62,16 @@ const ProductCard = ({ product, isPriority }) => {
             className="h-full overflow-hidden bg-white rounded-lg product-card"
         >
             {/* Fixed aspect ratio container for image */}
-            <div className="relative pt-[100%] w-full"> {/* 1:1 aspect ratio */}
+            <div className="relative pt-[100%] w-full">
+                {' '}
+                {/* 1:1 aspect ratio */}
                 <Link
                     href={`/products/${slug}`}
                     className="absolute inset-0 block overflow-hidden rounded-tl-lg rounded-tr-lg"
                 >
-                    <div className="w-full h-full bg-gray-100"> {/* Placeholder background */}
+                    <div className="w-full h-full bg-gray-100">
+                        {' '}
+                        {/* Placeholder background */}
                         <Image
                             src={preview_image ? preview_image : noAvailableImg}
                             alt={name}
@@ -88,18 +92,25 @@ const ProductCard = ({ product, isPriority }) => {
             </div>
 
             {/* Fixed height content area */}
-            <div className="flex flex-col justify-between h-[160px] p-[10px] md:p-[18px] bg-white">
+            <div className="flex flex-col justify-between p-[10px] md:p-[18px] bg-white">
                 <div>
                     <Link
                         href={`/products/${slug}`}
-                        className="block mb-1 text-xs font-medium text-gray-900 capitalize line-clamp-2 sm:text-base lg:text-base xl:text-lg md:mb-2"
+                        className="block mb-1 text-xs font-medium text-gray-900 capitalize sm:text-base lg:text-base xl:text-lg
+                    md:mb-2 product-title ellipsis-2 xl:min-h-14"
                     >
                         {name}
                     </Link>
                     <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900">
                         {priceCurrency} :{' '}
                         {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
-                        <span className={`inline-block ${sale_price > 0 ? 'line-through text-red-700 text-sm' : ''}`}>
+                        <span
+                            className={`inline-block ${
+                                sale_price > 0
+                                    ? 'line-through text-red-700 text-sm'
+                                    : ''
+                            }`}
+                        >
                             ৳{unit_price}
                         </span>
                     </p>
@@ -111,7 +122,9 @@ const ProductCard = ({ product, isPriority }) => {
                         href={`/products/${slug}`}
                         className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-[4px] capitalize"
                     >
-                        {siteSetting.button_text ? siteSetting.button_text : 'Order Now'}
+                        {siteSetting.button_text
+                            ? siteSetting.button_text
+                            : 'Order Now'}
                     </KarbarButton>
                 </div>
             </div>
