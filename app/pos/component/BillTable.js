@@ -79,6 +79,8 @@ const BillTable = ({
     const [discountType, setDiscountType] = useState('flat');
     const [subTotal, setSubtotal] = useState(0);
     const [couponCode, setCouponCode] = useState('');
+    const [bkashNumber, setBkashNumber] = useState(null);
+    const [cardNumber, setCardNumber] = useState(null);
     const [discountValue, setDiscountValue] = useState(0);
     const [couponApply, setCouponApply] = useState(true);
     const [invoice, setInvoice] = useState('');
@@ -401,6 +403,14 @@ const BillTable = ({
             billed_by: user.id,
             order_type: 'pos',
         };
+
+        if(selectedMethod === 'bkash') {
+            orderData.bkash_number = bkashNumber;
+        }
+
+        if(selectedMethod === 'card') {
+            orderData.card_number = cardNumber;
+        }
 
         if (selectedMethod === 'partial') {
             orderData.paid_amount = formData.payment_amount;
@@ -837,18 +847,71 @@ const BillTable = ({
                                                 {/* Change Amount Input */}
                                                 <div className="single-input">
                                                     <label className="block text-gray-700 text-sm font-semibold mb-[6px] capitalize">
-                                                        {selectedMethod === 'partial' ? 'Due Amount' : 'Change Amount'}
+                                                        {selectedMethod ===
+                                                        'partial'
+                                                            ? 'Due Amount'
+                                                            : 'Change Amount'}
                                                     </label>
                                                     <input
                                                         type="number"
                                                         name="change_amount"
-                                                        value={selectedMethod === 'partial' ? Math.abs(change_amount) : change_amount}
+                                                        value={
+                                                            selectedMethod ===
+                                                            'partial'
+                                                                ? Math.abs(
+                                                                      change_amount
+                                                                  )
+                                                                : change_amount
+                                                        }
                                                         placeholder="Enter change amount"
                                                         onChange={handleAmount}
                                                         readOnly
                                                         className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                                                     />
                                                 </div>
+                                                {/* Bkash Number Input */}
+                                                {selectedMethod === 'bkash' && (
+                                                    <div className="single-input">
+                                                        <label className="block text-gray-700 text-sm font-semibold mb-[6px] capitalize">
+                                                            Bkash Mobile Number
+                                                        </label>
+                                                        <input
+                                                            type="number"
+                                                            name="change_amount"
+                                                            value={bkashNumber}
+                                                            placeholder="Enter bKash number"
+                                                            onChange={(e) =>
+                                                                setBkashNumber(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                            className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
+                                                        />
+                                                    </div>
+                                                )}
+
+                                                {/* Change Amount Input */}
+                                                {selectedMethod === 'card' && (
+                                                    <div className="single-input">
+                                                        <label className="block text-gray-700 text-sm font-semibold mb-[6px] capitalize">
+                                                            Card Number
+                                                        </label>
+                                                        <input
+                                                            type="number"
+                                                            name="change_amount"
+                                                            value={cardNumber}
+                                                            placeholder="Enter card number"
+                                                            onChange={(e) =>
+                                                                setCardNumber(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                            className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
+                                                        />
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className="flex justify-start pt-5">
                                                 <button

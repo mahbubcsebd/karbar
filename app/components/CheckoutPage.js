@@ -31,7 +31,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const [orderLoading, setOrderLoading] = useState(false);
     const [couponCode, setCouponCode] = useState('');
     const [productStock, setProductStock] = useState(0);
-    const [discountValue, setDiscountValue] = useState(null);
+    const [discountValue, setDiscountValue] = useState(0);
     const { dictionary } = useDictionary();
     const { adManager } = useAdManager();
     const {orderId, setOrderId} = useOrderId();
@@ -686,6 +686,17 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                             {currency}
                                                         </p>
                                                     </li>
+                                                    {discountValue > 0 && (
+                                                        <li className="flex items-center justify-between py-3 border-b border-gray-400 lg:py-5">
+                                                            <p className="text-sm font-semibold text-gray-700 lg:text-lg">
+                                                                Discount :
+                                                            </p>
+                                                            <p className="text-sm font-semibold text-red-500 lg:text-lg">
+                                                                -{discountValue}{' '}
+                                                                {currency}
+                                                            </p>
+                                                        </li>
+                                                    )}
                                                     <li className="flex items-center justify-between py-3 border-b border-gray-400 lg:py-5">
                                                         <p className="text-sm font-semibold text-gray-700 lg:text-lg">
                                                             {dicDeliveryFee} :

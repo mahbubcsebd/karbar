@@ -58,38 +58,35 @@ const LatestProduct = () => {
                         <>
                             <SectionTitle title={sectionTitle} />
                             {products.length > 0 ? (
-                                <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px] ">
-                                    {products.map((product, index) => (
-                                        <ProductCard
-                                            key={product.id}
-                                            product={product}
-                                            isPriority={index < 4}
-                                        />
-                                    ))}
+                                <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px]">
+                                    <div className="min-h-[400px] grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 xl:gap-[30px]">
+                                        {products.map((product, index) => (
+                                            <ProductCard
+                                                key={product.id}
+                                                product={product}
+                                                isPriority={index < 4}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             ) : (
-                                <div className="text-center">
-                                    No products found
+                                <div className="min-h-[200px] grid place-items-center">
+                                    <p className="text-xl text-gray-500">
+                                        No products found
+                                    </p>
                                 </div>
                             )}
-                        </>
-                    )}
 
-                    {!loading && (
-                        <div className="flex justify-center pt-10 md:pt-[70px]">
-                            <KarbarButton
-                                asLink
-                                href="/collections/all"
-                                className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
-                                aria-label="Browse all products in our collection"
-                                title="Browse all products in our collection"
-                            >
-                                <span className="sr-only">
-                                    Browse all products -{' '}
-                                </span>
-                                {seeMore}
-                            </KarbarButton>
-                        </div>
+                            <div className="h-[100px] flex justify-center items-center">
+                                <KarbarButton
+                                    asLink
+                                    href="/collections/all"
+                                    className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                                >
+                                    {seeMore}
+                                </KarbarButton>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>
