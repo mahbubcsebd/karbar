@@ -82,8 +82,8 @@ const HeroSlider = () => {
                                             <Image
                                                 src={img.image_url}
                                                 alt={img.title}
-                                                fill
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                width={900}
+                                                height={500}
                                                 className="object-cover w-full h-auto"
                                                 priority={index === 0}
                                                 loading={
@@ -91,7 +91,7 @@ const HeroSlider = () => {
                                                         ? 'eager'
                                                         : 'lazy'
                                                 }
-                                                quality={75}
+                                                quality={100}
                                             />
                                         </Link>
                                     </SwiperSlide>
