@@ -92,7 +92,7 @@ const ProductCard = ({ product, isPriority }) => {
                     >
                         {name}
                     </Link>
-                    <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900">
+                    <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900 mb-[18px]">
                         {priceCurrency} :{' '}
                         {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
                         <span

@@ -78,7 +78,7 @@ const LatestProduct = () => {
                         </div>
 
                         {products.length > 0 && (
-                            <div className="h-[100px] flex items-center justify-center">
+                            <div className="mt-16 flex items-center justify-center">
                                 <KarbarButton
                                     asLink
                                     href="/collections/all"

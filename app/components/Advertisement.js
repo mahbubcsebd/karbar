@@ -52,8 +52,6 @@ const Advertisement = ({ position }) => {
     if (error) return <p>Error: {error}</p>;
     if (!advertisements || advertisements.length === 0) return null;
 
-    console.log("-------------------------" + advertisements.length);
-
     return (
         <div className="py-[60px]">
             {advertisements.map((ad) => {

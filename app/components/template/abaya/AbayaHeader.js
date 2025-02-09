@@ -56,7 +56,7 @@ const AbayaHeader = () => {
                             >
                                 <Link href="/">
                                     <Image
-                                        src={header_logo ? header_logo : logo}
+                                        src={header_logo ?? logo}
                                         alt="logo"
                                         width={82}
                                         height={30}
