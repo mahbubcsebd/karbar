@@ -47,8 +47,8 @@ const LatestProduct = () => {
         <div className="mb-10 product-section pt-[30px] lg:pt-10">
             <div className="container">
                 {loading ? (
-                    <div className="min-h-[500px]">
-                        <DaribProductLoader items={4} />
+                    <div className="min-h-[1500px]">
+                        <DaribProductLoader items={8} />
                     </div>
                 ) : error ? (
                     <div className="min-h-[400px] grid place-items-center">
@@ -57,7 +57,7 @@ const LatestProduct = () => {
                 ) : (
                     <>
                         <SectionTitle title={sectionTitle} />
-                        <div className="min-h-[400px]">
+                        <div className="min-h-[1500px]">
                             {products.length > 0 ? (
                                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px]">
                                     {products.map((product, index) => (
