@@ -44,11 +44,11 @@ const LatestProduct = () => {
     }, [language]);
 
     return (
-        <div className="mb-10 product-section pt-[30px] lg:pt-10 min-h-[500px]">
+        <div className="mb-10 product-section pt-[30px] lg:pt-10">
             <div className="container">
                 {loading ? (
-                    <div className="min-h-[400px] grid place-items-center">
-                        <DaribProductLoader items={8} />
+                    <div className="min-h-[500px]">
+                        <DaribProductLoader items={4} />
                     </div>
                 ) : error ? (
                     <div className="min-h-[400px] grid place-items-center">
@@ -70,7 +70,9 @@ const LatestProduct = () => {
                                 </div>
                             ) : (
                                 <div className="grid place-items-center h-[400px]">
-                                    <p className="text-xl text-gray-500">No products found</p>
+                                    <p className="text-xl text-gray-500">
+                                        No products found
+                                    </p>
                                 </div>
                             )}
                         </div>
