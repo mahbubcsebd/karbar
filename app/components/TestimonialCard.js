@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { FaUserCircle } from 'react-icons/fa';
 
 import quote from '../assets/icons/quote.svg';
-import RatingStar from './RatingStar';
+import RatingStars from './RatingStars';
 
 const TestimonialCard = ({ testimonial }) => {
     const { name, rating, review } = testimonial;
@@ -29,7 +29,7 @@ const TestimonialCard = ({ testimonial }) => {
                                 Customer
                             </p>
                             <div className="min-w-[140px]">
-                                <RatingStar rating={rating} />
+                                <RatingStars rating={rating} />
                             </div>
                         </div>
                     </div>
