@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext } from 'react';
 // import { useContext } from "react";
 import useSiteSetting from "@/hooks/useSiteSetting";
 import Image from "next/image";
@@ -14,18 +14,10 @@ import KarbarButton from "./KarbarButton";
 
 
 const ProductCard = ({ product, isPriority }) => {
-    const productCardRef = useRef(null);
-    const [width, setWidth] = useState(0);
     const { dictionary } = useDictionary();
     const { siteSetting, loading, error } = useSiteSetting();
 
     const { priceCurrency, seeDetails } = dictionary.ProductCard;
-
-    useEffect(() => {
-        if (productCardRef.current) {
-            setWidth(productCardRef.current.offsetWidth);
-        }
-    }, []);
 
     const { uuid, name, preview_image, sale_price, unit_price, stock, slug } =
         product;
@@ -57,10 +49,7 @@ const ProductCard = ({ product, isPriority }) => {
     };
 
     return (
-        <div
-            ref={productCardRef}
-            className="h-full overflow-hidden bg-white rounded-lg product-card"
-        >
+        <div className="h-full overflow-hidden bg-white rounded-lg product-card">
             {/* Fixed aspect ratio container for image */}
             <div className="relative pt-[100%] w-full">
                 {' '}
@@ -73,7 +62,7 @@ const ProductCard = ({ product, isPriority }) => {
                         {' '}
                         {/* Placeholder background */}
                         <Image
-                            src={preview_image ? preview_image : noAvailableImg}
+                            src={preview_image ?? noAvailableImg}
                             alt={name}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -81,6 +70,8 @@ const ProductCard = ({ product, isPriority }) => {
                             loading={isPriority ? 'eager' : 'lazy'}
                             priority={isPriority}
                             quality={75}
+                            placeholder="blur"
+                            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNFMEUwRTAiIC8+PC9zdmc+"
                         />
                     </div>
                     {stock < 1 && (
