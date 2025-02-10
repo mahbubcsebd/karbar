@@ -36,7 +36,7 @@ const HeaderSearch = ({ showSearchModal, setShowSearchModal, dictionary }) => {
     }
 
     return (
-        <div className="lg:relative">
+        <div className="lg:relative min-h-[56px] min-w-[350px]">
             <div
                 className={`${
                     showSearchModal
