@@ -18,7 +18,7 @@
         "noFound": "No product found",
         "latestProduct": "Latest Product",
         "ourProduct": "Our Product",
-        "seeMore": "View All Products"
+        "seeMore": "Browse All"
     },
     "TemplateFour": {
         "latest": "Latest",
@@ -49,7 +49,7 @@
         "seeDetails": "See Details",
         "stockOut": "Out of Stock",
         "priceCurrency": "Tk",
-        "seeMore": "Browse All Products",
+        "seeMore": "Browse All",
         "sectionTitle": "Latest Product",
         "SortBy": {
             "sortBy": "Sort By",

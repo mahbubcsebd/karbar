@@ -72,18 +72,12 @@ const LatestProductFour = () => {
                             href="/collections/all"
                             preserveHover={true}
                             variant="default"
-                            className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
-                            aria-label={`See more ${seeMore} products in our collection`}
+                            className="text-base md:text-[20px] font-medium border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                            aria-label={`See more products in our collection`}
                             title="Browse all products in our collection"
                         >
                             {seeMore ?? 'See More'}
                         </KarbarButton>
-                        {/* <Link
-                            href="/collections/all"
-                            className="text-base md:text-[20px] text-white font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full  bg-[#348E29] hover:bg-transparent hover:text-[#348E29] border border-[#348E29]"
-                        >
-                            {seeMore}
-                        </Link> */}
                     </div>
                 </div>
             </div>

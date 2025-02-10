@@ -1,16 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import products from "@/app/data/products.json";
 'use client';
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import useDictionary from '../../../hooks/useDictionary';
-// import { getAllProduct } from './../../../utils/getProduct';
-import { getAllProduct } from '../../../utils/getProduct';
-// import ProductCard from './ProductCard';
-// import { getAllCategories } from '../../../../../utils/categories';
 import ourProductsbg from '@/assets/images/our-product-bg-4.svg';
 import Image from 'next/image';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import useDictionary from '../../../hooks/useDictionary';
 import useSiteSetting from '../../../hooks/useSiteSetting';
 import { getAllCategories } from '../../../utils/categories';
+import { getAllProduct } from '../../../utils/getProduct';
 import KarbarButton from '../../KarbarButton';
 import SkeletonCard from '../../skeleton/SkeletonCard';
 import ProductCardFour from './ProductCardFour';
@@ -232,36 +229,18 @@ const ProductListFour = () => {
                             </div>
                         )}
                     </Suspense>
-
-                    {/* <div className="flex justify-center md:pt-[70px] mt-6">
-                        {memoizedProductsArray.length >= 12 &&
-                            memoizedProductsArray.length < totalProduct &&
-                            memoizedProductsArray.length !== totalProduct && (
-                                <button
-                                    onClick={() => handleSeeMore(4)}
-                                    disabled={loading}
-                                    type="button"
-                                    className="text-base md:text-[20px] text-gray-900 font-normal border-2 border-gray-900 px-6 py-3 rounded-lg md:px-[30px] md:py-4 hover:bg-gray-900 transition duration-150"
-                                >
-                                    {loading ? 'Loading...' : dictionary.Global.seeMore}
-                                </button>
-                            )}
-                    </div> */}
                     <div className="flex justify-center md:pt-[70px] mt-6">
                         <KarbarButton
                             asLink
                             href={`/collections/${selectedCategory}`}
-                            variant="outline"
-                            className="text-base md:text-[20px] font-normal border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                            preserveHover={true}
+                            variant="default"
+                            className="text-base md:text-[20px] font-medium border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                            aria-label={`See more products in our collection`}
+                            title="Browse all products in our collection"
                         >
                             {loading ? 'Loading...' : dictionary.Global.seeMore}
                         </KarbarButton>
-                        {/* <Link
-                            href={`/collections/${selectedCategory}`}
-                            className="text-base md:text-[20px] text-[#348E29] font-normal px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full bg-transparent hover:bg-[#348E29] border border-[#348E29]"
-                        >
-                            {loading ? 'Loading...' : dictionary.Global.seeMore}
-                        </Link> */}
                     </div>
                 </div>
             </div>
