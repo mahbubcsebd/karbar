@@ -65,9 +65,7 @@ const LatestProductFour = () => {
                     {/* লোডিং অবস্থায় Skeleton Loader দেখাবে */}
                     {loading ? (
                         <div className="">
-                            {[...Array(4)].map((_, index) => (
-                                <DaribProductLoader items={4} />
-                            ))}
+                            <DaribProductLoader items={4} />
                         </div>
                     ) : error ? (
                         <div className="text-red-500 text-center">{error}</div>
