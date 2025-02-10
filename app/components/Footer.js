@@ -3,7 +3,7 @@
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CiLocationOn, CiMail } from 'react-icons/ci';
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
@@ -24,27 +24,27 @@ const Footer = () => {
     const { siteSetting, loading, error } = useSiteSetting();
 
     const fetchPaymentMethod = useCallback(async () => {
-            try {
-                const paymentMethodData = await getPaymentMethod();
-                setPaymentMethod(paymentMethodData.data);
-            } catch (error) {
-                console.error('Error fetching payment methods:', error);
-            }
-        }, []);
+        try {
+            const paymentMethodData = await getPaymentMethod();
+            setPaymentMethod(paymentMethodData.data);
+        } catch (error) {
+            console.error('Error fetching payment methods:', error);
+        }
+    }, []);
 
-        const fetchPages = useCallback(async () => {
-            try {
-                const response = await getPages();
-                setPages(response.data);
-            } catch (error) {
-                console.error('Error fetching pages:', error);
-            }
-        }, []);
+    const fetchPages = useCallback(async () => {
+        try {
+            const response = await getPages();
+            setPages(response.data);
+        } catch (error) {
+            console.error('Error fetching pages:', error);
+        }
+    }, []);
 
-        useEffect(() => {
-            fetchPaymentMethod();
-            fetchPages();
-        }, [fetchPaymentMethod, fetchPages]);
+    useEffect(() => {
+        fetchPaymentMethod();
+        fetchPages();
+    }, [fetchPaymentMethod, fetchPages]);
 
     const {
         contact,
@@ -71,21 +71,28 @@ const Footer = () => {
         footer_description,
     } = siteSetting;
 
-    const paymentIcons = {
+    // Memoize the payment icons for performance optimization
+    const paymentIcons = useMemo(() => ({
         'bkash': bkashIcon,
         'nagad': nagadIcon,
         'cash': codIcon
-    };
+    }), []);
+
+    // Memoize the social links
+    const socialLinks = useMemo(() => [
+        { name: 'facebook', url: facebook_url, icon: FaFacebookF },
+        { name: 'instagram', url: instagram_url, icon: FaInstagram },
+        { name: 'youtube', url: youtube_url, icon: FaYoutube },
+        { name: 'tiktok', url: tiktok_url, icon: FaTiktok },
+    ], [facebook_url, instagram_url, youtube_url, tiktok_url]);
 
     return (
-        <footer
-            id="footer"
-            className="bg-[#14004F] footer relative overflow-hidden"
-        >
+        <footer id="footer" className="bg-[#14004F] footer relative overflow-hidden">
             <Image
                 className="absolute bottom-0 left-0 w-full"
                 src={footerBg}
                 alt="footer-bg z-10"
+                priority
             />
             <div className="footer-area relative z-50">
                 <div className="container">
@@ -94,7 +101,7 @@ const Footer = () => {
                             <div className="mb-6 max-w-[200px] max-h-[56px]">
                                 <Link href="/">
                                     <Image
-                                        src={footer_logo ? footer_logo : logo}
+                                        src={footer_logo || logo}
                                         alt="footer logo"
                                         height={115}
                                         width={115}
@@ -108,77 +115,16 @@ const Footer = () => {
                                 {footer_description}
                             </p>
                             <ul className="flex items-center gap-[18px]">
-                                {facebook_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                facebook_url
-                                                    ? facebook_url
-                                                    : 'https://facebook.com'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                            aria-label="facebook url"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
-                                                <FaFacebookF />
-                                            </div>
-                                        </Link>
-                                    </li>
-                                )}
-                                {instagram_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                instagram_url
-                                                    ? instagram_url
-                                                    : 'https://instagram.com'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                            aria-label="instagram url"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
-                                                <FaInstagram />
-                                            </div>
-                                        </Link>
-                                    </li>
-                                )}
-                                {youtube_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                youtube_url
-                                                    ? youtube_url
-                                                    : 'https://youtube.com'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                            aria-label="youtube url"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
-                                                <FaYoutube />
-                                            </div>
-                                        </Link>
-                                    </li>
-                                )}
-                                {tiktok_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                tiktok_url
-                                                    ? tiktok_url
-                                                    : 'https://www.tiktok.com/'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                            aria-label="tiktok url"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
-                                                <FaTiktok />
-                                            </div>
-                                        </Link>
-                                    </li>
+                                {socialLinks.map(({ name, url, icon: Icon }) =>
+                                    url && (
+                                        <li key={name}>
+                                            <Link href={url} rel="noopener noreferrer" target="_blank" aria-label={`${name} url`}>
+                                                <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-purple-900 hover:border-purple-900">
+                                                    <Icon />
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    )
                                 )}
                             </ul>
                         </div>
@@ -189,10 +135,7 @@ const Footer = () => {
                             <ul className="grid gap-4 md:gap-6">
                                 {pages.map((page) => (
                                     <li key={page.id}>
-                                        <Link
-                                            className="text-lg font-normal text-gray-400"
-                                            href={`/company/${page.slug}`}
-                                        >
+                                        <Link className="text-lg font-normal text-gray-400" href={`/company/${page.slug}`}>
                                             {page.title}
                                         </Link>
                                     </li>
@@ -211,7 +154,7 @@ const Footer = () => {
                                                 <FiPhoneCall />
                                             </span>
                                         </div>
-                                        {phone ? phone : '01896-088855'}
+                                        {phone || '01896-088855'}
                                     </div>
                                 </li>
                                 <li>
@@ -221,7 +164,7 @@ const Footer = () => {
                                                 <CiMail />
                                             </span>
                                         </div>
-                                        {email ? email : 'karbar@gmail.com'}
+                                        {email || 'karbar@gmail.com'}
                                     </div>
                                 </li>
                                 <li>
@@ -231,9 +174,7 @@ const Footer = () => {
                                                 <CiLocationOn />
                                             </span>
                                         </div>
-                                        {footer_address
-                                            ? footer_address
-                                            : 'Mirpur DOHS, Dhaka'}
+                                        {footer_address || 'Mirpur DOHS, Dhaka'}
                                     </div>
                                 </li>
                             </ul>
@@ -244,47 +185,23 @@ const Footer = () => {
                 <div className="container">
                     <div className="lg:flex justify-between items-center py-[30px] hidden">
                         <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
-                            &copy;All rights reserved by{' '}
-                            <span className="font-semibold">{title}</span>
+                            &copy; All rights reserved by <span className="font-semibold">{title}</span>
                         </p>
                         <p className="text-base lg:text-lg font-normal text-gray-500 flex items-center gap-[4px]">
-                            {/* © {copyRight} */}
                             Powered by{' '}
-                            <Link
-                                className="text-gray-400"
-                                href="https://karbar.shop"
-                                target="_blank"
-                            >
-                                <Image
-                                    src={karbar}
-                                    alt="karbar"
-                                    className="w-[65px] lg:w-[70px] pt-[4px]"
-                                    loading="lazy"
-                                    quality={60}
-                                    width={70}
-                                    height={30}
-                                />
+                            <Link className="text-gray-400" href="https://karbar.shop" target="_blank">
+                                <Image src={karbar} alt="karbar" className="w-[65px] lg:w-[70px] pt-[4px]" loading="lazy" quality={60} width={70} height={30} />
                             </Link>
                         </p>
                         {paymentMethod.length > 0 && (
                             <div className="flex items-center gap-4">
-                                <p className="text-[20px] font-normal text-gray-400 relative">
-                                    {payment} :
-                                </p>
+                                <p className="text-[20px] font-normal text-gray-400 relative">{payment} :</p>
                                 <ul className="flex items-center gap-2">
                                     {paymentMethod.map((method) => {
                                         const icon = paymentIcons[method.name];
-
                                         return (
                                             <li key={method.id}>
-                                                <Image
-                                                    src={icon}
-                                                    alt={method.name}
-                                                    loading="lazy"
-                                                    quality={60}
-                                                    width={50}
-                                                    height={50}
-                                                />
+                                                <Image src={icon} alt={method.name} loading="lazy" quality={60} width={50} height={50} />
                                             </li>
                                         );
                                     })}
@@ -301,20 +218,12 @@ const Footer = () => {
                                     {payment} :
                                     <span className="w-9 h-[1px] bg-[#FF9E2C] "></span>
                                 </p>
-                                <ul className="flex items-center gap-2 w-[300px] overflow-hidden">
+                                <ul className="flex items-center gap-2">
                                     {paymentMethod.map((method) => {
                                         const icon = paymentIcons[method.name];
-
                                         return (
                                             <li key={method.id}>
-                                                <Image
-                                                    src={icon}
-                                                    alt={method.name}
-                                                    loading="lazy"
-                                                    quality={60}
-                                                    width={50}
-                                                    height={50}
-                                                />
+                                                <Image src={icon} alt={method.name} loading="lazy" quality={60} width={50} height={50} />
                                             </li>
                                         );
                                     })}
@@ -322,30 +231,6 @@ const Footer = () => {
                             </div>
                         </div>
                     )}
-                    <div className="flex flex-col items-center justify-center gap-1 py-5 bg-gray-700">
-                        <p className="text-base lg:text-lg font-normal text-gray-400 flex items-center gap-[4px]">
-                            &copy;All rights reserved by{' '}
-                            <span className="font-semibold">{title}</span>
-                        </p>
-                        <p className="flex items-center gap-1 text-base font-normal text-gray-400 lg:text-lg lg:hidden">
-                            {/* © {copyRight} */}
-                            Powered by{' '}
-                            <Link
-                                className="text-gray-400"
-                                href="https://karbar.shop"
-                            >
-                                <Image
-                                    src={karbar}
-                                    alt="karbar"
-                                    className="w-[65px] lg:w-[70px] pt-[4px]"
-                                    loading="lazy"
-                                    quality={60}
-                                    width={70}
-                                    height={30}
-                                />
-                            </Link>
-                        </p>
-                    </div>
                 </div>
             </div>
         </footer>

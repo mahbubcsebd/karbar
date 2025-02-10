@@ -3,7 +3,7 @@
 'use client';
 import ourProductsbg from '@/assets/images/our-product-bg-4.svg';
 import Image from 'next/image';
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useDictionary from '../../../hooks/useDictionary';
 import useSiteSetting from '../../../hooks/useSiteSetting';
 import { getAllCategories } from '../../../utils/categories';
@@ -79,45 +79,44 @@ const ProductListFour = () => {
         fetchProduct();
     }, [language, selectedCategory, page]);
 
-    const handleCategory = async (categoryName) => {
+
+
+    const handleCategory = useCallback((categoryName) => {
         setIsSeeMoreClick(false);
         setSelectedCategory(categoryName);
         setPage(1);
-    };
+    }, []);
 
-    const handleAllFilter = async (categoryName) => {
+    const handleAllFilter = useCallback(() => {
         setPage(1);
         setProductItem([]);
         setSelectedCategory('all');
-    };
+    }, []);
 
-    const handleSeeMore = () => {
-        setPage(page + 1);
+    const handleSeeMore = useCallback(() => {
+        setPage((prevPage) => prevPage + 1);
         setIsSeeMoreClick(true);
-    };
+    }, []);
+
 
     const scrollContainerRef = useRef(null);
 
     useEffect(() => {
         const container = scrollContainerRef.current;
+        if (!container) return;
 
         const handleWheel = (e) => {
             e.preventDefault();
             container.scrollLeft += e.deltaY;
         };
 
-        if (container) {
-            container.addEventListener('wheel', handleWheel, {
-                passive: false,
-            });
-        }
+        container.addEventListener('wheel', handleWheel, { passive: true });
 
         return () => {
-            if (container) {
-                container.removeEventListener('wheel', handleWheel);
-            }
+            container.removeEventListener('wheel', handleWheel);
         };
     }, []);
+
 
     return (
         <div
@@ -201,7 +200,6 @@ const ProductListFour = () => {
                             ))}
                         </ul>
                     </div>
-                    <Suspense fallback={<h2></h2>}>
                         {loading && !isSeeMoreClick ? (
                             <div className="product-list grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-[30px]">
                                 <SkeletonCard />
@@ -228,7 +226,6 @@ const ProductListFour = () => {
                                     )}
                             </div>
                         )}
-                    </Suspense>
                     <div className="flex justify-center md:pt-[70px] mt-6">
                         <KarbarButton
                             asLink

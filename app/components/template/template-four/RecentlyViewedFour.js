@@ -1,15 +1,18 @@
 import latestbg from '@/assets/images/latest-bg.svg';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-// import useDictionary from '../../hooks/useDictionary';
+import { useEffect, useMemo, useState } from 'react';
 import useDictionary from '../../../hooks/useDictionary';
 import SectionTitle from '../../SectionTitle';
 import ProductCardFour from './ProductCardFour';
-// import SectionTitle from './SectionTitle';
 
 const RecentlyViewedFour = () => {
     const [recentlyViewed, setRecentlyViewed] = useState([]);
     const { language, dictionary } = useDictionary();
+
+    // Memoize the recently viewed products to avoid reprocessing
+    const memoizedProducts = useMemo(() => {
+        return recentlyViewed;
+    }, [recentlyViewed]);
 
     // Fetch recently viewed products on component mount
     useEffect(() => {
@@ -18,10 +21,8 @@ const RecentlyViewedFour = () => {
         setRecentlyViewed(viewedProducts);
     }, []);
 
-    // If no recently viewed products, display a message
-    if (recentlyViewed.length === 0) {
-        return null;
-    }
+    // Display a message when no products are available
+    if (memoizedProducts.length === 0) return null;
 
     return (
         <div
@@ -33,11 +34,12 @@ const RecentlyViewedFour = () => {
                     src={latestbg}
                     alt="bg"
                     className="absolute top-0 left-0 z-[-1] w-full h-full object-cover object-center"
+                    loading="lazy" // Lazy load background image
                 />
                 <div className="container">
                     <SectionTitle title={dictionary.RecentViewed.recentTitle} />
                     <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px]">
-                        {recentlyViewed.map((product) => (
+                        {memoizedProducts.map((product) => (
                             <ProductCardFour
                                 key={product.id}
                                 product={product}

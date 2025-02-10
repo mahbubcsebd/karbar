@@ -4,15 +4,10 @@ import { getHeroImage } from '@/utils/getHeroImage';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css/bundle'; // All necessary Swiper CSS in one import
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import './hero.css';
-
-import Head from 'next/head';
 
 const HeroSlider = () => {
     const [images, setImages] = useState([]);
@@ -33,20 +28,9 @@ const HeroSlider = () => {
     }, []);
 
     return (
-        <>
-            <Head>
-                {images?.map((img) => (
-                    <link
-                        key={img.id}
-                        rel="preload"
-                        href={img.image_url}
-                        as="image"
-                    />
-                ))}
-            </Head>
             <div
                 id="hero"
-                className="hero"
+                className="hero h-[370px] overflow-hidden"
             >
                 <div className="hero-area">
                     <div className="hero-slider-container">
@@ -76,6 +60,7 @@ const HeroSlider = () => {
                                 {images?.map((img, index) => (
                                     <SwiperSlide key={img.id}>
                                         <Link
+                                            className='w-full h-[370px] overflow-hidden'
                                             href={img.url}
                                             aria-label={`View details for ${img.title}`}
                                         >
@@ -92,8 +77,6 @@ const HeroSlider = () => {
                                                         : 'lazy'
                                                 }
                                                 quality={100}
-                                                placeholder="blur"
-                                                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNFMEUwRTAiIC8+PC9zdmc+"
                                             />
                                         </Link>
                                     </SwiperSlide>
@@ -103,7 +86,6 @@ const HeroSlider = () => {
                     </div>
                 </div>
             </div>
-        </>
     );
 };
 

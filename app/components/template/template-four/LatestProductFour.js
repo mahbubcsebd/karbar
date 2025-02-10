@@ -21,10 +21,10 @@ const LatestProductFour = () => {
 
     useEffect(() => {
         const fetchProduct = async () => {
-            setLoading(true);
-            setError(null);
             try {
-                const productsData = await getAllProduct(
+                setLoading(true);
+                setError(null);
+                const { data } = await getAllProduct(
                     language,
                     'all',
                     '',
@@ -33,10 +33,12 @@ const LatestProductFour = () => {
                     1,
                     4
                 );
-                setProducts(productsData.data);
-            } catch (error) {
-                console.error('Failed to fetch products:', error);
-                setError('Failed to load products. Please try again.');
+                setProducts(data);
+            } catch (err) {
+                console.error('Failed to fetch products:', err.message);
+                setError(
+                    err.message || 'Failed to load products. Please try again.'
+                );
             } finally {
                 setLoading(false);
             }
@@ -62,11 +64,8 @@ const LatestProductFour = () => {
                         postTitle={dictionary.TemplateFour.products}
                     />
 
-                    {/* লোডিং অবস্থায় Skeleton Loader দেখাবে */}
                     {loading ? (
-                        <div className="">
-                            <DaribProductLoader items={4} />
-                        </div>
+                        <DaribProductLoader items={4} />
                     ) : error ? (
                         <div className="text-red-500 text-center">{error}</div>
                     ) : products.length > 0 ? (
@@ -88,10 +87,10 @@ const LatestProductFour = () => {
                         <KarbarButton
                             asLink
                             href="/collections/all"
-                            preserveHover={true}
+                            preserveHover
                             variant="default"
                             className="text-base md:text-[20px] font-medium border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
-                            aria-label={`See more products in our collection`}
+                            aria-label="See more products in our collection"
                             title="Browse all products in our collection"
                         >
                             {seeMore ?? 'See More'}

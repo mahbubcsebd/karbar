@@ -1,24 +1,24 @@
 'use client';
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import './hero.css';
-
-// Import required modules
 import latestbg from '@/assets/images/latest-bg.svg';
 import { getTestimonials } from '@/utils/getTestimonial';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import { Autoplay, Pagination, Thumbs } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import useDictionary from '../hooks/useDictionary';
 import SectionTitle from './SectionTitle';
 import TestimonialCard from './TestimonialCard';
+
+const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => func(...args), delay);
+    };
+};
 
 const Testimonials = ({ bg }) => {
     const [testimonials, setTestimonials] = useState([]);
@@ -27,24 +27,58 @@ const Testimonials = ({ bg }) => {
     const { dictionary } = useDictionary();
 
     useEffect(() => {
-        const fetchTestimonials = async () => {
+        const fetchTestimonials = debounce(async () => {
             try {
                 const testimonialsData = await getTestimonials();
                 setTestimonials(testimonialsData.data);
             } catch (err) {
+                console.error('Error fetching testimonials:', err);
                 setError(
                     'Failed to load testimonials. Please try again later.'
                 );
             } finally {
                 setLoading(false);
             }
-        };
+        }, 300);
 
         fetchTestimonials();
     }, []);
 
+    const swiperSettings = useMemo(
+        () => ({
+            spaceBetween: 30,
+            slidesPerView: Math.min(testimonials.length, 3),
+            loop: testimonials.length >= 3,
+            autoplay: { delay: 4000, pauseOnMouseEnter: true },
+            pagination: { clickable: true },
+            breakpoints: {
+                375: {
+                    slidesPerView: Math.min(testimonials.length, 1),
+                    spaceBetween: 16,
+                },
+                768: {
+                    slidesPerView: Math.min(testimonials.length, 2),
+                    spaceBetween: 20,
+                },
+                1280: {
+                    slidesPerView: Math.min(testimonials.length, 3),
+                    spaceBetween: 30,
+                },
+            },
+            modules: [Pagination, Autoplay, Thumbs],
+            className: 'testimonialsSwiper',
+        }),
+        [testimonials]
+    );
+
     if (loading) {
-        return null
+        return (
+            <div className="flex justify-center items-center h-40">
+                <span className="animate-pulse text-gray-400">
+                    Loading testimonials...
+                </span>
+            </div>
+        );
     }
 
     if (error) {
@@ -61,8 +95,9 @@ const Testimonials = ({ bg }) => {
                 {bg && (
                     <Image
                         src={latestbg}
-                        alt="bg"
+                        alt="background"
                         className="absolute top-0 left-0 z-[-1] w-full h-full object-cover object-center"
+                        loading="lazy"
                     />
                 )}
                 <div className="container">
@@ -70,47 +105,7 @@ const Testimonials = ({ bg }) => {
                         title={dictionary.Testimonial.testimonialTitle}
                     />
                     <div className="flex items-stretch review-slider-wrapper">
-                        <Swiper
-                            spaceBetween={30}
-                            slidesPerView={
-                                testimonials.length < 3
-                                    ? testimonials.length
-                                    : 3
-                            }
-                            loop={testimonials.length >= 3}
-                            autoplay={{
-                                delay: 4000,
-                                pauseOnMouseEnter: true,
-                            }}
-                            pagination={{
-                                clickable: true,
-                            }}
-                            breakpoints={{
-                                375: {
-                                    slidesPerView: Math.min(
-                                        testimonials.length,
-                                        1
-                                    ),
-                                    spaceBetween: 16,
-                                },
-                                768: {
-                                    slidesPerView: Math.min(
-                                        testimonials.length,
-                                        2
-                                    ),
-                                    spaceBetween: 20,
-                                },
-                                1280: {
-                                    slidesPerView: Math.min(
-                                        testimonials.length,
-                                        3
-                                    ),
-                                    spaceBetween: 30,
-                                },
-                            }}
-                            modules={[Pagination, Autoplay, Thumbs]}
-                            className="testimonialsSwiper"
-                        >
+                        <Swiper {...swiperSettings}>
                             {testimonials.map((testimonial, index) => (
                                 <SwiperSlide
                                     key={index}
