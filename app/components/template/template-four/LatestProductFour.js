@@ -48,7 +48,7 @@ const LatestProductFour = () => {
     return (
         <div
             id="product-section"
-            className="product-section"
+            className="product-section min-h-[820px]"
         >
             <div className="relative pt-10 pb-20 product-area">
                 <Image
