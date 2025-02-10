@@ -8,15 +8,21 @@ import useDictionary from '../../../hooks/useDictionary';
 import { getAllProduct } from '../../../utils/getProduct';
 import KarbarButton from '../../KarbarButton';
 import SectionTitleFour from '../../SectionTitleFour';
+import DaribProductLoader from '../../loader/DaribProductLoader';
 import ProductCardFour from './ProductCardFour';
 
 const LatestProductFour = () => {
     const { language, dictionary } = useDictionary();
     const { seeMore } = dictionary.ProductCard;
+
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
+            setLoading(true);
+            setError(null);
             try {
                 const productsData = await getAllProduct(
                     language,
@@ -30,6 +36,9 @@ const LatestProductFour = () => {
                 setProducts(productsData.data);
             } catch (error) {
                 console.error('Failed to fetch products:', error);
+                setError('Failed to load products. Please try again.');
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -52,20 +61,31 @@ const LatestProductFour = () => {
                         preTitle={dictionary.TemplateFour.latest}
                         postTitle={dictionary.TemplateFour.products}
                     />
-                    {products.length > 0 ? (
-                        <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px] ">
-                            {products.map((product) => {
-                                return (
-                                    <ProductCardFour
-                                        key={product.id}
-                                        product={product}
-                                    />
-                                );
-                            })}
+
+                    {/* লোডিং অবস্থায় Skeleton Loader দেখাবে */}
+                    {loading ? (
+                        <div className="">
+                            {[...Array(4)].map((_, index) => (
+                                <DaribProductLoader items={4} />
+                            ))}
+                        </div>
+                    ) : error ? (
+                        <div className="text-red-500 text-center">{error}</div>
+                    ) : products.length > 0 ? (
+                        <div className="product-list grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-[30px]">
+                            {products.map((product) => (
+                                <ProductCardFour
+                                    key={product.id}
+                                    product={product}
+                                />
+                            ))}
                         </div>
                     ) : (
-                        <div>No products found</div>
+                        <div className="text-gray-500 text-center">
+                            No products found
+                        </div>
                     )}
+
                     <div className="flex justify-center pt-10 md:pt-[70px]">
                         <KarbarButton
                             asLink
