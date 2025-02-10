@@ -51,7 +51,7 @@ const HeroSlider = () => {
                 <div className="hero-area">
                     <div className="hero-slider-container">
                         {loading ? (
-                            <div className="w-full h-[300px] bg-gray-200 animate-pulse"></div>
+                            <div className="w-full h-[370px] bg-gray-200 animate-pulse"></div>
                         ) : (
                             <Swiper
                                 spaceBetween={30}

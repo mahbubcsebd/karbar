@@ -34,7 +34,7 @@ const Header = () => {
             <header
                 id="header"
                 // className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1] fixed top-0 left-0 w-full z-9999999999999"
-                className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1]"
+                className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1] min-h-[90px]"
             >
                 <div className="header-area">
                     <div className="container">
