@@ -69,10 +69,10 @@ const Header = () => {
                         >
                             {showSearchModal ? <RxCross1 /> : <FiSearch />}
                         </button>
-                        <div className="flex gap-4 items-center">
+                        <div className="flex items-center gap-4">
                             {!user ? (
                                 <AuthModal>
-                                    <button className="px-5 py-3 bg-purple-900 rounded-md text-base text-white capitalize">
+                                    <button className="px-5 py-3 text-base text-white capitalize bg-purple-900 rounded-md">
                                         Sign In
                                     </button>
                                 </AuthModal>

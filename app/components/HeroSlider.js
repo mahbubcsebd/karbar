@@ -30,7 +30,7 @@ const HeroSlider = () => {
     return (
             <div
                 id="hero"
-                className="hero h-[370px] overflow-hidden"
+                className="hero"
             >
                 <div className="hero-area">
                     <div className="hero-slider-container">
@@ -60,7 +60,7 @@ const HeroSlider = () => {
                                 {images?.map((img, index) => (
                                     <SwiperSlide key={img.id}>
                                         <Link
-                                            className='w-full h-[370px] overflow-hidden'
+                                            className='w-full'
                                             href={img.url}
                                             aria-label={`View details for ${img.title}`}
                                         >
