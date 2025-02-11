@@ -146,7 +146,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                     <DialogTitle>Coupon</DialogTitle>
                     <DialogDescription>Coupon Description</DialogDescription>
                 </DialogHeader>
-                <DialogContent className="sm:max-w-[425px] p-6">
+                <DialogContent className="w-[350px] rounded-xl sm:max-w-[425px] p-6">
                     <h2 className="mb-4 text-3xl font-semibold text-center text-gray-900">
                         {authType === 'signIn' ? 'Sign In' : 'Sign Up'}
                     </h2>

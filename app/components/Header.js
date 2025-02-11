@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { AiOutlineLogin } from 'react-icons/ai';
 import { FiSearch } from 'react-icons/fi';
 import { RxCross1 } from 'react-icons/rx';
 import logo from '../assets/icons/logo.svg';
@@ -33,7 +34,7 @@ const Header = () => {
     const { header_logo } = siteSetting;
 
     return (
-        <header className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1] min-h-[90px]">
+        <header className="header py-[17px] bg-[#F4F4F4] border-b border-[#D1D1D1] min-h-[75px] md:min-h-[90px]">
             <div className="container">
                 <div className="flex items-center justify-between">
                     <div
@@ -72,8 +73,11 @@ const Header = () => {
                         <div className="flex items-center gap-4">
                             {!user ? (
                                 <AuthModal>
-                                    <button className="px-5 py-3 text-base text-white capitalize bg-purple-900 rounded-md">
-                                        Sign In
+                                    <button className="flex items-center justify-center w-10 h-10 text-base text-white capitalize bg-purple-900 border border-purple-900 rounded-full md:px-5 md:py-3 md:rounded-md md:w-auto md:h-auto">
+                                        <span className="hidden md:block">Sign In</span>
+                                        <span className="md:hidden">
+                                            <AiOutlineLogin />
+                                        </span>
                                     </button>
                                 </AuthModal>
                             ) : (

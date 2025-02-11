@@ -68,7 +68,7 @@ function calculateDiscount(unitPrice, salePrice) {
         >
             <Link
                 href={`/products/${slug}`}
-                className="block product-image h-[240px] sm:h-[373px] md:h-[286px] lg:h-[270px] xl:h-[344px] 1xl:h-[270px] 2xl:h-[320px] rounded-lg overflow-hidden relative"
+                className="block product-image h-[200px] sm:h-[373px] md:h-[286px] lg:h-[270px] xl:h-[344px] 1xl:h-[270px] 2xl:h-[320px] rounded-lg overflow-hidden relative"
             >
                 <Image
                     src={preview_image ? preview_image : noAvailableImg}
@@ -95,7 +95,7 @@ function calculateDiscount(unitPrice, salePrice) {
                     </KarbarButton>
                 </div>
                 {stock < 1 && (
-                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-center text-white text-xl bg-black z-99 opacity-80">
+                    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-xl text-center text-white bg-black z-99 opacity-80">
                         Out of stock
                     </div>
                 )}
