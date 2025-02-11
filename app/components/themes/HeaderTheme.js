@@ -1,41 +1,67 @@
 'use client';
 
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
-// Placeholder component to display while the actual component is loading
-const Loading = () => <div></div>;
+const Loading = () => (
+    <div className="w-full min-h-[90px] bg-gray-200 animate-pulse"></div>
+);
 const ErrorComponent = () => <div>Error loading theme component.</div>;
 
 function HeaderThemes({ template }) {
     const [Component, setComponent] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        if (template === 'Template01') {
-            setComponent(lazy(() => import('../Header')));
-        } else if (template === 'Template02') {
-            setComponent(lazy(() => import('../template/abaya/AbayaHeader')));
-        } else if (template === 'Template06') {
-            setComponent(lazy(() => import('../template/template-six/HeaderSix')));
-        } else {
-            setComponent(lazy(() => import('../Header')));
-        }
+        setLoading(true);
+        setError(false);
+        let isMounted = true;
+
+        const loadComponent = async () => {
+            try {
+                let importedComponent;
+                switch (template) {
+                    case 'Template02':
+                        importedComponent = await import(
+                            '../template/abaya/AbayaHeader'
+                        );
+                        break;
+                    case 'Template06':
+                        importedComponent = await import(
+                            '../template/template-six/HeaderSix'
+                        );
+                        break;
+                    case 'Template01':
+                    default:
+                        importedComponent = await import('../Header');
+                        break;
+                }
+                if (isMounted) {
+                    setComponent(() => importedComponent.default);
+                }
+            } catch (err) {
+                if (isMounted) {
+                    setError(true);
+                }
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        loadComponent();
+
+        return () => {
+            isMounted = false;
+        };
     }, [template]);
 
-    if (error) {
-        return <ErrorComponent />;
-    }
+    if (error) return <ErrorComponent />;
+    if (loading) return <Loading />;
 
     return (
-        <div>
-            {Component ? (
-                <Suspense>
-                    <Component />
-                </Suspense>
-            ) : (
-                <Loading />
-            )}
-        </div>
+        <Suspense fallback={<Loading />}>{Component && <Component />}</Suspense>
     );
 }
 
