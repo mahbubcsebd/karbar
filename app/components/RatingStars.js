@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 // import { FaRegStar, FaStar } from 'react-icons/fa6';
-import { IoMdStar, IoMdStarOutline } from 'react-icons/io';
 
 const RatingStars = ({ rating, className = "" }) => {
   // Memoize the stars array to prevent unnecessary re-renders
@@ -18,7 +17,7 @@ const RatingStars = ({ rating, className = "" }) => {
           role="img"
           aria-label={`Rating: ${rating} out of 5 stars`}
       >
-          {stars.map(({ filled, id }) =>
+          {/* {stars.map(({ filled, id }) =>
               filled ? (
                   <IoMdStar
                       key={id}
@@ -32,7 +31,7 @@ const RatingStars = ({ rating, className = "" }) => {
                       className="text-xl text-gray-400"
                   />
               )
-          )}
+          )} */}
       </div>
   );
 };
