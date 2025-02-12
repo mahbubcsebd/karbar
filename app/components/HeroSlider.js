@@ -58,26 +58,26 @@ const HeroSlider = () => {
                             className="mySwiper"
                         >
                             {images?.map((img, index) => (
-                                <SwiperSlide
-                                    key={img.id}
-                                    className="relative w-full h-[220px] lg:h-[370px]"
-                                >
+                                <SwiperSlide key={img.id}>
                                     <Link
-                                        className="absolute inset-0 w-full h-full"
                                         href={img.url}
                                         aria-label={`View details for ${img.title}`}
                                     >
-                                        <Image
-                                            src={img.image_url}
-                                            alt={img.title}
-                                            fill
-                                            className="object-cover"
-                                            priority={index === 0}
-                                            loading={
-                                                index === 0 ? 'eager' : 'lazy'
-                                            }
-                                            quality={100}
-                                        />
+                                        <div className="relative w-full h-[220px] lg:h-[370px]">
+                                            <Image
+                                                src={img.image_url}
+                                                alt={img.title}
+                                                fill
+                                                className="object-cover"
+                                                priority={index === 0}
+                                                loading={
+                                                    index === 0
+                                                        ? 'eager'
+                                                        : 'lazy'
+                                                }
+                                                quality={100}
+                                            />
+                                        </div>
                                     </Link>
                                 </SwiperSlide>
                             ))}
