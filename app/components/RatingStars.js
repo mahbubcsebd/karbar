@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FaRegStar, FaStar } from 'react-icons/fa';
+import { FaRegStar, FaStar } from 'react-icons/fa6';
 
 const RatingStars = ({ rating, className = "" }) => {
   // Memoize the stars array to prevent unnecessary re-renders
