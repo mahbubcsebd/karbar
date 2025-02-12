@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-// import { FaRegStar, FaStar } from 'react-icons/fa6';
+import { FaRegStar, FaStar } from 'react-icons/fa6';
 
 const RatingStars = ({ rating, className = "" }) => {
   // Memoize the stars array to prevent unnecessary re-renders
@@ -12,27 +12,13 @@ const RatingStars = ({ rating, className = "" }) => {
   }, [rating]);
 
   return (
-      <div
-          className={`flex items-center gap-1 ${className}`}
-          role="img"
-          aria-label={`Rating: ${rating} out of 5 stars`}
-      >
-          {/* {stars.map(({ filled, id }) =>
-              filled ? (
-                  <IoMdStar
-                      key={id}
-                      className={`text-xl ${
-                          filled ? 'text-[#FF9E2C]' : 'text-gray-400'
-                      }`}
-                  />
-              ) : (
-                  <IoMdStarOutline
-                      key={id}
-                      className="text-xl text-gray-400"
-                  />
-              )
-          )} */}
-      </div>
+    <div className={`flex items-center gap-2 ${className}`} role="img" aria-label={`Rating: ${rating} out of 5 stars`}>
+      {stars.map(({ filled, id }) => (
+        filled ?
+          <FaStar key={id} className="text-xl text-[#FF9E2C]" /> :
+          <FaRegStar key={id} className="text-xl text-gray-400" />
+      ))}
+    </div>
   );
 };
 

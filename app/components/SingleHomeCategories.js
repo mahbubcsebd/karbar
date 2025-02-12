@@ -1,39 +1,41 @@
 'use client';
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import './hero.css';
 
-
-
-// import required modules
-
-import { useRef } from 'react';
+import dynamic from 'next/dynamic';
+import { useMemo, useRef } from 'react';
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
 import useDictionary from '../hooks/useDictionary';
-import ProductCard from './ProductCard';
+
+// Lazy import ProductCard to optimize performance
+const ProductCard = dynamic(() => import('./ProductCard'), {
+    ssr: false,
+});
 
 const SingleHomeCategories = ({ category }) => {
-    const {dictionary} = useDictionary();
-    const swiperRef = useRef();
+    const { dictionary } = useDictionary();
+    const swiperRef = useRef(null);
 
-    // const handleNextClick = () => {
-    //     swiper.slideNext();
-    // };
-
-    // const handlePrevClick = () => {
-    //     swiper.slidePrev();
-    // };
     const { key, categories } = category;
+
+    // Memoize the product list to prevent unnecessary re-renders
+    const renderedProducts = useMemo(
+        () =>
+            categories.map((product) => (
+                <SwiperSlide key={product.id}>
+                    <ProductCard product={product} />
+                </SwiperSlide>
+            )),
+        [categories]
+    );
+
     return (
         <div className="mb-10">
-            <div className="flex items-center justify-between mb-[50px]">
+            <div className="flex items-center justify-between mb-12">
                 <h2 className="text-2xl font-semibold text-gray-800 capitalize md:text-4xl">
                     {key}
                 </h2>
@@ -41,7 +43,7 @@ const SingleHomeCategories = ({ category }) => {
                     <button
                         onClick={() => swiperRef.current?.slidePrev()}
                         type="button"
-                        className={`w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-base rounded-full flex justify-center items-center text-gray-900 bg-[#D9D9D9] ${`swiper-button-prev-${key}`}`}
+                        className={`w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-base rounded-full flex justify-center items-center text-gray-900 bg-gray-300`}
                         aria-label="slider prev button"
                     >
                         <FaArrowLeftLong />
@@ -49,7 +51,7 @@ const SingleHomeCategories = ({ category }) => {
                     <button
                         onClick={() => swiperRef.current?.slideNext()}
                         type="button"
-                        className="w-8 h-8 sm:w-10 sm:h-10 r text-xs sm:text-base rounded-full flex justify-center items-center text-gray-900 bg-[#D9D9D9] ${`swiper-button-next-${key}`}"
+                        className="flex items-center justify-center w-8 h-8 text-xs text-gray-900 bg-gray-300 rounded-full sm:w-10 sm:h-10 sm:text-base"
                         aria-label="slider next button"
                     >
                         <FaArrowRightLong />
@@ -59,10 +61,7 @@ const SingleHomeCategories = ({ category }) => {
             <Swiper
                 slidesPerView={4}
                 spaceBetween={30}
-                pagination={{
-                    clickable: true,
-                }}
-                // modules={[Pagination]}
+                pagination={{ clickable: true }}
                 navigation={{
                     nextEl: `.swiper-button-next-${key}`,
                     prevEl: `.swiper-button-prev-${key}`,
@@ -71,25 +70,12 @@ const SingleHomeCategories = ({ category }) => {
                     swiperRef.current = swiper;
                 }}
                 breakpoints={{
-                    320: {
-                        slidesPerView: 2,
-                        spaceBetween: 16,
-                    },
-                    768: {
-                        slidesPerView: 3,
-                        spaceBetween: 20,
-                    },
-                    1280: {
-                        slidesPerView: 4,
-                        spaceBetween: 30,
-                    },
+                    320: { slidesPerView: 2, spaceBetween: 16 },
+                    768: { slidesPerView: 3, spaceBetween: 20 },
+                    1280: { slidesPerView: 4, spaceBetween: 30 },
                 }}
             >
-                {categories.map((product) => (
-                    <SwiperSlide key={product.id}>
-                        <ProductCard product={product} />
-                    </SwiperSlide>
-                ))}
+                {renderedProducts}
             </Swiper>
         </div>
     );
