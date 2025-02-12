@@ -4,7 +4,7 @@ import { getHeroImage } from '@/utils/getHeroImage';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import 'swiper/css/bundle'; // All necessary Swiper CSS in one import
+import 'swiper/css/bundle';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import './hero.css';
@@ -19,7 +19,7 @@ const HeroSlider = () => {
                 const heroImages = await getHeroImage();
                 setImages(heroImages.data);
             } catch {
-                console.log('hero slide image fetch failed');
+                console.log('Hero slide image fetch failed');
             } finally {
                 setLoading(false);
             }
@@ -38,7 +38,7 @@ const HeroSlider = () => {
                         <div className="w-full h-[220px] lg:h-[370px] bg-gray-200 animate-pulse"></div>
                     ) : (
                         <Swiper
-                            spaceBetween={30}
+                            spaceBetween={0}
                             loop={true}
                             autoplay={{
                                 delay: 2500,
@@ -58,18 +58,20 @@ const HeroSlider = () => {
                             className="mySwiper"
                         >
                             {images?.map((img, index) => (
-                                <SwiperSlide key={img.id}>
+                                <SwiperSlide
+                                    key={img.id}
+                                    className="relative w-full h-[220px] lg:h-[370px]"
+                                >
                                     <Link
-                                        className="w-full h-[220px] lg:h-[370px] block"
+                                        className="absolute inset-0 w-full h-full"
                                         href={img.url}
                                         aria-label={`View details for ${img.title}`}
                                     >
                                         <Image
                                             src={img.image_url}
                                             alt={img.title}
-                                            width={900}
-                                            height={500}
-                                            className="object-cover w-full h-full"
+                                            fill
+                                            className="object-cover"
                                             priority={index === 0}
                                             loading={
                                                 index === 0 ? 'eager' : 'lazy'
