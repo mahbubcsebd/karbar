@@ -141,7 +141,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                 open={open}
                 onOpenChange={setOpen}
             >
-                <DialogTrigger asChild>{children}</DialogTrigger>
+                <DialogTrigger asChild area-label="login button">{children}</DialogTrigger>
                 <DialogHeader className="sr-only">
                     <DialogTitle>Coupon</DialogTitle>
                     <DialogDescription>Coupon Description</DialogDescription>
