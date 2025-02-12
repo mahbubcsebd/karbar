@@ -72,7 +72,7 @@ const HeaderCart = ({dictionary}) => {
             </button>
             {show && (
                 <div
-                    className={`absolute right-0 top-14 bg-white rounded-lg px-5 py-6 min-w-[300px] lg:min-w-[370px] z-50 shadow-md min-h-[250px] md:min-h-[360px] ${
+                    className={`absolute -right-[60px] sm:right-0 top-12 bg-white rounded-lg px-5 py-6 min-w-[300px] lg:min-w-[370px] z-50 shadow-md min-h-[250px] md:min-h-[360px] ${
                         cartItems.length === 0
                             ? 'flex justify-center items-center'
                             : ''

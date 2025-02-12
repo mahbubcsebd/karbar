@@ -1,9 +1,11 @@
 'use client';
 
 import AuthModal from '@/components/AuthModal';
+import useUser from '@/hooks/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { AiOutlineLogin } from 'react-icons/ai';
 import { FiSearch } from 'react-icons/fi';
 import { RxCross1 } from 'react-icons/rx';
 import logo from '../../../assets/icons/logo.svg';
@@ -12,8 +14,6 @@ import useSiteSetting from '../../../hooks/useSiteSetting';
 import AuthUser from '../../AuthUser';
 import HeaderCart from '../../HeaderCart';
 import LanguageSwitcher from '../../LanguageSwitcher';
-// import useUser from '../hooks/useUser';
-import useUser from '@/hooks/useUser';
 import AbayaHeaderSearch from './AbayaHeaderSearch';
 
 const AbayaHeader = () => {
@@ -40,7 +40,7 @@ const AbayaHeader = () => {
                             <div className="relative lg:hidden">
                                 <button
                                     onClick={handleSearch}
-                                    className="absolute left-0 text-2xl text-white -translate-y-1/2 top-1/2 "
+                                    className="absolute left-0 hidden text-2xl text-white -translate-y-1/2 top-1/2 "
                                 >
                                     {showSearchModal ? (
                                         <RxCross1 />
@@ -76,8 +76,13 @@ const AbayaHeader = () => {
                                     {!user ? (
                                         <div className="flex space-x-4">
                                             <AuthModal>
-                                                <button className="px-5 py-3 text-base text-white capitalize bg-purple-900 rounded-md">
-                                                    Sign In
+                                                <button className="flex items-center justify-center w-10 h-10 text-base text-white capitalize bg-purple-900 border border-purple-900 rounded-full md:px-5 md:py-3 md:rounded-md md:w-auto md:h-auto">
+                                                    <span className="hidden md:block">
+                                                        Sign In
+                                                    </span>
+                                                    <span className="md:hidden">
+                                                        <AiOutlineLogin />
+                                                    </span>
                                                 </button>
                                             </AuthModal>
                                         </div>

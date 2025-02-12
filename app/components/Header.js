@@ -64,7 +64,7 @@ const Header = () => {
                         )}
                         <button
                             type="button"
-                            className="relative flex items-center justify-center text-lg md:text-[22px] text-gray-800 border border-[#D14BF8] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white"
+                            className="relative flex items-center justify-center text-lg md:text-[22px] text-gray-800 border border-[#D14BF8] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white lg:hidden"
                             onClick={handleSearch}
                             aria-label="search toggle button"
                         >

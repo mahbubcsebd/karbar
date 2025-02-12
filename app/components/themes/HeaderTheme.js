@@ -1,44 +1,48 @@
 'use client';
 
-import { Suspense, lazy, useEffect, useState } from 'react';
-
-// Placeholder component to display while the actual component is loading
-const Loading = () => (
-    <div className="w-full min-h-[90px] bg-gray-200 animate-pulse"></div>
-);
-const ErrorComponent = () => <div>Error loading theme component.</div>;
+import { useEffect, useState } from 'react';
 
 function HeaderThemes({ template }) {
     const [Component, setComponent] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
+        let importComponent;
+
         if (template === 'Template01') {
-            setComponent(lazy(() => import('../Header')));
+            importComponent = import('../Header');
         } else if (template === 'Template02') {
-            setComponent(lazy(() => import('../template/abaya/AbayaHeader')));
+            importComponent = import('../template/abaya/AbayaHeader');
         } else if (template === 'Template06') {
-            setComponent(lazy(() => import('../template/template-six/HeaderSix')));
+            importComponent = import('../template/template-six/HeaderSix');
         } else {
-            setComponent(lazy(() => import('../Header')));
+            importComponent = import('../Header');
         }
+
+        importComponent
+            .then((mod) => {
+                setComponent(() => mod.default);
+                setLoading(false);
+            })
+            .catch(() => {
+                setError(true);
+                setLoading(false);
+            });
     }, [template]);
 
-    if (error) {
-        return <ErrorComponent />;
+    if (loading) {
+        return (
+            <div className="w-full min-h-[75px] md:min-h-[90px] bg-gray-200 animate-pulse"></div>
+        );
     }
 
-    return (
-        <div>
-            {Component ? (
-                <Suspense fallback={<Loading />}>
-                    <Component />
-                </Suspense>
-            ) : (
-                <Loading />
-            )}
-        </div>
-    );
+    if (error) {
+        return <div>Error loading theme component.</div>;
+    }
+
+    return Component ? <Component /> : null;
 }
 
 export default HeaderThemes;

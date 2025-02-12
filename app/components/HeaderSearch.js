@@ -40,12 +40,12 @@ const HeaderSearch = ({ showSearchModal, setShowSearchModal, dictionary }) => {
             <div
                 className={`${
                     showSearchModal
-                        ? 'absolute left-2 top-[17px] z-50 block w-full'
-                        : 'hidden lg:block'
+                        ? 'absolute left-2 top-[12px] z-50 inline-block lg:w-full'
+                        : 'hidden lg:inline-block'
                 }`}
             >
                 <form
-                    className={`header-search relative lg:w-[350px] h-13 lg:h-14 w-[300px] sm:w-[370px] md:w-[460px]`}
+                    className={`header-search relative lg:w-[350px] h-13 lg:h-14 w-[250px] sm:w-[370px] md:w-[460px]`}
                 >
                     <input
                         type="text"

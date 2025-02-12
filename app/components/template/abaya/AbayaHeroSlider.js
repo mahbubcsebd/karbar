@@ -33,50 +33,44 @@ const AbayaHeroSlider = () => {
     return (
         <div
             id="hero"
-            className="hero pt-4 md:pt-6 lg:pt-16 pb-[30px] lg:pb-20"
+            className="pb-[30px] lg:pb-20"
         >
             <div className="hero-area">
-                <div className="container">
-                    <div className="w-full overflow-hidden rounded-[20px]">
-                        {loading ? (
-                            <div className="w-full overflow-hidden h-[150px] lg:h-[350px]"></div>
-                        ) : (
-                            <Swiper
-                                spaceBetween={30}
-                                autoplay={{
-                                    delay: 2500,
-                                    disableOnInteraction: false,
-                                }}
-                                effect={'fade'}
-                                navigation={true}
-                                pagination={{
-                                    clickable: true,
-                                }}
-                                modules={[
-                                    EffectFade,
-                                    Navigation,
-                                    Pagination,
-                                    Autoplay,
-                                ]}
-                                className="mySwiper"
-                            >
-                                {images?.map((img) => (
-                                    <SwiperSlide key={img.id}>
-                                        <Link href={img.url}>
-                                            <Image
-                                                src={img.image_url}
-                                                alt={img.title}
-                                                width={900}
-                                                height={500}
-                                                className="object-cover w-full h-full"
-                                            />
-                                        </Link>
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
-                        )}
-                    </div>
-                </div>
+                {loading ? (
+                    <div className="w-full overflow-hidden h-[220px] lg:h-[650px] animate-pulse"></div>
+                ) : (
+                    <Swiper
+                        spaceBetween={0}
+                        autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }}
+                        effect={'fade'}
+                        navigation={true}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        modules={[EffectFade, Navigation, Pagination, Autoplay]}
+                        className="w-full h-full mySwiper"
+                    >
+                        {images?.map((img) => (
+                            <SwiperSlide key={img.id}>
+                                <Link
+                                    href={img.url}
+                                    className="w-full overflow-hidden h-[220px] lg:h-[650px] block"
+                                >
+                                    <Image
+                                        src={img.image_url}
+                                        alt={img.title}
+                                        width={1440}
+                                        height={650}
+                                        className="object-cover w-full h-full"
+                                    />
+                                </Link>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                )}
             </div>
         </div>
     );
