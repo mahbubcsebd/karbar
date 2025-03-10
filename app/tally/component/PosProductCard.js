@@ -100,11 +100,11 @@ const PosProductCard = ({ product }) => {
                 <button
                     onClick={() => handleAddToCart(barcode_or_sku_code)}
                     disabled={quantity <= 0}
-                    className="block mb-1 text-xs font-medium text-gray-900 text-[8px] product-title ellipsis-2 text-left"
+                    className="block mb-1 text-sm font-medium text-gray-900 product-title ellipsis-2 text-left"
                 >
                     {product_name_with_attr}
                 </button>
-                <p className="product-price text-[8px] font-semibold text-gray-900">
+                <p className="product-price text-[10px] font-semibold text-gray-900">
                     {priceCurrency} :{' '}
                     {sale_price === 0 ? unit_price : sale_price}
                 </p>

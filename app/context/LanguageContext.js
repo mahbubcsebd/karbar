@@ -44,18 +44,36 @@ export const LanguageProvider = ({ children }) => {
         const fetchLanguagesAndSetup = async () => {
             try {
                 const languageData = await getLanguage();
-                const fetchedLanguages = languageData.data;
+                let fetchedLanguages = [];
+                let isFallbackUsed = false;
+
+                if (languageData.data && languageData.data.length > 0) {
+                    fetchedLanguages = languageData.data;
+                } else {
+                    console.warn(
+                        "No languages found from API. Using fallback language (English)."
+                    );
+                    fetchedLanguages = [
+                        {
+                            id: 1,
+                            name: 'English',
+                            code: 'en',
+                            is_default: true,
+                            flag: '/app/assets/icons/english.svg',
+                        },
+                    ];
+                    isFallbackUsed = true;
+                    // Store this information for other components if needed
+                    localStorage.setItem('usingLanguageFallback', 'true');
+                }
+
+                // Always set languages, even if using fallback
                 setLanguages(fetchedLanguages);
 
+                // Try to find the default language or fallback to 'en'
                 const defaultLanguage =
                     fetchedLanguages.find((lang) => lang.is_default)?.code ||
                     'en';
-
-                if (!fetchedLanguages.some((lang) => lang.is_default)) {
-                    console.warn(
-                        "No default language found in API. Falling back to English ('en')."
-                    );
-                }
 
                 const importedTranslations = await importTranslations(
                     fetchedLanguages
@@ -78,7 +96,21 @@ export const LanguageProvider = ({ children }) => {
                     'Failed to fetch languages or translations',
                     error
                 );
+                // In case of error, fall back to English
                 setLanguage('en');
+                setDictionary({});
+
+                // Set fallback English in case of any error
+                setLanguages([
+                    {
+                        id: 1,
+                        name: 'English',
+                        code: 'en',
+                        is_default: true,
+                        flag: '/app/assets/icons/english.svg',
+                    },
+                ]);
+                localStorage.setItem('usingLanguageFallback', 'true');
             } finally {
                 setIsHydrated(true);
                 setIsLoading(false); // Mark loading complete

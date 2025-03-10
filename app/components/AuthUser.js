@@ -8,6 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import useDictionary from '@/hooks/useDictionary';
 import useUser from '@/hooks/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,6 +19,7 @@ import { TbLogout } from "react-icons/tb";
 const AuthUser = ({theme}) => {
     const [open, setOpen] = useState(false);
     const { user, handleLogout } = useUser();
+    const { dictionary } = useDictionary();
 
     const handleMenuItemClick = () => {
         setOpen(false); // Close the dropdown when an item is clicked
@@ -41,7 +43,11 @@ const AuthUser = ({theme}) => {
                             />
                         </div>
                         <p
-                            className={`items-center hidden gap-2 text-base font-semibold lg:flex ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}
+                            className={`items-center hidden gap-2 text-base font-semibold lg:flex ${
+                                theme === 'dark'
+                                    ? 'text-white'
+                                    : 'text-gray-800'
+                            }`}
                         >
                             {user?.name.split(' ')[0]} <IoIosArrowDown />
                         </p>
@@ -85,14 +91,14 @@ const AuthUser = ({theme}) => {
                     >
                         <Link
                             href={`/dashboard/user/${user?.username}`}
-                            className="flex items-center w-full gap-2 px-3 py-2 text-base font-normal text-gray-800 transition-all duration-150 rounded-sm auth-link hover:bg-gray-300"
+                            className="flex items-center w-full gap-2 px-3 py-2 text-base font-normal text-gray-800 transition-all duration-150 rounded-sm auth-link hover:bg-gray-300 capitalize"
                         >
                             <Image
                                 src={profileIcon}
                                 alt="profile icon"
                                 className="auth-icon"
                             />
-                            Profile
+                            {dictionary.Auth.profile}
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem
@@ -101,14 +107,14 @@ const AuthUser = ({theme}) => {
                     >
                         <Link
                             href="/dashboard/my-orders"
-                            className="flex items-center w-full gap-2 px-3 py-2 text-base font-normal text-gray-800 transition-all duration-150 rounded-sm auth-link hover:bg-gray-300"
+                            className="flex items-center w-full gap-2 px-3 py-2 text-base font-normal text-gray-800 transition-all duration-150 rounded-sm auth-link hover:bg-gray-300 capitalize"
                         >
                             <Image
                                 src={orderIcon}
                                 alt="orders icon"
                                 className="auth-icon"
                             />
-                            My Orders
+                            {dictionary.Auth.myOrders}
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -117,7 +123,7 @@ const AuthUser = ({theme}) => {
                             onClick={handleLogout}
                             className="flex items-center justify-center w-full gap-2 px-4 py-3 text-base text-white bg-purple-900 rounded"
                         >
-                            <TbLogout size={18} /> Logout
+                            <TbLogout size={18} /> {dictionary.Auth.logout}
                         </button>
                     </DropdownMenuItem>
                 </DropdownMenuContent>

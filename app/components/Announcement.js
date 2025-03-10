@@ -81,7 +81,7 @@ const Announcement = () => {
                             )}
                             <button
                                 onClick={() => setIsTextOpen(false)}
-                                className="ml-4 text-white p-2 hover:bg-purple-800 rounded-full w-10 h-10 flex items-center justify-center"
+                                className="flex items-center justify-center w-10 h-10 p-2 ml-4 text-white rounded-full hover:bg-purple-800"
                                 aria-label="Close announcement"
                             >
                                 <X className="w-5 h-5" />
@@ -93,7 +93,7 @@ const Announcement = () => {
             {announcement?.bannerAnnounce && isBannerOpen && (
                 <div className="relative overflow-hidden">
                     <button
-                        className="absolute z-50 top-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center"
+                        className="absolute z-50 flex items-center justify-center w-10 h-10 p-2 rounded-full top-4 right-4 bg-black/50 hover:bg-black/70"
                         onClick={() => setIsBannerOpen(false)}
                         aria-label="Close banner announcement"
                     >
@@ -128,7 +128,7 @@ const Announcement = () => {
                         </DialogHeader>
                         <DialogContent hideClose className="max-w-[350px] max-h-[250px] sm:max-w-[800px] sm:max-h-[500px] p-0 overflow-hidden border-0">
                             <button
-                                className="absolute z-50 top-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center"
+                                className="absolute z-50 flex items-center justify-center w-10 h-10 p-2 rounded-full top-4 right-4 bg-black/50 hover:bg-black/70"
                                 onClick={() => setIsModalOpen(false)}
                                 aria-label="Close modal announcement"
                             >

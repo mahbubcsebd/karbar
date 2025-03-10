@@ -91,7 +91,9 @@ function calculateDiscount(unitPrice, salePrice) {
                         href={`/products/${slug}`}
                         className="w-full block text-center py-[10px] px-5 md:py-4 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-full"
                     >
-                        {siteSetting.button_text ? siteSetting.button_text : 'Order Now'}
+                        {siteSetting.button_text
+                            ? siteSetting.button_text
+                            : 'Order Now'}
                     </KarbarButton>
                 </div>
                 {stock < 1 && (
@@ -109,7 +111,9 @@ function calculateDiscount(unitPrice, salePrice) {
                 </Link>
                 <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900 mb-[18px]">
                     {priceCurrency} :{' '}
-                    {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
+                    {sale_price > 0 && (
+                        <span>{`${siteSetting.currency_icon || "৳"}${sale_price}`}</span>
+                    )}{' '}
                     <span
                         className={`inline-block ${
                             sale_price > 0
@@ -117,7 +121,7 @@ function calculateDiscount(unitPrice, salePrice) {
                                 : ''
                         }`}
                     >
-                        ৳{unit_price}
+                        {`${siteSetting.currency_icon || "৳"}${unit_price}`}
                     </span>
                 </p>
             </div>

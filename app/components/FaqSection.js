@@ -37,6 +37,8 @@ const FaqSection = ({ bg }) => {
     const leftColumnFaqs = faqs.slice(0, midPoint);
     const rightColumnFaqs = faqs.slice(midPoint);
 
+    if(faqs.length === 0) return null;
+
     return (
         <div className={`${bg ? '' : 'mb-10'} faqs-section pt-5`}>
             <div className={`relative faq-area ${bg ? 'py-16' : ''}`}>

@@ -1,18 +1,45 @@
 import logo from '@/assets/icons/logo.svg';
+import HeaderCart from '@/components/HeaderCart';
+import KarbarButton from '@/components/KarbarButton';
+import SortContext from '@/context/SortContext';
+import useDictionary from '@/hooks/useDictionary';
 import useSiteSetting from '@/hooks/useSiteSetting';
+import { getAllCategories } from '@/utils/categories';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 
+
 const HeaderSix = () => {
-    const { siteSetting, loading, error } = useSiteSetting();
-    const { header_logo } = siteSetting;
+    const { siteSetting } = useSiteSetting();
+    const [categories, setCategories] = useState([]);
+    const { language, dictionary } = useDictionary();
+    const router = useRouter();
+    const { setSortQuery } = useContext(SortContext);
+
+
+    const headerLogo = useMemo(
+        () => siteSetting.header_logo || logo,
+        [siteSetting.header_logo]
+    );
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+    const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+        useEffect(() => {
+            const fetchCategory = async () => {
+                try {
+                    const categoriesData = await getAllCategories(language);
+                    setCategories(categoriesData.data);
+                } catch (error) {
+                    console.error('Failed to fetch products:', error);
+                }
+            };
+
+            fetchCategory();
+        }, [language]);
 
     return (
         <div className="py-4 bg-white header relative z-9999 shadow-md">
@@ -21,7 +48,7 @@ const HeaderSix = () => {
                     <div className="logo">
                         <Link href="/">
                             <Image
-                                src={header_logo ? header_logo : logo}
+                                src={headerLogo ? headerLogo : logo}
                                 alt="logo"
                                 width={100}
                                 height={40}
@@ -53,52 +80,34 @@ const HeaderSix = () => {
                         }
                         left-0 w-full md:w-auto pb-10 md:pb-0 container z-40 transition-all duration-300 ease-in-out`}
                     >
-                        <li>
-                            <Link
-                                className="text-lg text-[#263054] font-medium"
-                                href="#"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                className="text-lg text-[#263054] font-medium"
-                                href="#"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                About Us
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                className="text-lg text-[#263054] font-medium"
-                                href="#"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                Blog
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                className="text-lg text-[#263054] font-medium"
-                                href="/"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                Contact
-                            </Link>
-                        </li>
+                        {categories.slice(0, 4).map((category) => (
+                            <li key={category.id}>
+                                <Link
+                                    href={`collections/${category.slug}`}
+                                    className="text-lg text-[#263054] font-medium"
+                                >
+                                    {category.name}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
 
                     {/* Order Now Button */}
-                    <div className="hidden md:block">
-                        <Link
-                            href="#"
-                            className="px-6 py-4 rounded-lg bg-[#FD9C02] border-2 border-[#FD9C02] text-white font-normal text-base inline-block hover:bg-transparent hover:text-[#FD9C02] transition-all duration-150"
-                        >
-                            Order Now
-                        </Link>
+                    <div className="flex items-center gap-4">
+                        <HeaderCart dictionary={dictionary.Header} />
+                        <div className="hidden md:block">
+                            <KarbarButton
+                                asLink
+                                href="/collections/all"
+                                preserveHover
+                                variant="default"
+                                className="px-6 py-4 rounded-lg border-2 text-white font-normal text-base inline-block hover:bg-transparent transition-all duration-150"
+                                aria-label="See more products in our collection"
+                                title="Browse all products in our collection"
+                            >
+                                Order Now
+                            </KarbarButton>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -15,9 +15,9 @@ const LandingBanner = ({ landing }) => {
                         className="absolute top-0 left-0 z-10 object-cover w-full h-full"
                     />
                 {section_one_title && (
-                    <div className="h-[240px] md:h-[270px] lg:h-[310px] flex items-center justify-center w-full relative z-50">
+                    <div className="min-h-[240px] md:min-h-[270px] lg:min-h-[310px] flex items-center justify-center w-full relative z-50">
                         <div className="container grid items-center justify-center">
-                            <div className="max-w-[660px] text-center">
+                            <div className="text-center py-10 lg:py-[50px]">
                                 <h2 className="text-[24px] md:text-[30px] lg:text-4xl xl:text-5xl text-white font-bold text-center block mb-[30px] leading-relaxed">
                                     {section_one_title}
                                 </h2>

@@ -4,11 +4,14 @@
 REMOTE_USER="root"
 REMOTE_HOST="194.238.16.105"
 REMOTE_PORT="22"
-REMOTE_DIR="/var/www/daarib.com"
+REMOTE_DIR="/var/www/seafishcorner.com"
 
 # Define the new port and api Url
-NEW_PORT="3000"
-NEW_API_URL="https://admin.daarib.com/api"
+NEW_PORT="5007"
+NEW_API_URL="https://admin.seafishcorner.com/api"
+#NEW_API_URL=$APP_HOSTNAME"/api"
+
+#sed -i 's/\r$//' ./scripts/seafishcorner-deploy.sh  # Windows Wsl using
 
 # Update the package.json file with new port using jq
 echo "Updating package.json with new port..."
@@ -20,19 +23,21 @@ jq --arg port "$NEW_PORT" '
 ' package.json > tmp.json && mv tmp.json package.json
 
 # Confirm the changes
-echo "Updated package.json with port $NEW_PORT:"
+echo "Updated .env with port $NEW_PORT:"
 cat package.json
 
 # Update .env with new API base URL
 echo "Updating .env with new API base URL..."
+#sed -i "s|^APP_HOSTNAME.*|APP_HOSTNAME=$NEW_API_URL|" .env
 sed -i "s|^NEXT_PUBLIC_API_BASE_URL=.*|NEXT_PUBLIC_API_BASE_URL=$NEW_API_URL|" .env
 
 # Confirm the changes
-echo "Updated .env with port $NEW_API_URL:"
+echo "Updated package.json with port $NEW_API_URL:"
 cat .env
 
 # Build the Next.js project
 echo "Building the Next.js project..."
+npm install
 npm run build
 npm cache clean --force
 
@@ -71,7 +76,7 @@ ssh ${REMOTE_USER}@${REMOTE_HOST} << EOF
   npm install
 
   # Restart the service
-  sudo systemctl restart daarib.service
+  sudo systemctl restart ridersoption.service
 
   echo "Deployment completed successfully."
 EOF

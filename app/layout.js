@@ -2,17 +2,24 @@
 
 import { GoogleTagManager } from '@next/third-parties/google';
 import { Poppins } from 'next/font/google';
+import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import NextTopLoader from 'nextjs-toploader';
 import { Suspense, useEffect, useReducer, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import messanger from '../app/assets/icons/messanger.svg';
+import whatsapp from '../app/assets/icons/whatsapp.svg';
 import ScrollToTop from '../app/components/ScrollToTop';
 import { ProductContext } from '../app/context/cartContext';
 import { cartReducer, initialState } from '../app/reducer/CartReducer';
 import { ModalProvider } from '../app/reducer/ModalProvider';
 import { SearchProvider } from '../app/reducer/SearchContext';
+// import FBPixel from './components/add-manager/FBPixel';
+import FBConversionApi from './components/add-manager/FBConversionApi';
+import FBPixel from './components/add-manager/FBPixel';
 import Announcement from './components/Announcement';
 import HomePreLoader from './components/HomePreLoader';
 import FooterThemes from './components/themes/FooterTheme';
@@ -153,21 +160,20 @@ export default function RootLayout({ children }) {
         fetchData();
     }, []);
 
-       useEffect(() => {
-           dispatch({
-               type: 'SET_CART',
-           });
-       }, []);
-
+    useEffect(() => {
+        dispatch({
+            type: 'SET_CART',
+        });
+    }, []);
 
     return (
         <html lang="en">
-            {addManager?.tag_manager_id &&
-                Array.isArray(addManager?.tag_manager_id) &&
-                addManager?.tag_manager_id.map((gtmId) => (
+            {addManager?.tag_managers &&
+                Array.isArray(addManager?.tag_managers) &&
+                addManager?.tag_managers.map((tagManager) => (
                     <GoogleTagManager
-                        key={gtmId}
-                        gtmId={gtmId}
+                        key={tagManager.tag_manager_id}
+                        gtmId={tagManager.tag_manager_id}
                     />
                 ))}
             <body>
@@ -236,6 +242,44 @@ export default function RootLayout({ children }) {
                                                                         )}
                                                                 </main>
                                                                 <ScrollToTop />
+                                                                <div className="fixed z-[99999999] grid gap-3 md:gap-2 bottom-10 md:bottom-[85px] right-4">
+                                                                    {siteSetting?.whatsapp_id &&
+                                                                        pathname !==
+                                                                            '/pos' && (
+                                                                            <Link
+                                                                                className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
+                                                                                target="_blank"
+                                                                                href={`https://wa.me/${siteSetting.whatsapp_id}`}
+                                                                            >
+                                                                                <Image
+                                                                                    className="w-full h-full"
+                                                                                    src={
+                                                                                        whatsapp
+                                                                                    }
+                                                                                    alt="whatsapp"
+                                                                                    priority
+                                                                                />
+                                                                            </Link>
+                                                                        )}
+                                                                    {siteSetting?.fb_page_id &&
+                                                                        pathname !==
+                                                                            '/pos' && (
+                                                                            <Link
+                                                                                className="w-10 h-10 overflow-hidden md:w-9 md:h-9"
+                                                                                target="_blank"
+                                                                                href={`https://m.me/${siteSetting.fb_page_id}`}
+                                                                            >
+                                                                                <Image
+                                                                                    className="w-full h-full"
+                                                                                    src={
+                                                                                        messanger
+                                                                                    }
+                                                                                    alt="messanger"
+                                                                                    priority
+                                                                                />
+                                                                            </Link>
+                                                                        )}
+                                                                </div>
                                                                 <ToastContainer />
                                                             </OrderProvider>
                                                         </SiteSettingProvider>
@@ -249,6 +293,20 @@ export default function RootLayout({ children }) {
                         </LanguageProvider>
                     </Suspense>
                 )}
+                {addManager?.pixels &&
+                    Array.isArray(addManager?.pixels) &&
+                    addManager?.pixels.map((pixel) => (
+                        <div key={pixel.id}>
+                            <FBPixel
+                                // key={`pixel-${pixel.id}`}
+                                pixelId={pixel.pixel_id}
+                            />
+                            <FBConversionApi
+                                // key={`token-${pixel.id}`}
+                                pixelId={pixel.token}
+                            />
+                        </div>
+                    ))}
             </body>
         </html>
     );

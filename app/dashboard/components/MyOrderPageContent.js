@@ -8,6 +8,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import useDictionary from '@/hooks/useDictionary';
+import useSiteSetting from '@/hooks/useSiteSetting';
 import { decrypt } from '@/services/encryption';
 import { getMyOrders, getOrderStatus } from '@/utils/auth/getOrders';
 import { getPrintInvoice } from '@/utils/pos/getPrintInvoice';
@@ -24,6 +26,7 @@ import {
 import { BsPrinter } from 'react-icons/bs';
 import { FaRegEye } from 'react-icons/fa6';
 
+
 const MyOrdersPageContent = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -38,6 +41,8 @@ const MyOrdersPageContent = () => {
     const loaderRef = useRef(null);
     const [isSeeMoreClick, setIsSeeMoreClick] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
+    const { dictionary } = useDictionary();
+    const { siteSetting } = useSiteSetting();
 
     const memoizedOrderArray = useMemo(() => {
         return orderItem;
@@ -151,15 +156,15 @@ const MyOrdersPageContent = () => {
     const getStatusText = (status) => {
         switch (status) {
             case 'Pending':
-                return 'Pending';
+                return dictionary.Auth.pending;
             case 'Processed':
-                return 'Processing';
+                return dictionary.Auth.processed;
             case 'Delivered':
-                return 'Delivered';
+                return dictionary.Auth.delivered;
             case 'Completed':
-                return 'Completed';
+                return dictionary.Auth.received;
             case 'Cancelled':
-                return 'Cancelled';
+                return dictionary.Auth.cancelled;
             default:
                 return 'Unknown Status';
         }
@@ -172,8 +177,8 @@ const MyOrdersPageContent = () => {
     };
     return (
         <div className="h-full bg-white px-[30px] py-12 border border-gray-400 rounded-lg w-full">
-            <h2 className="pb-4 mb-10 text-2xl font-medium text-gray-900 border-b border-gray-400">
-                My Orders
+            <h2 className="pb-4 mb-10 text-2xl font-medium text-gray-900 border-b border-gray-400 capitalize">
+                {dictionary.Auth.myOrders}
             </h2>
             <ul className="border-b border-gray-400 flex items-center gap-4 lg:gap-[30px] flex-wrap">
                 <li>
@@ -185,7 +190,7 @@ const MyOrdersPageContent = () => {
                                 : 'border-transparent'
                         }`}
                     >
-                        All
+                        {dictionary.Auth.all}
                     </button>
                 </li>
                 {orderStatusList.map((status) => (
@@ -198,7 +203,7 @@ const MyOrdersPageContent = () => {
                                     : 'border-transparent'
                             }`}
                         >
-                            {status}
+                            {getStatusText(status)}
                         </button>
                     </li>
                 ))}
@@ -215,11 +220,12 @@ const MyOrdersPageContent = () => {
                                     <div className="flex flex-col items-stretch justify-between gap-6 md:flex-row">
                                         <div>
                                             <p className="mb-2 text-sm font-normal text-gray-600 md:hidden">
-                                                Placed on: {order.created_at}
+                                                {dictionary.Auth.placed}:{' '}
+                                                {order.created_at}
                                             </p>
                                             <div className="flex items-center gap-4 mb-[18px]">
                                                 <p className="text-base font-normal text-gray-600">
-                                                    Order Id{' '}
+                                                    {dictionary.Auth.orderId}{' '}
                                                     <span className="font-semibold text-gray-700">
                                                         #{order.order_number}
                                                     </span>
@@ -235,21 +241,21 @@ const MyOrdersPageContent = () => {
                                                 </p>
                                             </div>
                                             <p className="text-base font-normal text-gray-600 mb-[18px]">
-                                                Number of items:{' '}
+                                                {dictionary.Auth.orderItems}:{' '}
                                                 <span className="font-semibold text-gray-700">
                                                     {order.total_quantity}
                                                 </span>
                                             </p>
                                             <p className="text-base font-normal text-gray-600">
-                                                Total:{' '}
+                                                {dictionary.Auth.total}:{' '}
                                                 <span className="font-semibold text-gray-700">
-                                                    ৳ {order.total_amount}
+                                                    {`${siteSetting.currency_icon || "৳"}${order.total_amount}`}
                                                 </span>
                                             </p>
                                         </div>
                                         <div className="flex flex-col justify-between gap-2 items-between">
                                             <p className="hidden text-sm font-normal text-gray-600 md:block">
-                                                Placed on:{' '}
+                                                {dictionary.Auth.placed}:{' '}
                                                 <span className="font-semibold">
                                                     {order.created_at}
                                                 </span>
@@ -259,7 +265,8 @@ const MyOrdersPageContent = () => {
                                                     href={`/dashboard/my-orders/${order.id}`}
                                                     class="text-sm md:text-base text-white font-medium px-[10px] md:px-[14px] py-2 md:py-2 bg-purple-900 rounded-sm flex items-center gap-2"
                                                 >
-                                                    <FaRegEye /> Details
+                                                    <FaRegEye />{' '}
+                                                    {dictionary.Auth.details}
                                                 </Link>
 
                                                 <Dialog>
@@ -273,7 +280,10 @@ const MyOrdersPageContent = () => {
                                                             class="text-sm md:text-base text-white font-medium px-[10px] md:px-[14px] py-2 md:py-2 bg-[#A3A3A3] rounded-sm flex items-center gap-2"
                                                         >
                                                             <BsPrinter />{' '}
-                                                            Invoice
+                                                            {
+                                                                dictionary.Auth
+                                                                    .invoice
+                                                            }
                                                         </button>
                                                     </DialogTrigger>
                                                     <DialogContent className="sm:max-w-[425px] bg-[#F6F4FD] border-[rgba(136, 49, 225, 0.20)]">
@@ -307,7 +317,7 @@ const MyOrdersPageContent = () => {
                     <div className="flex justify-center pt-10 text-gray-600">
                         {memoizedOrderArray.length < 1 && !loading && (
                             <h2 className="text-2xl font-normal">
-                                Product not found
+                                {dictionary.Auth.noFound}
                             </h2>
                         )}
                     </div>

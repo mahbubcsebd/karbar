@@ -98,8 +98,9 @@ const GlobalProductCard = ({ product }) => {
                     {name}
                 </Link>
                 <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900 mb-[18px]">
-                    {priceCurrency} :{' '}
-                    {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
+                    {sale_price > 0 && (
+                        <span>{`${siteSetting.currency_icon || "৳"}${sale_price}`}</span>
+                    )}{' '}
                     <span
                         className={`inline-block ${
                             sale_price > 0
@@ -107,7 +108,7 @@ const GlobalProductCard = ({ product }) => {
                                 : ''
                         }`}
                     >
-                        ৳{unit_price}
+                        {`${siteSetting.currency_icon || "৳"}${unit_price}`}
                     </span>
                 </p>
                 <div className="flex items-center gap-2">

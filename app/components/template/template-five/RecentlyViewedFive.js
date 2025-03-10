@@ -1,11 +1,9 @@
 import latestbg from '@/assets/images/latest-bg.svg';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-// import useDictionary from '../hooks/useDictionary';
 import useDictionary from '../../../hooks/useDictionary';
 import SectionTitle from '../../SectionTitle';
 import ProductCardFive from './ProductCardFive';
-// import SectionTitle from './SectionTitle';
 
 const RecentlyViewedFive = () => {
     const [recentlyViewed, setRecentlyViewed] = useState([]);

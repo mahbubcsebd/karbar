@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js';
 
 // Secret key for encryption/decryption
-const secretKey = 'yourSecretKey';
+const secretKey = 'SDJHFGSDJHFGSLKADGDSFG';
 
 // Encrypt function (Base64 encoding)
 export const encrypt = (data) => {

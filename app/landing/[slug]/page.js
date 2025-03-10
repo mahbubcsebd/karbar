@@ -8,10 +8,14 @@ import LandingBanner from './component/LandingBanner';
 import LandingCheckoutPage from './component/LandingCheckoutPage';
 import LandingChoose from './component/LandingChoose';
 import LandingDescription from './component/LandingDescription';
+import LandingRelatedProducts from './component/LandingRelatedProduct';
 import LandingShopWithUs from './component/LandingShopWithUs';
 import OurPackages from './component/OurPackages';
-  export async function generateMetadata({ params }) {
-     const slug = (await params).slug;
+
+export async function generateMetadata({ params }) {
+    const slug = (await params)?.slug || 'default-slug'; // Fallback if slug is undefined
+
+    // Function to capitalize each word
     function capitalizeEachWord(text) {
         return text
             .split(' ')
@@ -22,30 +26,43 @@ import OurPackages from './component/OurPackages';
             .join(' ');
     }
 
-    const slugTitle = slug.replace(/-/g, " ");
-      const siteSetting = await getSiteSettings('en');
-      return {
-          title: `${siteSetting.data.title} | ${capitalizeEachWord(slugTitle)}`,
-          icons: {
-              icon: siteSetting.data.fev_icon,
-              apple: siteSetting.data.fev_icon,
-          },
-          openGraph: {
-              title: siteSetting.data.title,
-              description: siteSetting.data.footer_description,
-              url: siteSetting.data.website,
-              type: 'website',
-              images: [
-                  {
-                      url: siteSetting.data.header_logo,
-                      width: 1200,
-                      height: 630,
-                      alt: 'Karbar Logo',
-                  },
-              ],
-          },
-      };
-  }
+    // Replace hyphens with spaces in slug and capitalize the words
+    const slugTitle = slug.replace(/-/g, ' ');
+
+    // Fetch site settings with a fallback to ensure it doesn't break if fetching fails
+    const siteSetting = (await getSiteSettings('en')) || {};
+    const data = siteSetting?.data || {};
+
+    // Set fallback values for properties if they are missing
+    const title = data.title || 'Default Site Title';
+    const fevIcon = data.fev_icon || '/default-icon.png';
+    const headerLogo = data.header_logo || '/default-logo.png';
+    const footerDescription = data.footer_description || 'Default description';
+    const website = data.website || 'https://example.com';
+
+    return {
+        title: `${title} | ${capitalizeEachWord(slugTitle)}`,
+        icons: {
+            icon: fevIcon,
+            apple: fevIcon,
+        },
+        openGraph: {
+            title,
+            description: footerDescription,
+            url: website,
+            type: 'website',
+            images: [
+                {
+                    url: headerLogo,
+                    width: 1200,
+                    height: 630,
+                    alt: `${title} Logo`,
+                },
+            ],
+        },
+    };
+}
+
 
 const LandingPage = async ({ params }) => {
      const slug = (await params).slug;
@@ -72,6 +89,7 @@ const LandingPage = async ({ params }) => {
         is_combo_product,
         is_multiple_quantity_allow,
         combo,
+        related_products,
         is_coupon_field_visible,
     } = landingData.data;
 
@@ -103,10 +121,12 @@ const LandingPage = async ({ params }) => {
                 button_text={button_text}
                 button_color={button_color}
             />
-            {products.length > 0 && <OurPackages
-                package_title={package_title}
-                products={products}
-            />}
+            {products.length > 0 && (
+                <OurPackages
+                    package_title={package_title}
+                    products={products}
+                />
+            )}
             <LandingCheckoutPage
                 siteSettings={siteSettings.data}
                 paymentMethod={paymentMethod.data}
@@ -115,6 +135,7 @@ const LandingPage = async ({ params }) => {
                 combo={combo}
                 is_coupon_field_visible={is_coupon_field_visible}
             />
+            <LandingRelatedProducts products={related_products} />
         </div>
     );
 };

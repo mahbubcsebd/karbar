@@ -256,44 +256,9 @@ const ProductList = ({ category }) => {
                                 selectedSubCategory={selectedSubCategory}
                                 setSelectedSubCategory={setSelectedSubCategory}
                                 setSortQuery={setSortQuery}
+                                setBrandQuery={setBrandQuery}
                                 router={router}
                             />
-                            {/* <ul
-                                ref={scrollContainerRef}
-                                className="flex items-center md:flex-wrap gap-2 sm:gap-3 md:gap-[18px] max-w-[calc(100% - 60px)] overflow-x-auto categories-scroll"
-                            >
-                                <li>
-                                    <button
-                                        onClick={handleAllFilter}
-                                        type="button"
-                                        className={`whitespace-nowrap px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
-                                            selectedCategory == 'all'
-                                                ? 'bg-gray-700 text-white'
-                                                : ''
-                                        }`}
-                                    >
-                                        {dictionary.Global.all}
-                                    </button>
-                                </li>
-                                {categories.map((category) => (
-                                    <li key={category.id}>
-                                        <button
-                                            onClick={() =>
-                                                handleCategory(category.slug)
-                                            }
-                                            type="button"
-                                            className={`whitespace-nowrap px-3 py-1 md:px-6 md:py-[6px] text-xs sm:text-base font-normal text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white transition duration-150 ${
-                                                selectedCategory ==
-                                                category.slug
-                                                    ? 'bg-gray-700 text-white'
-                                                    : ''
-                                            }`}
-                                        >
-                                            {category.name}
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul> */}
                         </div>
                         <div className="flex items-center gap-4">
                             <div>
@@ -311,7 +276,7 @@ const ProductList = ({ category }) => {
                                         >
                                             <option
                                                 key={0}
-                                                value='all'
+                                                value="all"
                                             >
                                                 All Brand
                                             </option>

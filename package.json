@@ -5,9 +5,9 @@
     "scripts": {
         "dev": "next dev -p 4000",
         "build": "next build",
-        "start": "next start -p 7000",
+        "start": "next start -p 4000",
         "lint": "next lint",
-        "server": "json-server --watch db.json --port 7000",
+        "server": "json-server --watch db.json --port 4000",
         "test": "jest",
         "check-updates": "npm outdated",
         "update-all": "npm update",

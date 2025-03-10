@@ -3,53 +3,76 @@ import ProductList from '../../components/ProductList';
 import { getSiteSettings } from '../../utils/getSiteSettings';
 
 export async function generateMetadata({ params }) {
-     const category = (await params).category;
+    const category = (await params).category;
     const siteSetting = await getSiteSettings();
+
+    // Fallback data if siteSetting.data is empty or undefined
+    const data = siteSetting?.data || {};
 
     // Generate keywords from title and category
     const generateKeywords = (text) => {
-        return text
-            .toLowerCase()
-            .replace(/[^a-z0-9\s]/g, '')
-            .split(/\s+/)
-            .filter(word => word.length > 2)
-            .join(', ');
+        return (
+            text
+                ?.toLowerCase()
+                ?.replace(/[^a-z0-9\s]/g, '')
+                ?.split(/\s+/)
+                ?.filter((word) => word?.length > 2)
+                ?.join(', ') || ''
+        );
     };
 
-    const titleKeywords = generateKeywords(siteSetting.data.title);
-    const categoryKeywords = generateKeywords(category.replace(/-/g, ' '));
+    const titleKeywords = generateKeywords(data.title);
+    const categoryKeywords = generateKeywords(category?.replace(/-/g, ' '));
 
     return {
-        title: `${category.replace(/-/g, ' ').toUpperCase()} | ${siteSetting.data.title}`,
-        description: `Shop our collection of ${category.replace(/-/g, ' ')} at ${siteSetting.data.title}. Find the best deals and latest trends.`,
+        title: `${
+            category?.replace(/-/g, ' ')?.toUpperCase() || 'Category'
+        } | ${data.title || 'Default Title'}`,
+        description: `Shop our collection of ${
+            category?.replace(/-/g, ' ') || 'items'
+        } at ${
+            data.title || 'our store'
+        }. Find the best deals and latest trends.`,
         keywords: `${categoryKeywords}, ${titleKeywords}, shop online, best deals, latest collection`,
         icons: {
-            icon: siteSetting.data.fev_icon,
-            apple: siteSetting.data.fev_icon,
+            icon: data.fev_icon || '/default-favicon.png',
+            apple: data.fev_icon || '/default-favicon.png',
         },
         openGraph: {
-            title: `${category.replace(/-/g, ' ').toUpperCase()} - ${siteSetting.data.title}`,
-            description: siteSetting.data.footer_description,
-            url: `${siteSetting.data.website}/collections/${category}`,
+            title: `${
+                category?.replace(/-/g, ' ')?.toUpperCase() || 'Category'
+            } - ${data.title || 'Default Title'}`,
+            description:
+                data.footer_description ||
+                'Find the best deals and latest trends.',
+            url: `${
+                data.website || 'https://example.com'
+            }/collections/${category}`,
             type: 'website',
             images: [
                 {
-                    url: siteSetting.data.header_logo,
+                    url: data.header_logo || '/default-logo.png',
                     width: 1200,
                     height: 630,
-                    alt: 'Karbar Logo',
+                    alt: `${data.title || 'Default Title'} Logo`,
                 },
             ],
-            siteName: siteSetting.data.title,
+            siteName: data.title || 'Default Title',
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${category.replace(/-/g, ' ').toUpperCase()} - ${siteSetting.data.title}`,
-            description: siteSetting.data.footer_description,
-            images: siteSetting.data.header_logo,
+            title: `${
+                category?.replace(/-/g, ' ')?.toUpperCase() || 'Category'
+            } - ${data.title || 'Default Title'}`,
+            description:
+                data.footer_description ||
+                'Find the best deals and latest trends.',
+            images: data.header_logo || '/default-logo.png',
         },
         alternates: {
-            canonical: `${siteSetting.data.website}/collections/${category}`,
+            canonical: `${
+                data.website || 'https://example.com'
+            }/collections/${category}`,
         },
         robots: {
             index: true,
@@ -59,6 +82,7 @@ export async function generateMetadata({ params }) {
         },
     };
 }
+
 
 const CategoryPage = async ({ params }) => {
      const category = (await params).category;

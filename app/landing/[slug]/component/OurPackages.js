@@ -1,6 +1,7 @@
 'use client';
 
 import { ProductContext } from '@/context/cartContext';
+import useSiteSetting from '@/hooks/useSiteSetting';
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -8,6 +9,7 @@ import { toast } from 'react-toastify';
 const OurPackages = ({ package_title, products }) => {
     const [selectedValues, setSelectedValues] = useState({});
     const { state, dispatch } = useContext(ProductContext);
+    const { siteSetting } = useSiteSetting();
 
     // Clear cartItems on initial load
     useEffect(() => {
@@ -180,24 +182,46 @@ const OurPackages = ({ package_title, products }) => {
                                             <div className="w-[90px] h-[104px] sm:w-[95px] sm:h-[112px] md:w-[110px] md:h-[118px] lg:w-[84px] lg:h-[90px] xl:w-[100px] xl:h-[100px] rounded-lg overflow-hidden">
                                                 <Image
                                                     className="object-cover w-full h-full"
-                                                    src={product.preview_image}
+                                                    src={
+                                                        product.preview_image ||
+                                                        null
+                                                    }
                                                     alt={product.name}
                                                     width={100}
                                                     height={100}
                                                 />
                                             </div>
                                         </div>
-                                        <div className="flex-auto">
+                                        <div className="flex-auto min-w-full">
                                             <div className="flex justify-between items-baseline gap-4 mb-[10px]">
                                                 <h2
-                                                    className="text-sm sm:text-base lg:text-[20px] text-gray-800 font-semibold ellipsis-2 h-10 sm:h-12 md:h-[54px] leading-relaxed"
+                                                    className="text-sm sm:text-base lg:text-[20px] text-gray-800 font-semibold ellipsis-2 h-10 sm:h-12 md:h-[60px] leading-relaxed"
                                                     title={product.name}
                                                 >
                                                     {product.name}
                                                 </h2>
-                                                <p className="flex items-center gap-1 text-sm font-normal text-gray-600">
-                                                    <span className='font-semibold text-gray-800'>৳</span>{' '}
+                                                {/* <p className="flex items-center gap-1 text-sm font-normal text-gray-600">
+                                                    <span className="font-semibold text-gray-800">
+                                                        {
+                                                            siteSetting.currency_icon || "৳"
+                                                        }
+                                                    </span>{' '}
                                                     {product.unit_price}
+                                                </p> */}
+                                                <p className="flex items-center gap-1 text-sm font-normal text-gray-600">
+                                                    {product.sale_price > 0 && (
+                                                        <span>{`${siteSetting.currency_icon || "৳"}${product.sale_price}`}</span>
+                                                    )}{' '}
+                                                    <span
+                                                        className={`inline-block ${
+                                                            product.sale_price >
+                                                            0
+                                                                ? 'line-through text-red-700 text-sm'
+                                                                : ''
+                                                        }`}
+                                                    >
+                                                        {`${siteSetting.currency_icon || "৳"}${product.unit_price}`}
+                                                    </span>
                                                 </p>
                                             </div>
                                             <div className="flex items-center gap-6 mb-2">

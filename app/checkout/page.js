@@ -6,45 +6,56 @@ import { getSiteSettings } from '../utils/getSiteSettings';
 export async function generateMetadata() {
     const siteSetting = await getSiteSettings();
 
+    // Fallback data if siteSetting.data is empty or undefined
+    const data = siteSetting?.data || {};
+
     // Generate keywords from title
     const generateKeywords = (text) => {
-        return text
-            .toLowerCase()
-            .replace(/[^a-z0-9\s]/g, '')
-            .split(/\s+/)
-            .filter((word) => word.length > 2)
-            .join(', ');
+        return (
+            text
+                ?.toLowerCase()
+                ?.replace(/[^a-z0-9\s]/g, '')
+                ?.split(/\s+/)
+                ?.filter((word) => word?.length > 2)
+                ?.join(', ') || ''
+        );
     };
 
-    const titleKeywords = generateKeywords(siteSetting.data.title);
+    const titleKeywords = generateKeywords(data.title);
 
     return {
-        title: `Checkout | ${siteSetting.data.title}`,
-        description: `Complete your purchase at ${siteSetting.data.title}. Secure checkout process with multiple payment options.`,
+        title: `Checkout | ${data.title || 'Default Title'}`,
+        description: `Complete your purchase at ${
+            data.title || 'our store'
+        }. Secure checkout process with multiple payment options.`,
         keywords: `${titleKeywords}, checkout, payment, order, secure payment`,
         openGraph: {
-            title: `Checkout - ${siteSetting.data.title}`,
-            description: siteSetting.data.footer_description,
-            url: `${siteSetting.data.website}/checkout`,
+            title: `Checkout - ${data.title || 'Default Title'}`,
+            description:
+                data.footer_description ||
+                'Secure checkout process with multiple payment options.',
+            url: `${data.website || 'https://example.com'}/checkout`,
             type: 'website',
             images: [
                 {
-                    url: siteSetting.data.header_logo,
+                    url: data.header_logo || '/default-logo.png',
                     width: 1200,
                     height: 630,
-                    alt: `${siteSetting.data.title} Logo`,
+                    alt: `${data.title || 'Default Title'} Logo`,
                 },
             ],
-            siteName: siteSetting.data.title,
+            siteName: data.title || 'Default Title',
         },
         twitter: {
             card: 'summary',
-            title: `Checkout - ${siteSetting.data.title}`,
-            description: siteSetting.data.footer_description,
-            images: siteSetting.data.header_logo,
+            title: `Checkout - ${data.title || 'Default Title'}`,
+            description:
+                data.footer_description ||
+                'Secure checkout process with multiple payment options.',
+            images: data.header_logo || '/default-logo.png',
         },
         alternates: {
-            canonical: `${siteSetting.data.website}/checkout`,
+            canonical: `${data.website || 'https://example.com'}/checkout`,
         },
         robots: {
             index: false, // Don't index checkout pages for security
@@ -61,6 +72,7 @@ export async function generateMetadata() {
         },
     };
 }
+
 
 const page = async () => {
     const siteSettings = await getSiteSettings("en");

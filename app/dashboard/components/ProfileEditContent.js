@@ -1,6 +1,7 @@
 'use client';
 
 import profileImgg from '@/assets/images/profile.png';
+import useDictionary from '@/hooks/useDictionary';
 import useUser from '@/hooks/useUser';
 import { decrypt } from '@/services/encryption';
 import { updateUser } from '@/utils/auth/getAuth';
@@ -17,6 +18,8 @@ const ProfileEditContent = () => {
     const [profileImg, setProfileImg] = useState(profileImgg);
     const token = Cookies.get('userToken');
     const router = useRouter();
+    const { dictionary } = useDictionary();
+
 
     useEffect(() => {
         if (user) {
@@ -113,14 +116,14 @@ const ProfileEditContent = () => {
     return (
         <div className="bg-white px-[30px] py-12 border border-gray-400 rounded-lg">
             <form onSubmit={handleSubmit}>
-                <h2 className="pb-4 text-2xl font-medium text-gray-900 border-b border-gray-400">
-                    Edit Profile
+                <h2 className="pb-4 text-2xl font-medium text-gray-900 border-b border-gray-400 capitalize">
+                    {dictionary.Auth.editProfile}
                 </h2>
                 <div className="grid grid-cols-1 gap-6 pt-10 md:grid-cols-2">
                     <div className="grid gap-4 md:gap-6">
                         <div>
                             <label className="block mb-2 text-sm font-semibold text-gray-700">
-                                Full Name
+                                {dictionary.Auth.fullName}
                             </label>
                             <input
                                 type="text"
@@ -138,7 +141,7 @@ const ProfileEditContent = () => {
                         </div>
                         <div>
                             <label className="block text-gray-700 text-sm font-semibold mb-[6px] capitalize">
-                                Phone
+                                {dictionary.Auth.phone}
                             </label>
                             <input
                                 type="text"
@@ -150,14 +153,14 @@ const ProfileEditContent = () => {
                         </div>
                         <div>
                             <label className="block mb-2 text-sm font-semibold text-gray-700">
-                                Current Password
+                                {dictionary.Auth.currentPass}
                             </label>
                             <input
                                 type="password"
                                 name="currentPassword"
                                 value={formData.currentPassword}
                                 onChange={handleInputChange}
-                                placeholder="Current Password"
+                                placeholder={dictionary.Auth.currentPass}
                                 className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                             />
                             {errors.currentPassword && (
@@ -170,7 +173,7 @@ const ProfileEditContent = () => {
                     <div className="grid gap-4 md:gap-6">
                         <div>
                             <label className="block text-gray-700 text-sm font-semibold mb-[6px] capitalize">
-                                Email address
+                                {dictionary.Auth.email}
                             </label>
                             <input
                                 type="email"
@@ -182,7 +185,7 @@ const ProfileEditContent = () => {
                         </div>
                         <div>
                             <label className="block text-gray-700 text-sm font-semibold mb-[6px] capitalize">
-                                Date Of Birth
+                                {dictionary.Auth.dob}
                             </label>
                             <input
                                 type="date"
@@ -194,14 +197,14 @@ const ProfileEditContent = () => {
                         </div>
                         <div>
                             <label className="block mb-2 text-sm font-semibold text-gray-700">
-                                New Password
+                                {dictionary.Auth.newPass}
                             </label>
                             <input
                                 type="password"
                                 name="newPassword"
                                 value={formData.newPassword}
                                 onChange={handleInputChange}
-                                placeholder="New Password"
+                                placeholder={dictionary.Auth.newPass}
                                 className="block w-full px-[14px] py-[16px] lg:px-6 lg:py-4 3xl:px-[18px] 3xl:py-[22px] border border-[#D0D5DD] text-gray-700 ring-1 ring-inset ring-[#D0D5DD] focus:ring-1 focus:ring-blue-900 placeholder:text-gray-400 placeholder:text-base outline-hidden rounded-md input-shadow bg-white"
                             />
                             {errors.newPassword && (
@@ -214,13 +217,13 @@ const ProfileEditContent = () => {
                 </div>
                 <div className="pt-5">
                     <label className="block text-gray-700 text-sm font-semibold mb-[6px]">
-                        Address
+                        {dictionary.Auth.address}
                     </label>
                     <textarea
                         name="address"
                         value={formData.address}
                         onChange={handleInputChange}
-                        placeholder="Enter your address here"
+                        placeholder={dictionary.Auth.addressPlaceholder}
                         rows="3"
                         className="block w-full px-6 py-4 border border-gray-300 rounded-md"
                     />
@@ -230,14 +233,14 @@ const ProfileEditContent = () => {
                         type="submit"
                         className="px-[30px] py-4 bg-purple-900 rounded-md text-white"
                     >
-                        Save Changes
+                        {dictionary.Auth.save}
                     </button>
                     <Link
                         href={`/dashboard/user/${user?.username}`}
                         onClick={() => setFormData(user)} // Reset form data
                         className="px-[30px] py-4 bg-[#FF8080] rounded-md text-white"
                     >
-                        Cancel
+                        {dictionary.Auth.cancel}
                     </Link>
                 </div>
             </form>

@@ -1,6 +1,7 @@
 'use client';
 
 import profileImgg from '@/assets/images/profile.png';
+import useDictionary from '@/hooks/useDictionary';
 import useUser from '@/hooks/useUser';
 import { decrypt } from '@/services/encryption';
 import { updateUserProfilePicture } from '@/utils/auth/getAuth';
@@ -14,6 +15,7 @@ import { toast } from 'react-toastify';
 const UserPageContent = ({userName}) => {
     const { user, setUser } = useUser();
     const [profileImg, setProfileImg] = useState(profileImgg);
+    const { dictionary } = useDictionary();
 
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
@@ -75,12 +77,12 @@ const UserPageContent = ({userName}) => {
 
     return (
         <div className="bg-white px-[30px] py-12 border border-gray-400 rounded-lg">
-            <h2 className="pb-4 text-2xl font-medium text-gray-900 border-b border-gray-400">
-                Account Details
+            <h2 className="pb-4 text-2xl font-medium text-gray-900 capitalize border-b border-gray-400">
+                {dictionary.Auth.accountDetials}
             </h2>
             <div className="pt-10">
                 <h3 className="mb-3 text-lg font-medium text-gray-900">
-                    Profile Photo
+                    {dictionary.Auth.profilePhoto}
                 </h3>
                 <div className="flex items-center gap-[18px] w-[94px] h-[94px] relative">
                     <div className="w-[94px] h-[94px] rounded-full border-2 overflow-hidden border-purple-900 p-[2px] relative">
@@ -111,16 +113,16 @@ const UserPageContent = ({userName}) => {
             <div className="grid grid-cols-1 gap-6 pt-10 md:grid-cols-2">
                 <div className="grid gap-4 md:gap-6">
                     <div>
-                        <h3 className="mb-2 text-base font-medium text-gray-900">
-                            Full Name
+                        <h3 className="mb-2 text-base font-medium text-gray-900 capitalize">
+                            {dictionary.Auth.fullName}
                         </h3>
                         <p className="text-lg font-normal text-gray-500">
                             {user?.name ? user?.name : 'N/A'}
                         </p>
                     </div>
                     <div>
-                        <h3 className="mb-2 text-base font-medium text-gray-900">
-                            Phone
+                        <h3 className="mb-2 text-base font-medium text-gray-900 capitalize">
+                            {dictionary.Auth.phone}
                         </h3>
                         <p className="text-lg font-normal text-gray-500">
                             {user?.phone ? user?.phone : 'N/A'}
@@ -128,7 +130,7 @@ const UserPageContent = ({userName}) => {
                     </div>
                     <div>
                         <h3 className="mb-2 text-base font-medium text-gray-900">
-                            Role
+                            {dictionary.Auth.role}
                         </h3>
                         <p className="text-lg font-normal text-gray-500 capitalize">
                             {user?.role ? user?.role : 'N/A'}
@@ -138,7 +140,7 @@ const UserPageContent = ({userName}) => {
                 <div className="grid gap-4 md:gap-6">
                     <div>
                         <h3 className="mb-2 text-base font-medium text-gray-900">
-                            Email Address
+                            {dictionary.Auth.email}
                         </h3>
                         <p className="text-lg font-normal text-gray-500">
                             {user?.email ? user.email : 'N/A'}
@@ -146,7 +148,7 @@ const UserPageContent = ({userName}) => {
                     </div>
                     <div>
                         <h3 className="mb-2 text-base font-medium text-gray-900">
-                            Date Of Birth
+                            {dictionary.Auth.dob}
                         </h3>
                         <p className="text-lg font-normal text-gray-500">
                             {user?.dob ? user?.dob : 'N/A'}
@@ -154,7 +156,7 @@ const UserPageContent = ({userName}) => {
                     </div>
                     <div>
                         <h3 className="mb-2 text-base font-medium text-gray-900">
-                            Address
+                            {dictionary.Auth.address}
                         </h3>
                         <p className="text-lg font-normal text-gray-500">
                             {user?.address ? user?.address : 'N/A'}
@@ -166,7 +168,7 @@ const UserPageContent = ({userName}) => {
                         href="/dashboard/edit"
                         className="px-[30px] py-4 bg-purple-900 rounded-md text-white text-base font-medium"
                     >
-                        Edit Profile
+                        {dictionary.Auth.editProfile}
                     </Link>
                 </div>
             </div>

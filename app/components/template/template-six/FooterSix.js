@@ -6,12 +6,15 @@ import logo from '@/assets/icons/footer-logo.svg';
 import karbar from '@/assets/icons/karbar-logo.svg';
 import nagad from '@/assets/icons/nagad.svg';
 import footerBg from '@/assets/images/footer-six-bg.svg';
+import SortContext from '@/context/SortContext';
 import useDictionary from '@/hooks/useDictionary';
 import useSiteSetting from '@/hooks/useSiteSetting';
+import { getAllCategories } from '@/utils/categories';
+import getPages from '@/utils/getPages';
 import { getPaymentMethod } from '@/utils/getPaymentMethod';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CiLocationOn, CiMail } from 'react-icons/ci';
 import {
     FaArrowRight,
@@ -26,6 +29,9 @@ const FooterSix = () => {
     const [paymentMethod, setPaymentMethod] = useState([]);
     const { language, dictionary } = useDictionary();
     const { siteSetting, loading, error } = useSiteSetting();
+    const [pages, setPages] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const { setSortQuery } = useContext(SortContext);
 
     useEffect(() => {
         const fetchPaymentMethod = async () => {
@@ -35,6 +41,19 @@ const FooterSix = () => {
 
         fetchPaymentMethod();
     }, [language]);
+
+    useEffect(() => {
+        const fetchPages = async () => {
+            try {
+                const response = await getPages();
+                setPages(response.data);
+            } catch (error) {
+                console.error('Error fetching pages:', error);
+            }
+        };
+
+        fetchPages();
+    }, []);
 
     const {
         contact,
@@ -60,6 +79,19 @@ const FooterSix = () => {
         tiktok_url,
         footer_description,
     } = siteSetting;
+
+    useEffect(() => {
+        const fetchCategory = async () => {
+            try {
+                const categoriesData = await getAllCategories(language);
+                setCategories(categoriesData.data);
+            } catch (error) {
+                console.error('Failed to fetch products:', error);
+            }
+        };
+
+        fetchCategory();
+    }, [language]);
 
     return (
         <footer
@@ -99,76 +131,6 @@ const FooterSix = () => {
                                     <FaArrowRight />
                                 </button>
                             </div>
-                            {/* <ul className="flex items-center gap-[18px]">
-                                {facebook_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                facebook_url
-                                                    ? facebook_url
-                                                    : 'https://facebook.com'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
-                                                <FaFacebookF />
-                                            </div>
-                                        </Link>
-                                    </li>
-                                )}
-                                {instagram_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                instagram_url
-                                                    ? instagram_url
-                                                    : 'https://instagram.com'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
-                                                <FaInstagram />
-                                            </div>
-                                        </Link>
-                                    </li>
-                                )}
-                                {youtube_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                youtube_url
-                                                    ? youtube_url
-                                                    : 'https://youtube.com'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
-                                                <FaYoutube />
-                                            </div>
-                                        </Link>
-                                    </li>
-                                )}
-                                {tiktok_url && (
-                                    <li>
-                                        <Link
-                                            href={`${
-                                                tiktok_url
-                                                    ? tiktok_url
-                                                    : 'https://www.tiktok.com/'
-                                            }`}
-                                            rel="noopener noreferrer"
-                                            target="_blank"
-                                        >
-                                            <div className="flex items-center justify-center w-10 h-10 text-lg text-white transition duration-150 border-2 border-white rounded-full hover:bg-[#FD9C02] hover:border-[#FD9C02]">
-                                                <FaTiktok />
-                                            </div>
-                                        </Link>
-                                    </li>
-                                )}
-                            </ul> */}
                         </div>
                         <div className="col-span-12 lg:col-span-8">
                             <div className="grid grid-cols-3">
@@ -177,77 +139,35 @@ const FooterSix = () => {
                                         Quick Links
                                     </h3>
                                     <ul className="grid gap-4 md:gap-6">
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                {aboutUs}
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                Our Chef
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                Customer Review’s
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                Contact us
-                                            </Link>
-                                        </li>
+                                        {categories
+                                            .slice(0, 4)
+                                            .map((category) => (
+                                                <li key={category.id}>
+                                                    <Link
+                                                        href={`/collections/${category.slug}`}
+                                                        className="text-lg font-normal text-gray-400"
+                                                    >
+                                                        {category.name}
+                                                    </Link>
+                                                </li>
+                                            ))}
                                     </ul>
                                 </div>
                                 <div>
                                     <h3 className="text-[20px] text-white font-semibold mb-6 md:mb-[30px]">
-                                        Support
+                                        {company}
                                     </h3>
                                     <ul className="grid gap-4 md:gap-6">
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                Talk to support
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                Support docs
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                System status
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                className="text-lg font-normal text-gray-400"
-                                                href="#"
-                                            >
-                                                Live Chat
-                                            </Link>
-                                        </li>
+                                        {pages.map((page) => (
+                                            <li key={page.id}>
+                                                <Link
+                                                    className="text-lg font-normal text-gray-400"
+                                                    href={`/company/${page.slug}`}
+                                                >
+                                                    {page.title}
+                                                </Link>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                                 <div>

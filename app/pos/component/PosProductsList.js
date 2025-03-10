@@ -180,11 +180,12 @@ const PosProductsList = () => {
         <div className="pb-8">
             <div className="px-5">
                 <div className="grid grid-cols-12 gap-[30px] ">
-                    <div className="col-span-12 xl:col-span-7 order-2 xl:order-1">
+                    <div className="order-2 col-span-12 xl:col-span-7 xl:order-1">
                         <div className="mb-5">
                             <PosSearch
                                 search={search}
                                 setSearch={setSearch}
+                                products={productItem}
                             />
                         </div>
                         <div className="product-filter items-start flex lg:items-center gap-4 sm:gap-5 mb-[20px] bg-white rounded py-[6px] px-3">
@@ -262,7 +263,7 @@ const PosProductsList = () => {
                             </div>
                         </Suspense>
                     </div>
-                    <div className="col-span-12 xl:col-span-5 order-1 xl:order-2">
+                    <div className="order-1 col-span-12 xl:col-span-5 xl:order-2">
                         <div className="bg-white rounded-xl p-[18px]">
                             <div className="mb-8">
                                 <CustomerList

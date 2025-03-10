@@ -122,7 +122,7 @@ const PosProductOrder = ({ product, dictionary }) => {
             });
 
             // For Google Tag manager
-            if (adManager?.tag_manager_id) {
+            if (adManager?.tag_managers) {
             window.dataLayer.push({
                 event: 'add_to_cart',
                 ecommerce: {

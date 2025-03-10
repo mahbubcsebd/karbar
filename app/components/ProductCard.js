@@ -15,7 +15,7 @@ import KarbarButton from "./KarbarButton";
 
 const ProductCard = ({ product, isPriority }) => {
     const { dictionary } = useDictionary();
-    const { siteSetting, loading, error } = useSiteSetting();
+    const { siteSetting } = useSiteSetting();
 
     const { priceCurrency, seeDetails } = dictionary.ProductCard;
 
@@ -93,8 +93,9 @@ const ProductCard = ({ product, isPriority }) => {
                         {name}
                     </Link>
                     <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900 mb-[18px]">
-                        {priceCurrency} :{' '}
-                        {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
+                        {sale_price > 0 && (
+                            <span>{`${siteSetting.currency_icon || "৳"}${sale_price}`}</span>
+                        )}{' '}
                         <span
                             className={`inline-block ${
                                 sale_price > 0
@@ -102,7 +103,7 @@ const ProductCard = ({ product, isPriority }) => {
                                     : ''
                             }`}
                         >
-                            ৳{unit_price}
+                            {`${siteSetting.currency_icon || "৳"}${unit_price}`}
                         </span>
                     </p>
                 </div>

@@ -6,7 +6,7 @@ export function middleware(request) {
 
     if (!token) {
         // Redirect to login page if no token is found
-        return NextResponse.redirect(new URL('/home', request.url));
+        return NextResponse.redirect(new URL('/', request.url));
     }
 
     // If the token exists, proceed to the requested route

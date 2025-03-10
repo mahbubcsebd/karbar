@@ -1,26 +1,22 @@
 'use client';
 
+import cartIcon from '@/assets/icons/cartIcon.svg';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
-// import { useContext } from "react";
-import Image from 'next/image';
 import { toast } from 'react-toastify';
 import noAvailableImg from '../../../assets/icons/no-available.svg';
 import { ProductContext } from '../../../context/cartContext';
 import useDictionary from '../../../hooks/useDictionary';
 import useSiteSetting from '../../../hooks/useSiteSetting';
-// import { ProductContext } from "../context/cartContext";
-import cartIcon from "@/assets/icons/cartIcon.svg";
-import CartModal from '../../CartModal';
 import RatingReadOnly from '../../RatingReadOnly';
 
-const  ProductCardSix = ({ product }) => {
+const ProductCardSix = ({ product }) => {
     const productCardRef = useRef(null);
     const [width, setWidth] = useState(0);
     const { dictionary } = useDictionary();
-    const { siteSetting, loading, error } = useSiteSetting();
-
-    const { priceCurrency, seeDetails } = dictionary.ProductCard;
+    const { siteSetting } = useSiteSetting();
+    const { priceCurrency } = dictionary.ProductCard;
 
     useEffect(() => {
         if (productCardRef.current) {
@@ -30,26 +26,28 @@ const  ProductCardSix = ({ product }) => {
 
     const { uuid, name, preview_image, sale_price, unit_price, stock, slug } =
         product;
-
     const { state, dispatch } = useContext(ProductContext);
 
-    // const isInCart = state.cartItems.some((item) => item.id === product.id);
-
-    const selectedProduct = { ...product, quantity: 1 };
+    // Check if product is already in cart
+    const isInCart = state.cartItems.some((item) => item.id === product.id);
 
     // Handle Add To Cart
     const handleAddToCart = () => {
         if (!isInCart) {
             dispatch({
                 type: 'ADD_TO_CART',
-                payload: selectedProduct,
+                payload: { ...product, quantity: 1 },
             });
             toast.success(`Added ${product.name} to Cart!`, {
                 position: 'bottom-right',
             });
         } else {
+            dispatch({
+                type: 'REMOVE_FROM_CART',
+                payload: product.id,
+            });
             toast.error(
-                `The product ${product.name} has already been added to the cart`,
+                `The product ${product.name} is remove from cart`,
                 {
                     position: 'bottom-right',
                 }
@@ -57,17 +55,13 @@ const  ProductCardSix = ({ product }) => {
         }
     };
 
-function calculateDiscount(unitPrice, salePrice) {
-    const discount = ((unitPrice - salePrice) / unitPrice) * 100;
-    return Math.round(discount);
-    // return discount % 1 === 0 ? discount.toFixed(0) : discount.toFixed(2);
-}
+    // Calculate Discount
+    const calculateDiscount = (unitPrice, salePrice) => {
+        return Math.round(((unitPrice - salePrice) / unitPrice) * 100);
+    };
 
     return (
-        <div
-            ref={productCardRef}
-            className="h-full overflow-hidden product-card group rounded-lg bg-transparent bg-white"
-        >
+        <div className="h-full overflow-hidden product-card group rounded-lg bg-white">
             <Link
                 href={`/products/${slug}`}
                 className="block product-image h-[250px] sm:h-[280px] lg:h-[300px] xl:h-[350px] 2xl:[400px] rounded-lg overflow-hidden relative"
@@ -109,7 +103,9 @@ function calculateDiscount(unitPrice, salePrice) {
                 <div className="w-full h-[1px] bg-[#D9D9D9]"></div>
                 <div className="flex justify-between items-center gap-4 pt-1 md:pt-3">
                     <p className="product-price text-xs sm:text-base xl:text-2xl font-normal text-[#263054]">
-                        {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
+                        {sale_price > 0 && (
+                            <span>{`${siteSetting.currency_icon || "৳"}${sale_price}`}</span>
+                        )}{' '}
                         <span
                             className={`inline-block ${
                                 sale_price > 0
@@ -117,31 +113,24 @@ function calculateDiscount(unitPrice, salePrice) {
                                     : ''
                             }`}
                         >
-                            ৳{unit_price}
+                            {`${siteSetting.currency_icon || "৳"}${unit_price}`}
                         </span>
                     </p>
-                    <CartModal>
-                        <button className="w-[44px] h-[44px] text-lg flex justify-center items-center rounded-md text-[#6E758D] hover:bg-[#FD9C02] hover:text-white cart-btn">
-                            <Image
-                                src={cartIcon}
-                                alt="cart icon"
-                                className="cart-icon"
-                            />
-                        </button>
-                    </CartModal>
-                </div>
-                {/* <div className="flex items-center">
-                    <KarbarButton
-                        asLink
-                        href={`/products/${slug}`}
-                        variant="outline"
-                        className="w-full block text-center py-[10px] px-5 md:py-3 text-[10px] sm:text-base md:text-xs lg:text-base font-normal rounded-lg"
+                    <button
+                        className={`w-[44px] h-[44px] text-lg flex justify-center items-center rounded-md hover:bg-[#FD9C02] hover:text-white cart-btn ${
+                            isInCart
+                                ? 'bg-[#FD9C02] text-white cart-btn-active'
+                                : 'text-[#6E758D]'
+                        }`}
+                        onClick={handleAddToCart}
                     >
-                        {siteSetting.button_text
-                            ? siteSetting.button_text
-                            : 'Order Now'}
-                    </KarbarButton>
-                </div> */}
+                        <Image
+                            src={cartIcon}
+                            alt="cart icon"
+                            className="cart-icon"
+                        />
+                    </button>
+                </div>
             </div>
         </div>
     );

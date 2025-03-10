@@ -116,7 +116,7 @@ const AbayaFooter = () => {
                                                 <CiMail />
                                             </span>
                                         </p>
-                                        {email ? email : 'info@abaya.com'}
+                                        {email ? email : 'support@karbar.shop'}
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2 text-base font-normal text-gray-300 lg:text-lg">
@@ -128,7 +128,7 @@ const AbayaFooter = () => {
                                     </p>
                                     {footer_address
                                         ? footer_address
-                                        : 'Mirpur DOHS, Dhaka, Bangladesh'}
+                                        : 'Mirpur DOHS, Avenue 06 Mirpur 12, Dhaka, Bangladesh'}
                                 </div>
                             </div>
                         </div>

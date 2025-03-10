@@ -32,6 +32,10 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'admin.furnitobd.com',
+            },
+            {
+                protocol: 'https',
                 hostname:
                     new URL(process.env.NEXT_PUBLIC_API_BASE_URL).hostname ||
                     'localhost',
@@ -39,6 +43,18 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'img.freepik.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'admin.dreamshopkeeper.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'admin.dhakaibd.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'karbar.s3.ap-southeast-2.amazonaws.com',
             },
             {
                 protocol: 'https',
@@ -54,11 +70,15 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'www.facebook.com"',
+                hostname: 'www.facebook.com',
             },
             {
                 protocol: 'https',
                 hostname: 'admin.dhakaibd.com"',
+            },
+            {
+                protocol: 'https',
+                hostname: 'admin.romartbd.com"',
             },
         ],
     },

@@ -5,21 +5,24 @@ import orderInfoIcon from '@/assets/icons/order-info-icon.svg';
 import productsIcon from '@/assets/icons/products-icon.svg';
 import shippingIcon from '@/assets/icons/shipping-icon.svg';
 import trackingMapIcon from '@/assets/icons/track-map-icon.svg';
+import useDictionary from '@/hooks/useDictionary';
+import useSiteSetting from '@/hooks/useSiteSetting';
 import { decrypt } from '@/services/encryption';
 import { getOrderStatus, getSingleOrder } from '@/utils/auth/getOrders';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import OrderTrackingTimeline from './OrderTrackingTimeline ';
-// import OrderTrackingTimeline from '../../components/OrderTrackingTimeline';
 
-const OrderDetailsPageContent = ({orderId}) => {
+const OrderDetailsPageContent = ({ orderId }) => {
     const [order, setOrder] = useState(null); // Set to `null` initially
     const [orderStatus, setOrderStatus] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const token = Cookies.get('userToken');
     const [showTracking, setShowTracking] = useState(false);
+    const { dictionary } = useDictionary();
+    const { siteSetting } = useSiteSetting();
 
     const trackingHandler = () => {
         setShowTracking((prev) => !prev);
@@ -77,15 +80,15 @@ const OrderDetailsPageContent = ({orderId}) => {
     const getStatusText = (status) => {
         switch (status) {
             case 'Pending':
-                return 'Pending';
+                return dictionary.Auth.pending;
             case 'Processed':
-                return 'Processing';
+                return dictionary.Auth.processed;
             case 'Delivered':
-                return 'Delivered';
+                return dictionary.Auth.delivered;
             case 'Completed':
-                return 'Received';
+                return dictionary.Auth.received;
             case 'Cancelled':
-                return 'Cancelled';
+                return dictionary.Auth.cancelled;
             default:
                 return 'Unknown Status';
         }
@@ -112,11 +115,11 @@ const OrderDetailsPageContent = ({orderId}) => {
                             </div>
                         </div>
                         <div>
-                            <h3 className="mb-2 text-2xl font-bold text-gray-900">
-                                My Order
+                            <h3 className="mb-2 text-2xl font-bold text-gray-900 capitalize">
+                                {dictionary.Auth.myOrders}
                             </h3>
                             <p className="mb-2 text-base font-medium text-gray-900">
-                                Order Number:{' '}
+                                {dictionary.Auth.orderId}:{' '}
                                 <span className="font-semibold text-gray-900">
                                     #{order?.order_number || 'Loading...'}
                                 </span>
@@ -142,7 +145,7 @@ const OrderDetailsPageContent = ({orderId}) => {
                                 src={trackingMapIcon}
                                 alt="tracking map"
                             />
-                            Tracking
+                            {dictionary.Auth.tracking}
                         </button>
                     </div>
                 </div>
@@ -161,7 +164,7 @@ const OrderDetailsPageContent = ({orderId}) => {
                         src={shippingIcon}
                         alt="products icon"
                     />
-                    Shipping Address
+                    {dictionary.Auth.shipping}
                 </h3>
                 <div className="grid gap-1">
                     <p className="text-lg font-medium text-gray-800">
@@ -181,7 +184,7 @@ const OrderDetailsPageContent = ({orderId}) => {
                         src={productsIcon}
                         alt="products icon"
                     />
-                    Products
+                    {dictionary.Auth.products}
                 </h3>
 
                 <div className="overflow-y-auto ">
@@ -248,13 +251,13 @@ const OrderDetailsPageContent = ({orderId}) => {
                                     </div>
                                     <div className="text-right">
                                         <p className="mb-6 text-base font-medium text-gray-700">
-                                            Total:{' '}
+                                            {dictionary.Auth.total}:{' '}
                                             <span className="font-semibold text-gray-800">
-                                                ৳ {item.total}
+                                                {`${siteSetting.currency_icon || "৳"}${item.total}`}
                                             </span>
                                         </p>
                                         <p className="text-base font-medium text-gray-700">
-                                            Qty:{' '}
+                                            {dictionary.Auth.quantity}:{' '}
                                             <span className="font-semibold text-gray-800">
                                                 {item.quantity}
                                             </span>
@@ -272,33 +275,13 @@ const OrderDetailsPageContent = ({orderId}) => {
                         src={orderInfoIcon}
                         alt="products icon"
                     />
-                    Order Info
+                    {dictionary.Auth.orderInfo}
                 </h3>
                 <ul className="grid">
-                    {/* <li className="py-3 border-b border-gray-400 border-dashed md:py-5">
-                        <div className="flex items-center justify-between">
-                            <p className="text-base font-normal text-gray-700 md:text-lg">
-                                Order Number :
-                            </p>
-                            <p className="text-base font-medium text-gray-700 md:text-lg">
-                                #{order.order_number}
-                            </p>
-                        </div>
-                    </li>
                     <li className="py-3 border-b border-gray-400 border-dashed md:py-5">
                         <div className="flex items-center justify-between">
                             <p className="text-base font-normal text-gray-700 md:text-lg">
-                                Order At :
-                            </p>
-                            <p className="text-base font-medium text-gray-700 md:text-lg">
-                                {order.order_at}
-                            </p>
-                        </div>
-                    </li> */}
-                    <li className="py-3 border-b border-gray-400 border-dashed md:py-5">
-                        <div className="flex items-center justify-between">
-                            <p className="text-base font-normal text-gray-700 md:text-lg">
-                                Payment Method :
+                                {dictionary.Auth.paymentMethod} :
                             </p>
                             <p className="text-base font-semibold text-gray-700 capitalize md:text-lg">
                                 {order.payment_method}
@@ -308,30 +291,30 @@ const OrderDetailsPageContent = ({orderId}) => {
                     <li className="py-3 border-b border-gray-400 border-dashed md:py-5">
                         <div className="flex items-center justify-between">
                             <p className="text-base font-normal text-gray-700 md:text-lg">
-                                Subtotal :
+                                {dictionary.Auth.subTotal} :
                             </p>
                             <p className="text-base font-semibold text-gray-700 md:text-lg">
-                                ৳ {order.sub_total}
+                                {`${siteSetting.currency_icon || "৳"}${order.sub_total}`}
                             </p>
                         </div>
                     </li>
                     <li className="py-3 border-b border-gray-400 border-dashed md:py-5">
                         <div className="flex items-center justify-between">
                             <p className="text-base font-normal text-gray-700 md:text-lg">
-                                Delivery Fee :
+                                {dictionary.Auth.deliveryFee} :
                             </p>
                             <p className="text-base font-semibold text-gray-700 md:text-lg">
-                                ৳ {order.delivery_fee}
+                                {`${siteSetting.currency_icon || "৳"}${order.delivery_fee}`}
                             </p>
                         </div>
                     </li>
                     <li className="pt-5">
                         <div className="flex items-center justify-between">
                             <p className="text-base font-normal text-gray-700 md:text-lg">
-                                Total Payable :
+                                {dictionary.Auth.totalPay} :
                             </p>
                             <p className="text-base font-semibold text-gray-800 md:text-lg">
-                                ৳ {order.total_amount}
+                                {`${siteSetting.currency_icon || "৳"}${order.total_amount}`}
                             </p>
                         </div>
                     </li>

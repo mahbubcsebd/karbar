@@ -336,3 +336,7 @@ button:focus {
 .cart-btn:hover .cart-icon {
     filter: brightness(0) invert(1); /* Simulates white color */
 }
+
+.cart-btn-active .cart-icon {
+    filter: brightness(0) invert(1); /* Simulates white color */
+}

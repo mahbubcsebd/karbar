@@ -78,9 +78,9 @@ const  ProductCardFour = ({ product }) => {
                     <div
                         className={`absolute top-3 left-3 px-[14px] py-[10px] rounded-full text-[10px] bg-white shadow-md`}
                     >
-                            <p className="text-[#484848]">
-                                {calculateDiscount(unit_price, sale_price)}% Off
-                            </p>
+                        <p className="text-[#484848]">
+                            {calculateDiscount(unit_price, sale_price)}% Off
+                        </p>
                     </div>
                 )}
                 {stock < 1 && (
@@ -97,8 +97,9 @@ const  ProductCardFour = ({ product }) => {
                     {name}
                 </Link>
                 <p className="product-price text-xs sm:text-base xl:text-lg font-semibold text-gray-900 mb-[18px]">
-                    {priceCurrency} :{' '}
-                    {sale_price > 0 && <span>৳{sale_price}</span>}{' '}
+                    {sale_price > 0 && (
+                        <span>{`${siteSetting.currency_icon || "৳"}${sale_price}`}</span>
+                    )}{' '}
                     <span
                         className={`inline-block ${
                             sale_price > 0
@@ -106,7 +107,7 @@ const  ProductCardFour = ({ product }) => {
                                 : ''
                         }`}
                     >
-                        ৳{unit_price}
+                        {`${siteSetting.currency_icon || "৳"}${unit_price}`}
                     </span>
                 </p>
             </div>

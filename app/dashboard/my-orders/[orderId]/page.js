@@ -2,52 +2,67 @@ import { getSiteSettings } from '@/utils/getSiteSettings';
 import OrderDetailsPageContent from '../../components/OrderDetailsPageContent';
 
 export async function generateMetadata({ params }) {
-     const orderId = (await params).orderId
+    const orderId = (await params)?.orderId;
     const siteSetting = await getSiteSettings();
+
+    // Fallback data if siteSetting.data is empty or undefined
+    const data = siteSetting?.data || {};
 
     // Generate keywords from title
     const generateKeywords = (text) => {
-        return text
-            .toLowerCase()
-            .replace(/[^a-z0-9\s]/g, '')
-            .split(/\s+/)
-            .filter(word => word.length > 2)
-            .join(', ');
+        return (
+            text
+                ?.toLowerCase()
+                .replace(/[^a-z0-9\s]/g, '')
+                .split(/\s+/)
+                .filter((word) => word.length > 2)
+                .join(', ') || ''
+        );
     };
 
-    const titleKeywords = generateKeywords(siteSetting.data.title);
+    const titleKeywords = generateKeywords(data.title);
 
     return {
-        title: `Order #${orderId} Details | ${siteSetting.data.title}`,
-        description: `View details for order #${orderId} at ${siteSetting.data.title}. Track your order status and delivery information.`,
+        title: `Order #${orderId} Details | ${data.title || 'Default Title'}`,
+        description: `View details for order #${orderId} at ${
+            data.title || 'Default Title'
+        }. Track your order status and delivery information.`,
         keywords: `${titleKeywords}, order details, order tracking, order status, order ${orderId}`,
         icons: {
-            icon: siteSetting.data.fev_icon,
-            apple: siteSetting.data.fev_icon,
+            icon: data.fev_icon || '/default-icon.png',
+            apple: data.fev_icon || '/default-icon.png',
         },
         openGraph: {
-            title: `Order #${orderId} Details - ${siteSetting.data.title}`,
-            description: siteSetting.data.footer_description,
-            url: `${siteSetting.data.website}/dashboard/my-orders/${orderId}`,
+            title: `Order #${orderId} Details - ${
+                data.title || 'Default Title'
+            }`,
+            description: data.footer_description || 'Default description',
+            url: `${
+                data.website || 'https://example.com'
+            }/dashboard/my-orders/${orderId}`,
             type: 'website',
             images: [
                 {
-                    url: siteSetting.data.header_logo,
+                    url: data.header_logo || '/default-logo.png',
                     width: 1200,
                     height: 630,
-                    alt: `${siteSetting.data.title} Logo`,
+                    alt: `${data.title || 'Default Title'} Logo`,
                 },
             ],
-            siteName: siteSetting.data.title,
+            siteName: data.title || 'Default Title',
         },
         twitter: {
             card: 'summary',
-            title: `Order #${orderId} Details - ${siteSetting.data.title}`,
-            description: siteSetting.data.footer_description,
-            images: siteSetting.data.header_logo,
+            title: `Order #${orderId} Details - ${
+                data.title || 'Default Title'
+            }`,
+            description: data.footer_description || 'Default description',
+            images: data.header_logo || '/default-logo.png',
         },
         alternates: {
-            canonical: `${siteSetting.data.website}/dashboard/my-orders/${orderId}`,
+            canonical: `${
+                data.website || 'https://example.com'
+            }/dashboard/my-orders/${orderId}`,
         },
         robots: {
             index: false, // Don't index individual order pages
@@ -57,10 +72,11 @@ export async function generateMetadata({ params }) {
             noarchive: true,
         },
         other: {
-            'X-Robots-Tag': 'noindex, nofollow, noarchive'
-        }
+            'X-Robots-Tag': 'noindex, nofollow, noarchive',
+        },
     };
 }
+
 
 const OrderDetailsPage = async ({ params }) => {
      const orderId = (await params).orderId;

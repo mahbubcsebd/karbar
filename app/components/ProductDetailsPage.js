@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import useSiteSetting from '@/hooks/useSiteSetting';
 import { useEffect } from 'react';
 import Modal from '../components/modal/Modal';
 import ProductOrder from '../components/ProductOrder';
@@ -14,6 +15,7 @@ import PreLoader from './PreLoader';
 
 const ProductDetailsPage = ({ slug }) => {
     const { language, dictionary } = useDictionary();
+    const { siteSetting } = useSiteSetting();
 
     // Fetching product data
     const {
@@ -98,7 +100,12 @@ const ProductDetailsPage = ({ slug }) => {
         total_one_stars,
         variants,
         fabrics,
+        image_preview_style,
+        product_unit,
     } = product || {};
+
+
+
     return (
         <div>
             <div className="pb-6 md:p md:py-20 product-details-page">
@@ -106,7 +113,10 @@ const ProductDetailsPage = ({ slug }) => {
                     <div className="container">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
                             <div className="lg:pr-10 xl:pr-16 xxl:pr-20 product-details-gallery">
-                                <ProductSlider product={product} />
+                                <ProductSlider
+                                    product={product}
+                                    previewStyle={image_preview_style}
+                                />
                             </div>
                             <div className="product-details-content">
                                 <div>
@@ -118,16 +128,18 @@ const ProductDetailsPage = ({ slug }) => {
                                         <span
                                             className={`inline-block ${
                                                 sale_price > 0
-                                                    ? 'line-through text-2xl'
+                                                    ? 'line-through text-xs lg:text-2xl'
                                                     : ''
                                             }`}
                                         >
-                                            {currency}
-                                            {unit_price}
+                                            {`${siteSetting.currency_icon || "৳"}${unit_price}`}
                                         </span>{' '}
                                         {sale_price > 0 && (
-                                            <span>৳{sale_price}</span>
+                                            <span>{`${siteSetting.currency_icon || "৳"}${sale_price}`}</span>
                                         )}
+                                        {product_unit && <span className="text-lg text-gray-600 ml-2 font-normal">
+                                            (per {product_unit})
+                                        </span>}
                                     </p>
                                     {stock < 1 && (
                                         <p className="mb-5 text-red-500">
@@ -161,14 +173,6 @@ const ProductDetailsPage = ({ slug }) => {
                                                 {sku_code}
                                             </p>
                                         </li>
-                                        {/* <li className="flex items-center gap-[30px] border-b border-gray-500 py-[18px]">
-                                            <p className="text-xl font-normal text-gray-700 w-[150px]">
-                                                {detailsFabrics} :
-                                            </p>
-                                            <p className="text-xl font-medium text-gray-600">
-                                                {fabrics}
-                                            </p>
-                                        </li> */}
                                     </ul>
                                     {summary && (
                                         <div

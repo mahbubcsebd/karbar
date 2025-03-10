@@ -264,7 +264,7 @@ const LandingCheckoutPage = ({
 
     const handleIncrement = (id) => {
         if (is_combo_product) {
-            if(is_multiple_quantity_allow) {
+            if (is_multiple_quantity_allow) {
                 dispatch({
                     type: 'INCREMENT_QUANTITY',
                     payload: id,
@@ -362,7 +362,7 @@ const LandingCheckoutPage = ({
                         type: 'CLEAR_CART',
                     });
                     // For Google tag manager
-                    if (adManager?.tag_manager_id) {
+                    if (adManager?.tag_managers) {
                         window.dataLayer.push({
                             event: 'purchase',
                             ecommerce: {
@@ -392,7 +392,7 @@ const LandingCheckoutPage = ({
 
     // For Google tag manager
     useEffect(() => {
-        if (adManager?.tag_manager_id) {
+        if (adManager?.tag_managers) {
             window.dataLayer.push({
                 event: 'begin_checkout',
                 ecommerce: {
@@ -466,26 +466,23 @@ const LandingCheckoutPage = ({
                                                 value={selectedValue}
                                                 onChange={handleSelectChange}
                                             >
-                                                <option
-                                                    select
-                                                    value="inside_dhaka"
-                                                >
+                                                <option value="inside_dhaka">
                                                     {insideDhaka} -{' '}
                                                     {insideDhakaDC > 0
                                                         ? `${insideDhakaDC} ${currency}`
-                                                        : { freeDelevery }}
+                                                        : freeDelevery}
                                                 </option>
                                                 <option value="outside_dhaka">
                                                     {outsideDhaka} -{' '}
                                                     {outsideDhakaDC > 0
                                                         ? `${outsideDhakaDC} ${currency}`
-                                                        : { freeDelevery }}
+                                                        : freeDelevery}
                                                 </option>
                                                 <option value="dhaka_sub_area">
                                                     {dhakaSubArea} -{' '}
-                                                    {dhakaSub > 0 // dhakaSub hobe
+                                                    {dhakaSub > 0
                                                         ? `${dhakaSub} ${currency}`
-                                                        : { freeDelevery }}
+                                                        : freeDelevery}
                                                 </option>
                                             </select>
                                         </div>
@@ -551,7 +548,7 @@ const LandingCheckoutPage = ({
                                                 <span className="font-semibold text-[#F93754]">
                                                     {save}
                                                 </span>{' '}
-                                                Taka.
+                                                {siteSettings.currency}.
                                             </h3>
                                         )}
                                         {cartItems.length > 0 ? (
@@ -648,7 +645,9 @@ const LandingCheckoutPage = ({
                                                                                 </div>
                                                                             )}
                                                                             <p className="text-sm lg:text-lg text-[#F93754] font-semibold">
-                                                                                ৳
+                                                                                {
+                                                                                    siteSettings.currency_icon || "৳"
+                                                                                }
                                                                                 {product.sale_price >
                                                                                 0
                                                                                     ? ' ' +
@@ -743,7 +742,7 @@ const LandingCheckoutPage = ({
                                                                         handleApply
                                                                     }
                                                                     type="button"
-                                                                    className="absolute right-0 text-sm font-semibold text-gray-700 lg:text-lg"
+                                                                    className="absolute right-0 text-sm font-medium text-purple-900 border-b border-purple-900 lg:text-base"
                                                                 >
                                                                     Apply
                                                                 </button>

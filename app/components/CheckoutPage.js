@@ -24,7 +24,6 @@ import { getCoupon } from '../utils/getCoupon';
 import { orderPost } from '../utils/orderPost';
 import KarbarButton from './KarbarButton';
 
-
 const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const [total, setTotal] = useState(0);
     const [couponApply, setCouponApply] = useState(true);
@@ -34,11 +33,10 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     const [discountValue, setDiscountValue] = useState(0);
     const { dictionary } = useDictionary();
     const { adManager } = useAdManager();
-    const {orderId, setOrderId} = useOrderId();
+    const { orderId, setOrderId } = useOrderId();
     const [isUser, setIsUser] = useState(false);
     const [userAuthToken, setUserAuthToken] = useState(null);
-    const {user} = useUser();
-
+    const { user } = useUser();
 
     const {
         formTitle,
@@ -93,8 +91,9 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
         (method) => method.name === 'nagad'
     )?.number;
 
-
-    const bkashDetails = paymentMethod.find( (method) => method.name === 'bkash')?.details;
+    const bkashDetails = paymentMethod.find(
+        (method) => method.name === 'bkash'
+    )?.details;
     const cashDetails = paymentMethod.find(
         (method) => method.name === 'cash'
     )?.details;
@@ -256,7 +255,6 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
     //     }
     // };
 
-
     const handlePaymentChange = (event) => {
         setSelectedPayment(event.target.value);
     };
@@ -302,7 +300,6 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
             discount_amount: discountValue ? discountValue : 0,
             sub_total: subTotal,
             create_account: isUser,
-
         };
 
         try {
@@ -331,7 +328,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                         type: 'CLEAR_CART',
                     });
                     // For Google tag manager
-                    if (adManager?.tag_manager_id) {
+                    if (adManager?.tag_managers) {
                         window.dataLayer.push({
                             event: 'purchase',
                             ecommerce: {
@@ -342,6 +339,21 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
 
                     // For Facebook Pixels
                     trackEvent('Purchase', orderData);
+
+                    // adManager?.pixels.forEach(async (pixel) => {
+                    //     await sendFacebookEvent(
+                    //         'Purchase',
+                    //         window.location.href,
+                    //         {
+                    //             em: 'hashed_email@example.com', // Hash করা ইমেইল (SHA256)
+                    //             ph: 'hashed_phone_number', // Hash করা ফোন নাম্বার
+                    //             items: orderData,
+                    //             name: "Mahbubur Rahman"
+                    //         },
+                    //         pixel.pixel_id,
+                    //         pixel.token
+                    //     );
+                    // });
                 } else {
                     setOrderLoading(false);
                     toast.error(
@@ -361,7 +373,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
 
     // For Google tag manager
     useEffect(() => {
-        if (adManager?.tag_manager_id) {
+        if (adManager?.tag_managers) {
             window.dataLayer.push({
                 event: 'begin_checkout',
                 ecommerce: {
@@ -621,7 +633,9 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                                                 </button>
                                                                             </div>
                                                                             <p className="text-sm lg:text-lg text-[#F93754] font-semibold">
-                                                                                ৳
+                                                                                {
+                                                                                    siteSettings.currency_icon || "৳"
+                                                                                }
                                                                                 {product.sale_price >
                                                                                 0
                                                                                     ? ' ' +
@@ -633,7 +647,8 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                                         <div className="flex items-center justify-between">
                                                                             <div className="flex items-center gap-2">
                                                                                 {Object.entries(
-                                                                                    product.attributes
+                                                                                    product.attributes ||
+                                                                                        {}
                                                                                 ).map(
                                                                                     ([
                                                                                         key,
@@ -681,9 +696,11 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                         <p className="text-sm font-semibold text-gray-700 lg:text-lg">
                                                             {dicSubTotal} :
                                                         </p>
-                                                        <p className="text-sm font-semibold text-gray-700 lg:text-lg">
+                                                        <p className="text-sm font-semibold text-gray-700 uppercase lg:text-lg">
                                                             {cartTotal}{' '}
-                                                            {currency}
+                                                            {
+                                                                siteSettings.currency
+                                                            }
                                                         </p>
                                                     </li>
                                                     {discountValue > 0 && (
@@ -691,9 +708,11 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                             <p className="text-sm font-semibold text-gray-700 lg:text-lg">
                                                                 Discount :
                                                             </p>
-                                                            <p className="text-sm font-semibold text-red-500 lg:text-lg">
+                                                            <p className="text-sm font-semibold text-red-500 uppercase lg:text-lg">
                                                                 -{discountValue}{' '}
-                                                                {currency}
+                                                                {
+                                                                    siteSettings.currency
+                                                                }
                                                             </p>
                                                         </li>
                                                     )}
@@ -701,9 +720,11 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                         <p className="text-sm font-semibold text-gray-700 lg:text-lg">
                                                             {dicDeliveryFee} :
                                                         </p>
-                                                        <p className="text-sm font-semibold text-gray-700 lg:text-lg">
+                                                        <p className="text-sm font-semibold text-gray-700 uppercase lg:text-lg">
                                                             {shippingCost}{' '}
-                                                            {currency}
+                                                            {
+                                                                siteSettings.currency
+                                                            }
                                                         </p>
                                                     </li>
                                                     <li className="py-3 border-b border-gray-400 lg:py-5">
@@ -726,7 +747,7 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                                     handleApply
                                                                 }
                                                                 type="button"
-                                                                className="absolute right-0 text-sm font-semibold text-gray-700 lg:text-lg"
+                                                                className="absolute right-0 text-sm font-medium text-purple-900 border-b border-purple-900 lg:text-base"
                                                             >
                                                                 Apply
                                                             </button>
@@ -736,8 +757,11 @@ const CheckoutPage = ({ siteSettings, paymentMethod }) => {
                                                         <p className="text-sm font-semibold text-gray-700 lg:text-lg">
                                                             {dicTotal} :
                                                         </p>
-                                                        <p className="text-sm font-semibold text-gray-700 lg:text-lg">
-                                                            {total} {currency}
+                                                        <p className="text-sm font-semibold text-gray-700 uppercase lg:text-lg">
+                                                            {total}{' '}
+                                                            {
+                                                                siteSettings.currency
+                                                            }
                                                         </p>
                                                     </li>
                                                 </ul>

@@ -23,6 +23,7 @@ export default function CategorySelectForm({
     selectedSubCategory,
     setSelectedSubCategory,
     setSortQuery,
+    setBrandQuery,
     router,
 }) {
     const [isClient, setIsClient] = useState(false);
@@ -93,6 +94,7 @@ export default function CategorySelectForm({
         setSelectedSubCategory('');
         setSortQuery('all');
         setSubCategories([]);
+        setBrandQuery('all');
         router.push('/collections/all');
     };
 

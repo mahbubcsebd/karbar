@@ -11,7 +11,7 @@ export async function getPosUser(token) {
     });
 
     if (!res.ok) {
-        throw new Error('Failed to fetch pos categories');
+        throw new Error('Failed to fetch pos user');
     }
 
     return res.json();

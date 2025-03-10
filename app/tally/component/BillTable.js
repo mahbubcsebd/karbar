@@ -439,7 +439,7 @@ const BillTable = ({
                     //     type: 'CLEAR_CART',
                     // });
                     // For Google tag manager
-                    if (adManager?.tag_manager_id) {
+                    if (adManager?.tag_managers) {
                         window.dataLayer.push({
                             event: 'purchase',
                             ecommerce: {

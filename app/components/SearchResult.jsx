@@ -1,3 +1,4 @@
+import useSiteSetting from '@/hooks/useSiteSetting';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -27,6 +28,7 @@ const SearchResult = ({ search, closeSearchResults }) => {
     const [products, setProducts] = useState([]);
     const { language } = useDictionary();
     const debouncedSearch = useDebounce(search, 500);
+    const { siteSetting } = useSiteSetting();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -120,7 +122,7 @@ const SearchResult = ({ search, closeSearchResults }) => {
                                             Price :{' '}
                                             {product.sale_price > 0 && (
                                                 <span>
-                                                    ৳{product.sale_price}
+                                                    {`${siteSetting.currency_icon || "৳"}${product.sale_price}`}
                                                 </span>
                                             )}{' '}
                                             <span
@@ -130,7 +132,7 @@ const SearchResult = ({ search, closeSearchResults }) => {
                                                         : ''
                                                 }`}
                                             >
-                                                ৳{product.unit_price}
+                                                {`${siteSetting.currency_icon || "৳"}${product.unit_price}`}
                                             </span>
                                         </p>
                                     </div>

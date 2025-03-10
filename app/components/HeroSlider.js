@@ -35,7 +35,7 @@ const HeroSlider = () => {
             <div className="hero-area">
                 <div className="hero-slider-container">
                     {loading ? (
-                        <div className="w-full h-[220px] lg:h-[370px] bg-gray-200 animate-pulse"></div>
+                        <div className="w-full h-[220px] lg:h-[370px] bg-gray-200 animate-pulse mb-10"></div>
                     ) : (
                         <Swiper
                             spaceBetween={0}
@@ -63,7 +63,7 @@ const HeroSlider = () => {
                                         href={img.url}
                                         aria-label={`View details for ${img.title}`}
                                     >
-                                        <div className="relative w-full h-[220px] lg:h-[370px]">
+                                        <div className="relative w-full h-[100px] md:h-[220px] lg:h-[370px]">
                                             <Image
                                                 src={img.image_url}
                                                 alt={img.title}

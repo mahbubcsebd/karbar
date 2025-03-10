@@ -79,7 +79,7 @@ const Header = () => {
                                         className="flex items-center justify-center w-10 h-10 text-base text-white capitalize bg-purple-900 border border-purple-900 rounded-full md:px-5 md:py-3 md:rounded-md md:w-auto md:h-auto"
                                     >
                                         <span className="hidden md:block">
-                                            Sign In
+                                            {dictionary.Auth.signin}
                                         </span>
                                         <span className="md:hidden">
                                             <AiOutlineLogin />

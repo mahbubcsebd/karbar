@@ -1,4 +1,5 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import useDictionary from '@/hooks/useDictionary';
 import useUser from '@/hooks/useUser';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -16,6 +17,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
     const [open, setOpen] = useState(false);
     const { setUser } = useUser();
     const router = useRouter();
+    const { dictionary } = useDictionary();
 
     const {
         register,
@@ -141,14 +143,21 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                 open={open}
                 onOpenChange={setOpen}
             >
-                <DialogTrigger asChild area-label="login button">{children}</DialogTrigger>
+                <DialogTrigger
+                    asChild
+                    area-label="login button"
+                >
+                    {children}
+                </DialogTrigger>
                 <DialogHeader className="sr-only">
-                    <DialogTitle>Coupon</DialogTitle>
-                    <DialogDescription>Coupon Description</DialogDescription>
+                    <DialogTitle>Auth Modal</DialogTitle>
+                    <DialogDescription>Auth Description</DialogDescription>
                 </DialogHeader>
                 <DialogContent className="w-[350px] rounded-xl sm:max-w-[425px] p-6">
                     <h2 className="mb-4 text-3xl font-semibold text-center text-gray-900">
-                        {authType === 'signIn' ? 'Sign In' : 'Sign Up'}
+                        {authType === 'signIn'
+                            ? dictionary.Auth.signin
+                            : dictionary.Auth.signup}
                     </h2>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
@@ -161,7 +170,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                         htmlFor="fullName"
                                         className="block mb-1 text-sm font-medium text-gray-900"
                                     >
-                                        Full Name
+                                        {dictionary.Auth.fullName}
                                     </label>
                                     <input
                                         type="text"
@@ -183,7 +192,9 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                                 ? 'ring-red-500'
                                                 : 'ring-[#D0D5DD]'
                                         } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
-                                        placeholder="Enter your full name"
+                                        placeholder={
+                                            dictionary.Auth.namePlaceholder
+                                        }
                                     />
                                     {errors.fullName && (
                                         <p className="mt-1 text-sm text-red-500">
@@ -196,7 +207,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                         htmlFor="fullName"
                                         className="block mb-1 text-sm font-medium text-gray-900"
                                     >
-                                        Phone
+                                        {dictionary.Auth.phone}
                                     </label>
                                     <input
                                         type="text"
@@ -219,7 +230,9 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                                 ? 'ring-red-500'
                                                 : 'ring-[#D0D5DD]'
                                         } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
-                                        placeholder="Enter your phone number"
+                                        placeholder={
+                                            dictionary.Auth.phonePlaceholder
+                                        }
                                     />
                                     {errors.phone && (
                                         <p className="mt-1 text-sm text-red-500">
@@ -234,20 +247,25 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                 htmlFor="username"
                                 className="block mb-1 text-sm font-medium text-gray-900"
                             >
-                                Email Address{' '}
-                                {authType === 'signIn' ? 'or Phone Number' : ''}
+                                {dictionary.Auth.email}{' '}
+                                {authType === 'signIn'
+                                    ? dictionary.Auth.orPhone
+                                    : ''}
                             </label>
                             <input
                                 type="text"
                                 id="username"
                                 {...register('username', {
-                                    required:
-                                        'Email or phone number is required',
+                                    required: `Email ${
+                                        authType === 'signIn'
+                                            ? 'or phone number'
+                                            : ''
+                                    } is required`,
                                     validate: (value) => {
-                                        // ইমেইল ভ্যালিডেশন
+                                        //email validation
                                         const emailRegex =
                                             /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                                        // ফোন নাম্বার ভ্যালিডেশন (৯-১৫ ডিজিট)
+                                        // phone validation
                                         const phoneRegex = /^[0-9]{9,15}$/;
 
                                         return (
@@ -266,7 +284,13 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                         ? 'ring-red-500'
                                         : 'ring-[#D0D5DD]'
                                 } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
-                                placeholder={`Enter your email ${authType === 'signIn' ? 'or Phone Number' : ''}`}
+                                placeholder={`${
+                                    dictionary.Auth.emailPlaceholder
+                                } ${
+                                    authType === 'signIn'
+                                        ? dictionary.Auth.orPhone
+                                        : ''
+                                }`}
                             />
                             {errors.username && (
                                 <p className="mt-1 text-sm text-red-500">
@@ -280,17 +304,17 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                 htmlFor="password"
                                 className="block mb-1 text-sm font-medium text-gray-900"
                             >
-                                Password
+                                {dictionary.Auth.password}
                             </label>
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 id="password"
                                 {...register('password', {
                                     required: 'Password is required',
-                                    minLength: {
-                                        value: 8,
+                                    pattern: {
+                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                                         message:
-                                            'Password must be at least 8 characters',
+                                            'Password must be at least 8 characters and contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character',
                                     },
                                 })}
                                 className={`block w-full px-3 py-2 border ${
@@ -302,7 +326,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                         ? 'ring-red-500'
                                         : 'ring-[#D0D5DD]'
                                 } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
-                                placeholder="Enter your password"
+                                placeholder={dictionary.Auth.passPlaceholder}
                             />
                             <button
                                 type="button"
@@ -324,7 +348,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                     htmlFor="confirmPassword"
                                     className="block mb-1 text-sm font-medium text-gray-900"
                                 >
-                                    Confirm Password
+                                    {dictionary.Auth.confPassword}
                                 </label>
                                 <input
                                     type={
@@ -349,7 +373,9 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                             ? 'ring-red-500'
                                             : 'ring-[#D0D5DD]'
                                     } focus:ring-1 focus:ring-blue-900 placeholder:text-gray-600 placeholder:text-sm outline-hidden rounded-md input-shadow bg-white`}
-                                    placeholder="Confirm your password"
+                                    placeholder={
+                                        dictionary.Auth.confPassPlaceholder
+                                    }
                                 />
                                 <button
                                     type="button"
@@ -378,14 +404,14 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                                         htmlFor="remember"
                                         className="text-sm font-normal leading-none text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
-                                        Remember Me
+                                        {dictionary.Auth.remember}
                                     </label>
                                 </div>
                                 <Link
                                     href="/"
                                     className="text-sm font-normal text-gray-700"
                                 >
-                                    Forgot Password
+                                    {dictionary.Auth.forgotPassword}
                                 </Link>
                             </div>
                         )}
@@ -394,31 +420,33 @@ const AuthModal = ({ children, type = 'signIn' }) => {
                             type="submit"
                             className="w-full px-6 py-4 text-white transition bg-purple-900 rounded-md hover:bg-purple-900"
                         >
-                            {authType === 'signIn' ? 'Sign In' : 'Sign Up'}
+                            {authType === 'signIn'
+                                ? dictionary.Auth.signin
+                                : dictionary.Auth.signup}
                         </button>
                     </form>
 
                     <p className="mt-4 text-sm font-normal text-center text-gray-700">
                         {authType === 'signIn' ? (
                             <>
-                                Don&apos;t have an account?{' '}
+                                {dictionary.Auth.noAccount}{' '}
                                 <button
                                     type="button"
                                     onClick={toggleAuthType}
                                     className="text-blue-700 underline"
                                 >
-                                    Sign Up
+                                    {dictionary.Auth.signup}
                                 </button>
                             </>
                         ) : (
                             <>
-                                Already have an account?{' '}
+                                {dictionary.Auth.haveAccount}{' '}
                                 <button
                                     type="button"
                                     onClick={toggleAuthType}
                                     className="text-blue-600 underline"
                                 >
-                                    Sign In
+                                    {dictionary.Auth.signin}
                                 </button>
                             </>
                         )}

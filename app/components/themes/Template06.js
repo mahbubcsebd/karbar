@@ -1,5 +1,5 @@
 import Advertisement from '../Advertisement';
-import HeroSix from '../template/template-six/HeroSix';
+import HeroSlider from '../HeroSlider';
 import ProductListSix from '../template/template-six/ProductListSix';
 import RecentlyViewedFive from '../template/template-six/RecentlyViewedFive';
 import TestimonialSix from '../template/template-six/TestimonialSix';
@@ -7,7 +7,8 @@ import TestimonialSix from '../template/template-six/TestimonialSix';
 const TemplateFive = () => {
     return (
         <>
-            <HeroSix />
+            {/* <HeroSix /> */}
+            <HeroSlider />
             <Advertisement position="home_top" />
             <ProductListSix />
             <Advertisement position="home_middle" />

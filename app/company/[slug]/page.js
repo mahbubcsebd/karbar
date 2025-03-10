@@ -2,32 +2,39 @@ import { getPageDetails } from "@/utils/getPages";
 import { getSiteSettings } from "@/utils/getSiteSettings";
 
 export async function generateMetadata({ params }) {
-     const slug = (await params).slug;
+    const slug = params?.slug || ''; // Fallback to an empty string if slug is undefined
     const siteSetting = await getSiteSettings();
     const pageDetails = await getPageDetails(slug);
 
+    // Fallback data if siteSetting.data or pageDetails.data is empty or undefined
+    const siteData = siteSetting?.data || {};
+    const pageData = pageDetails?.data || {};
+
     return {
-        title: `${siteSetting.data.title} | ${pageDetails.data.title}`,
+        title: `${siteData.title || 'Default Title'} | ${
+            pageData.title || 'Page Title'
+        }`,
         icons: {
-            icon: siteSetting.data.fev_icon,
-            apple: siteSetting.data.fev_icon,
+            icon: siteData.fev_icon || '/default-icon.png',
+            apple: siteData.fev_icon || '/default-icon.png',
         },
         openGraph: {
-            title: siteSetting.data.title,
-            description: siteSetting.data.footer_description,
-            url: siteSetting.data.website,
+            title: siteData.title || 'Default Title',
+            description: siteData.footer_description || 'Default description',
+            url: siteData.website || 'https://example.com',
             type: 'website',
             images: [
                 {
-                    url: siteSetting.data.header_logo,
+                    url: siteData.header_logo || '/default-logo.png',
                     width: 1200,
                     height: 630,
-                    alt: 'Karbar Logo',
+                    alt: siteData.title || 'Default Title',
                 },
             ],
         },
     };
 }
+
 
 const AllPages = async ({ params }) => {
      const slug = (await params).slug;
