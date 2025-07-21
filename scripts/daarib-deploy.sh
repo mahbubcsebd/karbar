@@ -67,9 +67,6 @@ ssh ${REMOTE_USER}@${REMOTE_HOST} << EOF
     echo "Next.js is already installed."
   fi
 
-  # NPM Installing
-  npm install
-
   # Restart the service
   sudo systemctl restart daarib.service
 

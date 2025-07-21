@@ -1,116 +1,168 @@
 'use client';
 
-// import { useContext } from "react";
+import useDictionary from '@/_hooks/useDictionary';
+import useSiteSetting from '@/_hooks/useSiteSetting';
 import noAvailableImg from '@/assets/icons/no-available.svg';
-import useDictionary from '@/hooks/useDictionary';
 import Image from 'next/image';
-import usePos from '../../hooks/usePos';
-// import { ProductContext } from "../context/cartContext";
+import usePos from '../../_hooks/usePos';
 
 const PosProductCard = ({ product }) => {
-    const { dictionary } = useDictionary();
+  const { dictionary } = useDictionary();
+  const { priceCurrency } = dictionary.ProductCard;
+  const { siteSetting } = useSiteSetting();
 
-    const { priceCurrency, seeDetails } = dictionary.ProductCard;
+  const pos_theme_style = siteSetting?.pos_theme_style || 'image_with_title';
 
-    const {
-        product_id,
-        product_name_with_attr,
-        unit_price,
-        sale_price,
-        preview_image,
-        variant_id,
-        attribute_one_name,
-        attribute_group_one_name,
-        attribute_two,
-        attribute_two_name,
-        attribute_group_two_name,
-        barcode_or_sku_code,
-        quantity,
-        warehouse_name,
-    } = product;
+  const {
+    product_name,
+    unit_price,
+    final_sale_price,
+    preview_image,
+    product_id,
+    variant_sku,
+    quantity,
+    available_stock,
+  } = product;
 
-    const { state, dispatch } = usePos();
-    const isInCart = state.posCartItems.some(
-        (item) => item.barcode_or_sku_code === product.barcode_or_sku_code
+  const { state, dispatch } = usePos();
+
+  const selectedProduct = {
+    ...product,
+    stock: available_stock,
+    quantity: 1,
+  };
+
+  const handleAddToCart = () => {
+    const productInCart = state.posCartItems.find(
+      (item) =>
+        item.product_id === product_id && item.variant_sku === variant_sku
     );
 
-    const selectedProduct = { ...product, quantity: 1 };
+    if (productInCart) {
+      dispatch({
+        type: 'INCREMENT_QUANTITY',
+        payload: { product_id, variant_sku },
+      });
+    } else {
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: selectedProduct,
+      });
+    }
+  };
 
+  const renderImage = () => (
+    <Image
+      src={preview_image || noAvailableImg}
+      alt={product_name}
+      width={270}
+      height={320}
+      className="object-contain w-full h-full"
+    />
+  );
 
-    const handleAddToCart = (name) => {
-        // Check if the product is already in the cart
-        const productInCart = state.posCartItems.find(
-            (item) =>
-                item.barcode_or_sku_code === product.barcode_or_sku_code
-        );
-
-        if (productInCart) {
-            // Increment the quantity of the existing product
-            const updatedCartItems = state.posCartItems.map((item) => {
-                if (
-                    item.barcode_or_sku_code ===
-                    product.barcode_or_sku_code
-                ) {
-                    return { ...item, quantity: item.quantity + 1 };
-                }
-                return item;
-            });
-
-            dispatch({
-                type: 'INCREMENT_QUANTITY',
-                payload: name,
-            });
-        } else {
-            // Add the product to the cart if it's not already there
-            dispatch({
-                type: 'ADD_TO_CART',
-                payload: selectedProduct,
-            });
-        }
-    };
-
-
+  const renderStockBadge = () => {
+    const isOnlyTitle = pos_theme_style === 'only_title';
+    const badgeClass = isOnlyTitle
+      ? 'border border-gray-400 bg-transparent text-gray-800'
+      : available_stock > 0
+      ? 'bg-[#28A745] text-white'
+      : 'bg-[#F44336] text-white';
 
     return (
-        <div className="h-full overflow-hidden bg-white rounded-lg product-card">
-            <button
-                onClick={() => handleAddToCart(barcode_or_sku_code)}
-                disabled={quantity <= 0}
-                className="block w-full h-[122px] rounded-tl-lg rounded-tr-md
-                        overflow-hidden relative cursor-pointer"
-            >
-                <Image
-                    src={preview_image ? preview_image : noAvailableImg}
-                    alt={name}
-                    width={270}
-                    height={320}
-                    className="object-cover w-full h-full"
-                />
-                <div
-                    className={`absolute top-1 right-1 p-[6px] rounded-full text-[8px] text-white ${
-                        quantity > 0 ? 'bg-[#28A745]' : 'bg-[#F44336]'
-                    }`}
-                >
-                    <p>
-                        {quantity > 0 ? `${quantity} In Stock` : 'Out of stock'}
-                    </p>
-                </div>
-            </button>
-            <div className="product-content p-[6px] bg-white">
-                <button
-                    onClick={() => handleAddToCart(barcode_or_sku_code)}
-                    disabled={quantity <= 0}
-                    className="block mb-1 font-medium text-gray-900 text-sm product-title ellipsis-2 text-left"
-                >
-                    {product_name_with_attr}
-                </button>
-                <p className="product-price text-[10px] font-semibold text-gray-900">
-                    {priceCurrency} :{' '}
-                    {sale_price === 0 ? unit_price : sale_price}
-                </p>
-            </div>
-        </div>
+      <div
+        className={`absolute top-1 right-1 p-[6px] rounded-full text-[9px] ${badgeClass}`}
+      >
+        <p>
+          {available_stock > 0 ? `${available_stock} In Stock` : 'Out of stock'}
+        </p>
+      </div>
     );
+  };
+
+  const renderPriceBadge = () => {
+    const isOnlyTitle = pos_theme_style === 'only_title';
+    const isOnlyImage = pos_theme_style === 'only_image';
+
+    if (!isOnlyTitle && !isOnlyImage) return null;
+
+    const badgeClass = isOnlyTitle
+      ? 'border border-gray-400 bg-transparent text-gray-800'
+      : 'bg-black text-white';
+
+    return (
+      <div
+        className={`absolute top-1 left-1 p-[6px] rounded-full text-[9px] font-semibold ${badgeClass}`}
+      >
+        {`${siteSetting.currency_icon || '৳'}${
+          final_sale_price === 0 ? unit_price : final_sale_price
+        }`}
+      </div>
+    );
+  };
+
+  return (
+    <div className="h-full overflow-hidden bg-white rounded-lg product-card">
+      <button
+        onClick={handleAddToCart}
+        disabled={available_stock <= 0}
+        className={`block w-full relative cursor-pointer ${
+          pos_theme_style === 'only_title'
+            ? 'h-[130px] bg-white flex items-center justify-center rounded-t-md border-b border-gray-200'
+            : 'h-[130px] overflow-hidden rounded-t-md'
+        }`}
+      >
+        {pos_theme_style === 'only_title' ? (
+          <>
+            <div className="px-2 text-sm font-semibold text-center text-gray-700 capitalize">
+              {product_name}
+            </div>
+            {renderStockBadge()}
+            {renderPriceBadge()}
+          </>
+        ) : (
+          <>
+            {renderImage()}
+            {pos_theme_style === 'only_image' && renderStockBadge()}
+            {renderPriceBadge()}
+          </>
+        )}
+      </button>
+
+      {pos_theme_style === 'image_with_title' && (
+        <div className="p-[6px] bg-white">
+          <div className="border-b border-gray-300 pb-1 mb-1">
+            <button
+              onClick={handleAddToCart}
+              disabled={available_stock <= 0}
+              className="block w-full text-base font-medium text-left text-gray-900 capitalize ellipsis-2 min-h-12"
+              title={product_name}
+              aria-label={`Add ${product_name} to cart`}
+            >
+              {product_name}
+            </button>
+          </div>
+          <div className="flex justify-between items-center gap-2">
+            <p className="text-lg font-medium text-gray-900 flex items-start gap-1">
+              <span className="text-sm text-[#28A745] mt-[4px] font-bold">
+                {siteSetting.currency_icon || '৳'}
+              </span>
+              {`${final_sale_price === 0 ? unit_price : final_sale_price}`}
+            </p>
+            <p
+              className={`text-sm ${
+                available_stock > 0 ? 'text-gray-700' : 'text-[#F44336]'
+              }`}
+            >
+              {available_stock > 0
+                ? `${available_stock} In Stock`
+                : 'Out of stock'}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default PosProductCard;

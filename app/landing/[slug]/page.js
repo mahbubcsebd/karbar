@@ -1,16 +1,15 @@
 // import landingBg from "@/assets/images/landing-banner-bg.svg";
-import Testimonials from '@/components/Testimonials';
-import { getLanding } from '@/utils/getLanding';
-import { getPaymentMethod } from '@/utils/getPaymentMethod';
-import { getSiteSettings } from '@/utils/getSiteSettings';
-import { getTestimonials } from '@/utils/getTestimonial';
-import LandingBanner from './component/LandingBanner';
-import LandingCheckoutPage from './component/LandingCheckoutPage';
-import LandingChoose from './component/LandingChoose';
-import LandingDescription from './component/LandingDescription';
-import LandingRelatedProducts from './component/LandingRelatedProduct';
-import LandingShopWithUs from './component/LandingShopWithUs';
-import OurPackages from './component/OurPackages';
+import Testimonials from '@/_components/Testimonials';
+import { getLanding } from '@/_utils/getLanding';
+import { getPaymentMethod } from '@/_utils/getPaymentMethod';
+import { getSiteSettings } from '@/_utils/getSiteSettings';
+import { getTestimonials } from '@/_utils/getTestimonial';
+import LandingBanner from './_component/LandingBanner';
+import LandingCheckoutPage from './_component/LandingCheckoutPage';
+import LandingChoose from './_component/LandingChoose';
+import LandingDescription from './_component/LandingDescription';
+import LandingShopWithUs from './_component/LandingShopWithUs';
+import OurPackages from './_component/OurPackages';
 
 export async function generateMetadata({ params }) {
     const slug = (await params)?.slug || 'default-slug'; // Fallback if slug is undefined
@@ -89,7 +88,6 @@ const LandingPage = async ({ params }) => {
         is_combo_product,
         is_multiple_quantity_allow,
         combo,
-        related_products,
         is_coupon_field_visible,
     } = landingData.data;
 
@@ -123,8 +121,8 @@ const LandingPage = async ({ params }) => {
             />
             {products.length > 0 && (
                 <OurPackages
-                    package_title={package_title}
-                    products={products}
+                package_title={package_title}
+                products={products}
                 />
             )}
             <LandingCheckoutPage
@@ -135,7 +133,6 @@ const LandingPage = async ({ params }) => {
                 combo={combo}
                 is_coupon_field_visible={is_coupon_field_visible}
             />
-            <LandingRelatedProducts products={related_products} />
         </div>
     );
 };
