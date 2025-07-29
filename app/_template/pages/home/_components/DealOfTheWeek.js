@@ -4,9 +4,11 @@
 import KarbarButton from '@/_components/KarbarButton';
 import useDictionary from '@/_hooks/useDictionary';
 import useSiteSetting from '@/_hooks/useSiteSetting';
+import useUser from '@/_hooks/useUser';
 import { getAdvertisement } from '@/_utils/getAdvertisement';
 import { getAllProduct } from '@/_utils/getProduct';
 import fresh from '@/assets/images/fresh.png';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -23,6 +25,10 @@ const DealOfTheWeek = () => {
   const [error, setError] = useState(null);
   const { siteSetting } = useSiteSetting();
   const [advertisements, setAdvertisements] = useState([]);
+  const { user } = useUser();
+  const token = Cookies.get('userToken');
+
+  const isRetailer = user?.retailer_role_yn === 'yes';
 
   useEffect(() => {
     if (!siteSetting?.module?.includes('advertisement')) return;
@@ -50,7 +56,10 @@ const DealOfTheWeek = () => {
           'new_arrival',
           '',
           1,
-          4
+          4,
+          'all',
+          token,
+          isRetailer
         );
         setProducts(data);
       } catch (err) {
@@ -62,7 +71,7 @@ const DealOfTheWeek = () => {
     };
 
     fetchProduct();
-  }, [language]);
+  }, [language, token, user, isRetailer]);
 
   // Fallback image configuration
   const fallbackAd = {
@@ -121,7 +130,7 @@ const DealOfTheWeek = () => {
                   href="/collections/all"
                   preserveHover
                   variant="default"
-                  className="text-base md:text-[20px] font-medium border md:border-2 px-6 py-[10px] md:px-[30px] md:py-4 transition duration-150 rounded-full"
+                  className="text-base md:text-lg text-white font-normal border md:border-2 px-6 py-[10px] md:px-6 md:py-3 transition duration-150 rounded-full bg-[#17AF26] border-[#17AF26]"
                   aria-label="See more products in our collection"
                   title="Browse all products in our collection"
                 >

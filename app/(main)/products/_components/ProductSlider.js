@@ -34,9 +34,14 @@ const ProductSlider = ({ product, previewStyle }) => {
 
   // For Google tag manager
   useEffect(() => {
+    // Ensure dataLayer is initialized
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+    }
+
     if (adManager?.tag_managers?.length > 0) {
       adManager.tag_managers.forEach((tagManager) => {
-        if (tagManager.tag_manager_id) {
+        if (tagManager.tag_manager_id && window.dataLayer) {
           window.dataLayer.push({
             event: 'view_item',
             ecommerce: {
@@ -47,7 +52,7 @@ const ProductSlider = ({ product, previewStyle }) => {
       });
     }
 
-    // For Facebook Pixels
+    // Facebook Pixel
     if (adManager?.pixels?.length > 0) {
       adManager.pixels.forEach((pixel) => {
         if (pixel.pixel_id) {

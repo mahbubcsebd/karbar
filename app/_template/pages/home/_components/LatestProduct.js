@@ -1,13 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import KarbarButton from '@/_components/KarbarButton';
 import useDictionary from '@/_hooks/useDictionary';
 import useSiteSetting from '@/_hooks/useSiteSetting';
+import useUser from '@/_hooks/useUser';
 import { getAdvertisement } from '@/_utils/getAdvertisement';
 import { getAllProduct } from '@/_utils/getProduct';
 import latestCampain1 from '@/assets/images/latest-campain-1.png';
 import latestCampain2 from '@/assets/images/latest-campain-2.png';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -20,6 +21,10 @@ const LatestProduct = () => {
   const { sectionTitle, seeMore } = dictionary.ProductCard;
   const { siteSetting } = useSiteSetting();
   const [advertisements, setAdvertisements] = useState([]);
+  const { user } = useUser();
+  const token = Cookies.get('userToken');
+
+  const isRetailer = user?.retailer_role_yn === 'yes';
 
   useEffect(() => {
     if (!siteSetting?.module?.includes('advertisement')) return;
@@ -38,12 +43,14 @@ const LatestProduct = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
         setError(null);
+
+        console.log('Fetching products with:', { token, isRetailer });
+
         const { data } = await getAllProduct(
           language,
           'all',
@@ -51,21 +58,26 @@ const LatestProduct = () => {
           'new_arrival',
           '',
           1,
-          4
+          4,
+          'all',
+          token,
+          isRetailer
         );
+
+        console.log('Fetched products:', token, isRetailer);
+
         setProducts(data);
       } catch (err) {
         console.error('Failed to fetch products:', err.message);
-        setError('Failed to fetch products. Please try again.');
+        setError(err.message || 'Failed to fetch products. Please try again.');
       } finally {
         setLoading(false);
       }
     };
 
     fetchProduct();
-  }, [language]);
+  }, [language, user, token, isRetailer]);
 
-  // Fallback images when no advertisements are available
   const fallbackImages = [
     {
       id: 1,
@@ -81,7 +93,6 @@ const LatestProduct = () => {
     },
   ];
 
-  // Use advertisements if available, otherwise use fallback
   const displayImages =
     advertisements[0]?.images?.length > 0
       ? advertisements[0].images.slice(0, 2)
@@ -135,13 +146,13 @@ const LatestProduct = () => {
                 ))}
               </div>
 
-              <div className="flex justify-center md:pt-6 mt-6">
+              <div className="flex justify-center mt-6 md:pt-6">
                 <KarbarButton
                   asLink
                   href="/collections/all"
                   preserveHover
                   variant="default"
-                  className="text-base md:text-lg text-white font-normal border md:border-2 px-6 py-[10px] md:px-6 md:py-3 transition duration-150 rounded-full bg-[#17AF26] border-[#17AF26"
+                  className="text-base md:text-lg text-white font-normal border md:border-2 px-6 py-[10px] md:px-6 md:py-3 transition duration-150 rounded-full bg-[#17AF26] border-[#17AF26]"
                   aria-label="See more products in our collection"
                   title="Browse all products in our collection"
                 >

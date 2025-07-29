@@ -1,8 +1,10 @@
-"use client";
+'use client';
 
 import SortContext from '@/_context/SortContext';
 import useDictionary from '@/_hooks/useDictionary';
+import useUser from '@/_hooks/useUser';
 import { getAllProduct } from '@/_utils/getProduct';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import SingleShorts from './SingleShorts';
@@ -12,6 +14,10 @@ const ShortList = () => {
   const { newArrival, bestSelling, discount } = dictionary.ProductCard.SortBy;
   const { setSortQuery } = useContext(SortContext);
   const router = useRouter();
+  const { user } = useUser();
+  const token = Cookies.get('userToken');
+
+  const isRetailer = user?.retailer_role_yn === 'yes';
 
   const [featuredlProducts, setFeaturedlProducts] = useState([]);
   const [newArrivalProducts, setNewArrivalProducts] = useState([]);
@@ -32,10 +38,54 @@ const ShortList = () => {
           discountData,
           bestSellingData,
         ] = await Promise.all([
-          getAllProduct(language, 'all', '', 'all', '', 1, 4, 'all'),
-          getAllProduct(language, 'all', '', 'new_arrival', '', 1, 4, 'all'),
-          getAllProduct(language, 'all', '', 'discount', '', 1, 4, 'all'),
-          getAllProduct(language, 'all', '', 'best_selling', '', 1, 4, 'all'),
+          getAllProduct(
+            language,
+            'all',
+            '',
+            'all',
+            '',
+            1,
+            4,
+            'all',
+            token,
+            isRetailer
+          ),
+          getAllProduct(
+            language,
+            'all',
+            '',
+            'new_arrival',
+            '',
+            1,
+            4,
+            'all',
+            token,
+            isRetailer
+          ),
+          getAllProduct(
+            language,
+            'all',
+            '',
+            'discount',
+            '',
+            1,
+            4,
+            'all',
+            token,
+            isRetailer
+          ),
+          getAllProduct(
+            language,
+            'all',
+            '',
+            'best_selling',
+            '',
+            1,
+            4,
+            'all',
+            token,
+            isRetailer
+          ),
         ]);
 
         setFeaturedlProducts(featuredlProductsData.data);
@@ -48,7 +98,7 @@ const ShortList = () => {
     };
 
     fetchProducts();
-  }, [language]);
+  }, [language, token, user, isRetailer]);
 
   const shortListData = [
     {

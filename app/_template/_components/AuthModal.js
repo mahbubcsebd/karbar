@@ -120,6 +120,7 @@ const AuthModal = ({ children, type = 'signIn' }) => {
         email: data.username,
         password: data.password,
         password_confirmation: data.confirmPassword,
+        store_id: null,
       };
 
       try {

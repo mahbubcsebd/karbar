@@ -16,7 +16,7 @@ const ProductOrder = ({
   variantWisePrice,
   setVariantWisePrice,
 }) => {
-  const { id, variants = [], stock, sale_price } = product;
+  const { id, variants = [], stock, sale_price, unit_price } = product;
   const router = useRouter();
   const { adManager } = useAdManager();
   const { state, dispatch } = useContext(ProductContext);
@@ -136,7 +136,12 @@ const ProductOrder = ({
       product_slug: product.slug,
       product_id: product.id,
       total:
-        productCount * (variants.length > 0 ? variantWisePrice : sale_price),
+        productCount *
+        (variantWisePrice > 0
+          ? variantWisePrice
+          : sale_price > 0
+          ? sale_price
+          : unit_price),
       quantity: productCount,
       attributes: selectedValues,
       variant_id: matchedVariant?.product_variant_id ?? null,

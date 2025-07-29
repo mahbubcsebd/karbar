@@ -103,13 +103,8 @@ const ProductCard = ({ product, isPriority }) => {
             </div>
           )}
           {pre_order && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/70">
-              <Link
-                href={`/products/${slug}`}
-                className="px-5 py-2 text-base text-gray-900 bg-white rounded-md font-medium shadow-md hover:bg-gray-100 transition-all z-[999]"
-              >
-                Pre Order
-              </Link>
+            <div className="absolute bottom-3 right-3 px-[10px] py-[6px] rounded-full text-[10px] bg-white shadow-md">
+              <p className="text-[#484848]">Pre Order</p>
             </div>
           )}
           {stock < 1 && (

@@ -107,7 +107,10 @@ const Footer = () => {
               {isSiteSettingLoading ? (
                 <div className="w-[150px] h-[24px] bg-gray-700 rounded animate-pulse" />
               ) : (
-                <Link href="/" className="inline-block">
+                <Link
+                  href="/"
+                  className="inline-block max-w-[120px] md:max-w-[200px] max-h-[60px]"
+                >
                   <Image
                     src={siteSetting?.footer_logo || logo}
                     alt="footer logo"

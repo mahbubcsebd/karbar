@@ -3,8 +3,10 @@
 
 import KarbarButton from '@/_components/KarbarButton';
 import useDictionary from '@/_hooks/useDictionary';
+import useUser from '@/_hooks/useUser';
 import { getAllCategories } from '@/_utils/categories';
 import { getAllProduct } from '@/_utils/getProduct';
+import Cookies from 'js-cookie';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import ProductCard from '../../../_components/ProductCard';
 import SkeletonCard from '../../../_components/SkeletonCard';
@@ -20,6 +22,10 @@ const AllProducts = () => {
   const [isSeeMoreClick, setIsSeeMoreClick] = useState(false);
   const { language, dictionary } = useDictionary();
   const [categories, setCategories] = useState([]);
+  const { user } = useUser();
+  const token = Cookies.get('userToken');
+
+  const isRetailer = user?.retailer_role_yn === 'yes';
 
   const memoizedProductsArray = useMemo(() => {
     return productItem;
@@ -49,7 +55,10 @@ const AllProducts = () => {
           'all',
           '',
           page,
-          showProduct
+          showProduct,
+          'all',
+          token,
+          isRetailer
         );
         const newProducts = productsData.data;
         setTotalProduct(productsData.meta.total);
@@ -68,7 +77,7 @@ const AllProducts = () => {
     };
 
     fetchProduct();
-  }, [language, selectedCategory, page]);
+  }, [language, selectedCategory, page, token, user, isRetailer]);
 
   const handleCategory = async (categoryName) => {
     setIsSeeMoreClick(false);
@@ -155,7 +164,7 @@ const AllProducts = () => {
           </div>
           <Suspense fallback={<h2></h2>}>
             {loading && !isSeeMoreClick ? (
-              <div className="product-list grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 gap-4 product-list sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
                 <SkeletonCard />
                 <SkeletonCard />
                 <SkeletonCard />
@@ -164,7 +173,7 @@ const AllProducts = () => {
                 <SkeletonCard />
               </div>
             ) : memoizedProductsArray.length > 0 ? (
-              <div className="product-list grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 gap-4 product-list sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
                 {memoizedProductsArray.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
@@ -179,7 +188,7 @@ const AllProducts = () => {
               </div>
             )}
           </Suspense>
-          <div className="flex justify-center md:pt-6 mt-6">
+          <div className="flex justify-center mt-6 md:pt-6">
             <KarbarButton
               asLink
               href={`/collections/${selectedCategory}`}

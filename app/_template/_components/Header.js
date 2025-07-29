@@ -194,7 +194,7 @@ const Header = () => {
                 >
                   <Link
                     href="/"
-                    className="inline-block max-w-[120px] md:max-w-[200px]"
+                    className="inline-block max-w-[120px] md:max-w-[200px] max-h-[60px]"
                   >
                     {loading ? (
                       <div className="w-40 h-10 bg-white rounded-md animate-pulse" />

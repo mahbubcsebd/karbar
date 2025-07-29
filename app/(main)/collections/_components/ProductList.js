@@ -13,12 +13,14 @@ import {
 import BrandContext from '@/_context/brandContext';
 import SortContext from '@/_context/SortContext';
 import useDictionary from '@/_hooks/useDictionary';
+import useUser from '@/_hooks/useUser';
 import SearchContext from '@/_reducer/SearchContext';
 import ProductCard from '@/_template/_components/ProductCard';
 import SkeletonCard from '@/_template/_components/SkeletonCard';
 import { getAllCategories } from '@/_utils/categories';
 import { getBrands } from '@/_utils/getBrands';
 import { getAllProduct } from '@/_utils/getProduct';
+import Cookies from 'js-cookie';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { IoOptions } from 'react-icons/io5';
 import CategoryWiseFilter from './CategoryWiseFilter';
@@ -47,6 +49,10 @@ const ProductList = ({ category }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isClient, setIsClient] = useState(false);
+  const { user } = useUser();
+  const token = Cookies.get('userToken');
+
+  const isRetailer = user?.retailer_role_yn === 'yes';
 
   // Extract category and subcategory from URL
   const pathSegments = pathname.split('/').filter(Boolean);
@@ -176,7 +182,9 @@ const ProductList = ({ category }) => {
           searchQuery,
           page,
           showProduct,
-          brandQuery
+          brandQuery,
+          token,
+          isRetailer
         );
         const newProducts = productsData.data;
         setTotalProduct(productsData.meta.total);
@@ -208,6 +216,9 @@ const ProductList = ({ category }) => {
     page,
     brandQuery,
     showProduct,
+    token,
+    user,
+    isRetailer,
   ]);
 
   // Sync URL changes with state (only when not changing category programmatically)
